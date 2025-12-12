@@ -1,0 +1,261 @@
+.account-settings {
+    padding: var(--spacing-8) 0;
+    min-height: 100vh;
+}
+
+.account-settings .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-16);
+    color: var(--text-muted);
+    gap: var(--spacing-4);
+}
+
+.account-settings .spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Header */
+.settings-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+}
+
+.settings-header .back-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    color: var(--text-muted);
+}
+
+.settings-header .back-btn:hover {
+    color: var(--color-primary);
+}
+
+.settings-header h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Content Layout */
+.settings-content {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--spacing-6);
+    align-items: start;
+}
+
+/* Tabs */
+.settings-tabs {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.settings-tabs .tab {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) var(--spacing-4);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-align: left;
+}
+
+.settings-tabs .tab:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.settings-tabs .tab.active {
+    background: var(--color-primary);
+    color: white;
+}
+
+/* Panel */
+.settings-panel {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+}
+
+/* Form */
+.settings-form h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+}
+
+.settings-form .form-desc {
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-6);
+}
+
+.settings-form .form-group {
+    margin-bottom: var(--spacing-4);
+}
+
+.settings-form label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+.settings-form input {
+    width: 100%;
+    padding: var(--spacing-3);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color var(--transition-base);
+}
+
+.settings-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.settings-form .form-hint {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-top: var(--spacing-1);
+}
+
+.settings-form .btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-6);
+}
+
+/* Password Input */
+.password-input {
+    position: relative;
+}
+
+.password-input input {
+    padding-right: var(--spacing-12);
+}
+
+.password-input .toggle-btn {
+    position: absolute;
+    right: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.password-input .toggle-btn:hover {
+    color: var(--color-primary);
+}
+
+/* Notifications */
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-4);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+}
+
+.notification-info h4 {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+}
+
+.notification-info p {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    border-radius: 26px;
+    transition: 0.3s;
+}
+
+.toggle-slider::before {
+    position: absolute;
+    content: '';
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-switch input:checked+.toggle-slider {
+    background-color: var(--color-primary);
+}
+
+.toggle-switch input:checked+.toggle-slider::before {
+    transform: translateX(22px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .settings-content {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-tabs {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .settings-tabs .tab {
+        flex-shrink: 0;
+    }
+}

@@ -1,0 +1,188 @@
+.admin-promo-form {
+    padding: var(--spacing-6);
+}
+
+.admin-promo-form .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-16);
+    color: var(--text-muted);
+    gap: var(--spacing-4);
+}
+
+/* Header */
+.admin-promo-form .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-6);
+}
+
+.admin-promo-form .page-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.admin-promo-form .back-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    color: var(--text-muted);
+}
+
+.admin-promo-form .back-btn:hover {
+    color: var(--color-primary);
+}
+
+.admin-promo-form h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.admin-promo-form .page-header .btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+/* Form */
+.promo-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+/* Form Card */
+.promo-form .form-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+}
+
+.promo-form .form-card h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-4);
+}
+
+.promo-form .form-card h3 svg {
+    color: var(--text-muted);
+}
+
+/* Form Group */
+.promo-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+}
+
+.promo-form .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.promo-form .form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.promo-form .form-group input,
+.promo-form .form-group textarea,
+.promo-form .form-group select {
+    padding: var(--spacing-3);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color var(--transition-base);
+}
+
+.promo-form .form-group input:focus,
+.promo-form .form-group textarea:focus,
+.promo-form .form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.promo-form .form-group textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.promo-form .form-hint {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+/* Input with Addon */
+.input-with-addon {
+    position: relative;
+    display: flex;
+}
+
+.input-with-addon input {
+    flex: 1;
+    padding-right: var(--spacing-10) !important;
+}
+
+.input-with-addon .addon {
+    position: absolute;
+    right: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.input-with-addon .addon.left {
+    right: auto;
+    left: var(--spacing-3);
+}
+
+.input-with-addon:has(.addon.left) input {
+    padding-left: var(--spacing-10) !important;
+    padding-right: var(--spacing-3) !important;
+}
+
+/* Checkbox */
+.promo-form .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.promo-form .checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .promo-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
