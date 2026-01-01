@@ -132,6 +132,28 @@ export const orderService = {
     async getStatistics(): Promise<ApiResponse<OrderStatistics>> {
         return api.get<ApiResponse<OrderStatistics>>('/admin/dashboard/stats');
     },
+
+    /**
+     * Get recent orders for dashboard (Admin)
+     */
+    async getRecentOrders(limit: number = 10): Promise<ApiResponse<RecentOrder[]>> {
+        return api.get<ApiResponse<RecentOrder[]>>('/admin/dashboard/recent-orders', { limit });
+    },
 };
+
+// Recent order type for dashboard
+export interface RecentOrder {
+    id: string;
+    order_number: string;
+    customer: string;
+    customer_email: string | null;
+    product: string;
+    items_count: number;
+    quantity: number;
+    total_amount: number;
+    status: string;
+    payment_status: string;
+    created_at: string;
+}
 
 export default orderService;

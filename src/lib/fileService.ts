@@ -22,6 +22,16 @@ export interface UploadResponse {
     url: string;
 }
 
+// Image upload response
+export interface ImageUploadResponse {
+    url: string;
+    images?: string[];
+    index?: number;
+    path?: string;
+    size?: number;
+    mime_type?: string;
+}
+
 // File Upload Service
 export const fileService = {
     /**
@@ -91,6 +101,115 @@ export const fileService = {
             related_id: relatedId,
         });
     },
+
+    // ==================== IMAGE UPLOAD ====================
+
+    /**
+     * Upload product image
+     */
+    async uploadProductImage(
+        productId: string,
+        file: File,
+        replaceIndex?: number
+    ): Promise<ApiResponse<ImageUploadResponse>> {
+        const formData = new FormData();
+        formData.append('image', file);
+        if (replaceIndex !== undefined) {
+            formData.append('replace_index', replaceIndex.toString());
+        }
+
+        const token = localStorage.getItem('auth_token');
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
+        const response = await fetch(`${baseUrl}/admin/products/${productId}/images`, {
+            method: 'POST',
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Upload failed');
+        }
+
+        return data;
+    },
+
+    /**
+     * Delete product image
+     */
+    async deleteProductImage(
+        productId: string,
+        index: number
+    ): Promise<ApiResponse<{ images: string[] }>> {
+        return api.delete<ApiResponse<{ images: string[] }>>(`/admin/products/${productId}/images?index=${index}`);
+    },
+
+    /**
+     * Upload category image
+     */
+    async uploadCategoryImage(
+        categoryId: string,
+        file: File
+    ): Promise<ApiResponse<ImageUploadResponse>> {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const token = localStorage.getItem('auth_token');
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
+        const response = await fetch(`${baseUrl}/admin/categories/${categoryId}/image`, {
+            method: 'POST',
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Upload failed');
+        }
+
+        return data;
+    },
+
+    /**
+     * Delete category image
+     */
+    async deleteCategoryImage(categoryId: string): Promise<ApiResponse<null>> {
+        return api.delete<ApiResponse<null>>(`/admin/categories/${categoryId}/image`);
+    },
+
+    /**
+     * Upload generic image
+     */
+    async uploadImage(
+        file: File,
+        folder?: string
+    ): Promise<ApiResponse<ImageUploadResponse>> {
+        const formData = new FormData();
+        formData.append('image', file);
+        if (folder) formData.append('folder', folder);
+
+        const token = localStorage.getItem('auth_token');
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+
+        const response = await fetch(`${baseUrl}/admin/images/upload`, {
+            method: 'POST',
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Upload failed');
+        }
+
+        return data;
+    },
 };
 
 export default fileService;
+

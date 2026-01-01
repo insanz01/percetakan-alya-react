@@ -8,7 +8,9 @@ import {
     Image as ImageIcon
 } from 'lucide-react';
 import { categoryService } from '../../../lib/categoryService';
+import { fileService } from '../../../lib/fileService';
 import { useUIStore } from '../../../store';
+import { ImageUploader } from '../../../components';
 import './CategoryForm.css';
 
 interface CategoryFormData {
@@ -89,6 +91,23 @@ export default function CategoryForm() {
                 [name]: value,
                 ...(name === 'name' && !isEdit ? { slug: generateSlug(value) } : {}),
             }));
+        }
+    };
+
+    const handleImageChange = (newImage: string | string[]) => {
+        setFormData(prev => ({
+            ...prev,
+            image: Array.isArray(newImage) ? newImage[0] : newImage
+        }));
+    };
+
+    const handleImageUpload = async (file: File): Promise<string> => {
+        try {
+            const response = await fileService.uploadImage(file, 'categories');
+            return response.data.url;
+        } catch (error) {
+            console.error('Upload failed:', error);
+            throw error;
         }
     };
 
@@ -221,27 +240,14 @@ export default function CategoryForm() {
                         <div className="form-card">
                             <h3><ImageIcon size={20} /> Gambar Kategori</h3>
 
-                            <div className="image-preview">
-                                {formData.image ? (
-                                    <img src={formData.image} alt="Category preview" />
-                                ) : (
-                                    <div className="image-placeholder">
-                                        <ImageIcon size={48} />
-                                        <span>Belum ada gambar</span>
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="form-group">
-                                <label>URL Gambar</label>
-                                <input
-                                    type="text"
-                                    name="image"
-                                    value={formData.image}
-                                    onChange={handleChange}
-                                    placeholder="https://example.com/image.jpg"
-                                />
-                            </div>
+                            <ImageUploader
+                                value={formData.image}
+                                onChange={handleImageChange}
+                                onUpload={handleImageUpload}
+                                multiple={false}
+                                placeholder="Upload icon/gambar"
+                                className="category-uploader"
+                            />
                         </div>
 
                         <div className="form-card">

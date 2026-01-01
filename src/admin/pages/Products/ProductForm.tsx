@@ -4,14 +4,14 @@ import {
     ChevronLeft,
     Save,
     Plus,
-    X,
     Trash2,
-    Loader2,
-    Image as ImageIcon
+    Loader2
 } from 'lucide-react';
 import { productService } from '../../../lib/productService';
+import { fileService } from '../../../lib/fileService';
 import { useCategories } from '../../../hooks';
 import { useUIStore } from '../../../store';
+import { ImageUploader } from '../../../components';
 import type { ProductSize, ProductMaterial, PrintSide, Finishing, QuantityTier } from '../../../types';
 import './ProductForm.css';
 
@@ -285,21 +285,22 @@ export default function ProductForm() {
     };
 
     // Image handlers
-    const addImageUrl = () => {
-        const url = prompt('Masukkan URL gambar:');
-        if (url) {
-            setFormData(prev => ({
-                ...prev,
-                images: [...prev.images, url],
-            }));
-        }
-    };
-
-    const removeImage = (index: number) => {
+    const handleImagesChange = (newImages: string | string[]) => {
         setFormData(prev => ({
             ...prev,
-            images: prev.images.filter((_, i) => i !== index),
+            images: Array.isArray(newImages) ? newImages : [newImages]
         }));
+    };
+
+    const handleImageUpload = async (file: File): Promise<string> => {
+        try {
+            // Use generic upload first
+            const response = await fileService.uploadImage(file, 'products');
+            return response.data.url;
+        } catch (error) {
+            console.error('Upload failed:', error);
+            throw error;
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -504,28 +505,14 @@ export default function ProductForm() {
                         {/* Images */}
                         <div className="images-section">
                             <h3>Gambar Produk</h3>
-                            <div className="images-grid">
-                                {formData.images.map((img, index) => (
-                                    <div key={index} className="image-item">
-                                        <img src={img} alt={`Product ${index + 1} `} />
-                                        <button
-                                            type="button"
-                                            className="remove-image"
-                                            onClick={() => removeImage(index)}
-                                        >
-                                            <X size={16} />
-                                        </button>
-                                    </div>
-                                ))}
-                                <button
-                                    type="button"
-                                    className="add-image"
-                                    onClick={addImageUrl}
-                                >
-                                    <ImageIcon size={32} />
-                                    <span>Tambah Gambar</span>
-                                </button>
-                            </div>
+                            <ImageUploader
+                                value={formData.images}
+                                onChange={handleImagesChange}
+                                onUpload={handleImageUpload}
+                                multiple={true}
+                                maxImages={5}
+                                placeholder="Upload gambar produk"
+                            />
                         </div>
                     </div>
                 )}

@@ -379,13 +379,18 @@
     position: relative;
     aspect-ratio: 4/3;
     overflow: hidden;
+    background: var(--bg-secondary);
 }
 
+.product-card .product-image-wrapper img,
+.product-image-wrapper .product-image,
 .product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
     transition: transform var(--transition-slow);
+    min-height: 100%;
+    display: block;
 }
 
 .product-card:hover .product-image {

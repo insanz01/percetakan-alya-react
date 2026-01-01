@@ -312,12 +312,26 @@ function ProductCard({ product }: { product: Product }) {
 
     return (
         <Link to={`/produk/${product.slug}`} className="product-card">
-            <div className="product-image-wrapper">
+            <div
+                className="product-image-wrapper"
+                style={{
+                    position: 'relative',
+                    aspectRatio: '4/3',
+                    overflow: 'hidden',
+                    background: '#f1f5f9'
+                }}
+            >
                 <img
                     src={product.images[0]}
                     alt={product.name}
                     className="product-image"
                     loading="lazy"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block'
+                    }}
                 />
                 <div className="product-badges">
                     {product.isBestSeller && (

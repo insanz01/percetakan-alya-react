@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     TrendingUp,
     ShoppingCart,
@@ -7,21 +6,18 @@ import {
     DollarSign,
     ArrowUpRight,
     ArrowDownRight,
-    Eye,
     Loader2
 } from 'lucide-react';
-import { useOrderStatistics, useCustomerStatistics, useProducts, useCategories } from '../../../hooks';
+import {
+    useOrderStatistics,
+    useCustomerStatistics,
+    useProducts,
+    useCategories,
+    useRecentOrders,
+    usePopularProducts
+} from '../../../hooks';
 import { formatPrice } from '../../../lib/utils';
 import './Dashboard.css';
-
-// Fallback dummy recent orders (will be replaced when order API is connected)
-const fallbackRecentOrders = [
-    { id: 'ORD-001234', customer: 'Budi Santoso', product: 'Brosur A5 Premium', qty: 500, total: 350000, status: 'processing' },
-    { id: 'ORD-001233', customer: 'Siti Rahma', product: 'Kartu Nama Premium', qty: 200, total: 100000, status: 'completed' },
-    { id: 'ORD-001232', customer: 'Ahmad Wijaya', product: 'X-Banner Indoor', qty: 5, total: 425000, status: 'shipped' },
-    { id: 'ORD-001231', customer: 'Maya Putri', product: 'Stiker Vinyl Outdoor', qty: 100, total: 300000, status: 'pending' },
-    { id: 'ORD-001230', customer: 'Rudi Hartono', product: 'Poster A3+ Photo Paper', qty: 10, total: 300000, status: 'completed' },
-];
 
 const statusLabels: Record<string, { label: string; color: string }> = {
     pending: { label: 'Menunggu', color: 'yellow' },
@@ -29,9 +25,11 @@ const statusLabels: Record<string, { label: string; color: string }> = {
     processing: { label: 'Diproses', color: 'blue' },
     payment_verified: { label: 'Diproses', color: 'blue' },
     in_production: { label: 'Produksi', color: 'blue' },
+    finishing: { label: 'Finishing', color: 'blue' },
     shipped: { label: 'Dikirim', color: 'purple' },
     completed: { label: 'Selesai', color: 'green' },
     delivered: { label: 'Selesai', color: 'green' },
+    cancelled: { label: 'Dibatalkan', color: 'red' },
 };
 
 export default function Dashboard() {
@@ -39,10 +37,10 @@ export default function Dashboard() {
     const { data: customerStats, isLoading: customerStatsLoading } = useCustomerStatistics();
     const { data: products, isLoading: productsLoading } = useProducts({ active: true });
     const { data: categories, isLoading: categoriesLoading } = useCategories({ active: true });
+    const { data: recentOrders, isLoading: recentOrdersLoading } = useRecentOrders(5);
+    const { data: popularProducts, isLoading: popularProductsLoading } = usePopularProducts(5);
 
-    const [recentOrders] = useState(fallbackRecentOrders);
-
-    const isLoading = orderStatsLoading || customerStatsLoading || productsLoading || categoriesLoading;
+    const isLoading = orderStatsLoading || customerStatsLoading || productsLoading || categoriesLoading || recentOrdersLoading || popularProductsLoading;
 
     // Build stats cards
     const stats = [
@@ -79,16 +77,6 @@ export default function Dashboard() {
             color: 'orange',
         },
     ];
-
-    // Popular products (top 5 by best seller status)
-    const popularProducts = (products || [])
-        .filter(p => p.isBestSeller)
-        .slice(0, 5)
-        .map((p, i) => ({
-            ...p,
-            salesCount: [150, 120, 98, 85, 72][i] || 50,
-            views: [2500, 2100, 1800, 1500, 1200][i] || 500,
-        }));
 
     if (isLoading) {
         return (
@@ -148,34 +136,46 @@ export default function Dashboard() {
                         </a>
                     </div>
                     <div className="orders-table-wrapper">
-                        <table className="orders-table">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Pelanggan</th>
-                                    <th>Produk</th>
-                                    <th>Qty</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {recentOrders.map((order) => (
-                                    <tr key={order.id}>
-                                        <td className="order-id">{order.id}</td>
-                                        <td>{order.customer}</td>
-                                        <td className="product-name">{order.product}</td>
-                                        <td>{order.qty}</td>
-                                        <td className="order-total">{formatPrice(order.total)}</td>
-                                        <td>
-                                            <span className={`status-badge ${statusLabels[order.status]?.color || 'gray'}`}>
-                                                {statusLabels[order.status]?.label || order.status}
-                                            </span>
-                                        </td>
+                        {recentOrders && recentOrders.length > 0 ? (
+                            <table className="orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Pelanggan</th>
+                                        <th>Produk</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {recentOrders.map((order) => (
+                                        <tr key={order.id}>
+                                            <td className="order-id">{order.order_number}</td>
+                                            <td>{order.customer}</td>
+                                            <td className="product-name">
+                                                {order.product}
+                                                {order.items_count > 1 && (
+                                                    <span className="items-more"> +{order.items_count - 1} lainnya</span>
+                                                )}
+                                            </td>
+                                            <td>{order.quantity}</td>
+                                            <td className="order-total">{formatPrice(order.total_amount)}</td>
+                                            <td>
+                                                <span className={`status-badge ${statusLabels[order.status]?.color || 'gray'}`}>
+                                                    {statusLabels[order.status]?.label || order.status}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div className="empty-state">
+                                <ShoppingCart size={32} />
+                                <p>Belum ada pesanan</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -189,26 +189,35 @@ export default function Dashboard() {
                         </a>
                     </div>
                     <div className="popular-products">
-                        {popularProducts.length > 0 ? (
+                        {popularProducts && popularProducts.length > 0 ? (
                             popularProducts.map((product, index) => (
                                 <div key={product.id} className="popular-product-item">
                                     <span className="product-rank">#{index + 1}</span>
-                                    <img
-                                        src={product.images[0]}
-                                        alt={product.name}
-                                        className="product-thumb"
-                                    />
+                                    {product.image ? (
+                                        <img
+                                            src={product.image}
+                                            alt={product.name}
+                                            className="product-thumb"
+                                        />
+                                    ) : (
+                                        <div className="product-thumb placeholder">
+                                            <Package size={20} />
+                                        </div>
+                                    )}
                                     <div className="product-details">
                                         <p className="product-name">{product.name}</p>
                                         <div className="product-stats">
-                                            <span><ShoppingCart size={12} /> {product.salesCount} terjual</span>
-                                            <span><Eye size={12} /> {product.views} views</span>
+                                            <span><ShoppingCart size={12} /> {product.total_sold} terjual</span>
+                                            <span className="category-tag">{product.category || 'Uncategorized'}</span>
                                         </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <p className="empty-text">Belum ada produk populer</p>
+                            <div className="empty-state">
+                                <Package size={32} />
+                                <p>Belum ada produk populer</p>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -223,15 +232,22 @@ export default function Dashboard() {
                         </a>
                     </div>
                     <div className="categories-list">
-                        {(categories || []).map((category) => (
-                            <div key={category.id} className="category-item">
-                                <span className="category-icon">{category.icon}</span>
-                                <div className="category-info">
-                                    <p className="category-name">{category.name}</p>
-                                    <p className="category-count">{category.productCount} produk</p>
+                        {(categories || []).length > 0 ? (
+                            categories!.map((category) => (
+                                <div key={category.id} className="category-item">
+                                    <span className="category-icon">{category.icon || '📁'}</span>
+                                    <div className="category-info">
+                                        <p className="category-name">{category.name}</p>
+                                        <p className="category-count">{category.productCount || 0} produk</p>
+                                    </div>
                                 </div>
+                            ))
+                        ) : (
+                            <div className="empty-state">
+                                <TrendingUp size={32} />
+                                <p>Belum ada kategori</p>
                             </div>
-                        ))}
+                        )}
                     </div>
                 </div>
 

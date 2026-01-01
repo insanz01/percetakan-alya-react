@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { productService, ProductFilters } from '../lib/productService';
+import { productService, ProductFilters, PopularProduct } from '../lib/productService';
 import { categoryService, CategoryFilters } from '../lib/categoryService';
-import { orderService, OrderFilters } from '../lib/orderService';
+import { orderService, OrderFilters, RecentOrder } from '../lib/orderService';
 import { customerService, CustomerFilters } from '../lib/customerService';
 import { promoService, PromoFilters, Promo } from '../lib/promoService';
 import type { Product, ProductCategory, Order, User } from '../types';
@@ -439,6 +439,66 @@ export function useCustomerStatistics() {
             setIsLoading(false);
         }
     }, []);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    return { data, isLoading, error, refetch: fetchData };
+}
+
+// ==================== DASHBOARD ADDITIONAL ====================
+
+export function useRecentOrders(limit: number = 10) {
+    const [data, setData] = useState<RecentOrder[] | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await orderService.getRecentOrders(limit);
+            if (response.success) {
+                setData(response.data);
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError(err instanceof ApiError ? err.message : 'Failed to fetch recent orders');
+        } finally {
+            setIsLoading(false);
+        }
+    }, [limit]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    return { data, isLoading, error, refetch: fetchData };
+}
+
+export function usePopularProducts(limit: number = 5) {
+    const [data, setData] = useState<PopularProduct[] | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await productService.getPopularProducts(limit);
+            if (response.success) {
+                setData(response.data);
+            } else {
+                setError(response.message);
+            }
+        } catch (err) {
+            setError(err instanceof ApiError ? err.message : 'Failed to fetch popular products');
+        } finally {
+            setIsLoading(false);
+        }
+    }, [limit]);
 
     useEffect(() => {
         fetchData();
