@@ -16,7 +16,9 @@ import {
     FileText,
     CheckCircle,
     ExternalLink,
-    Loader2
+    Loader2,
+    Grid,
+    List
 } from 'lucide-react';
 import { useProducts, useCategories } from '../../../hooks';
 import { formatPrice } from '../../../lib/utils';
@@ -28,6 +30,7 @@ export default function Products() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
 
     const { data: products, isLoading: productsLoading } = useProducts();
     const { data: categories, isLoading: categoriesLoading } = useCategories();
@@ -106,122 +109,214 @@ export default function Products() {
                         ))}
                     </select>
                 </div>
+                <div className="view-toggle">
+                    <button
+                        className={`view-toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
+                        onClick={() => setViewMode('table')}
+                        title="Tampilan Tabel"
+                    >
+                        <List size={18} />
+                    </button>
+                    <button
+                        className={`view-toggle-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                        onClick={() => setViewMode('grid')}
+                        title="Tampilan Grid"
+                    >
+                        <Grid size={18} />
+                    </button>
+                </div>
             </div>
 
-            {/* Products Table */}
-            <div className="products-table-card">
-                <div className="table-wrapper">
-                    <table className="data-table">
-                        <thead>
-                            <tr>
-                                <th>Produk</th>
-                                <th>Kategori</th>
-                                <th>Harga</th>
-                                <th>Min. Order</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredProducts.map((product) => (
-                                <tr key={product.id}>
-                                    <td>
-                                        <div className="product-cell">
-                                            <img
-                                                src={product.images[0]}
-                                                alt={product.name}
-                                                className="product-image"
-                                            />
-                                            <div className="product-info">
-                                                <p className="product-name">{product.name}</p>
-                                                <p className="product-desc">{product.shortDescription}</p>
+            {/* Products Display - Table or Grid */}
+            {viewMode === 'table' ? (
+                <div className="products-table-card">
+                    <div className="table-wrapper">
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Produk</th>
+                                    <th>Kategori</th>
+                                    <th>Harga</th>
+                                    <th>Min. Order</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredProducts.map((product) => (
+                                    <tr key={product.id}>
+                                        <td>
+                                            <div className="product-cell">
+                                                <img
+                                                    src={product.images[0]}
+                                                    alt={product.name}
+                                                    className="product-image"
+                                                />
+                                                <div className="product-info">
+                                                    <p className="product-name">{product.name}</p>
+                                                    <p className="product-desc">{product.shortDescription}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span className="category-badge">
-                                            {getCategoryName(product.categoryId)}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div className="price-cell">
-                                            <span className="base-price">
-                                                {formatPrice(product.quantityTiers[0].pricePerUnit)}
+                                        </td>
+                                        <td>
+                                            <span className="category-badge">
+                                                {getCategoryName(product.categoryId)}
                                             </span>
-                                            <span className="price-unit">/pcs</span>
-                                        </div>
-                                    </td>
-                                    <td>{product.minOrderQty} pcs</td>
-                                    <td>
-                                        <div className="status-badges">
-                                            {product.isBestSeller && (
-                                                <span className="status-badge bestseller">Best Seller</span>
-                                            )}
-                                            {product.isPromo && (
-                                                <span className="status-badge promo">Promo</span>
-                                            )}
-                                            {product.isRetailProduct && (
-                                                <span className="status-badge retail">Retail</span>
-                                            )}
-                                            {!product.isBestSeller && !product.isPromo && !product.isRetailProduct && (
-                                                <span className="status-badge normal">Aktif</span>
-                                            )}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="actions-cell">
-                                            <button
-                                                className="action-btn"
-                                                title="Lihat"
-                                                onClick={() => handleViewProduct(product)}
-                                            >
-                                                <Eye size={16} />
-                                            </button>
-                                            <button className="action-btn" title="Edit">
-                                                <Edit2 size={16} />
-                                            </button>
-                                            <div className="dropdown-container">
-                                                <button
-                                                    className="action-btn"
-                                                    onClick={() => setActiveDropdown(
-                                                        activeDropdown === product.id ? null : product.id
-                                                    )}
-                                                >
-                                                    <MoreVertical size={16} />
-                                                </button>
-                                                {activeDropdown === product.id && (
-                                                    <div className="dropdown-menu">
-                                                        <button
-                                                            className="dropdown-item"
-                                                            onClick={() => handleViewProduct(product)}
-                                                        >
-                                                            <Eye size={14} /> Lihat Detail
-                                                        </button>
-                                                        <button className="dropdown-item">
-                                                            <Edit2 size={14} /> Edit Produk
-                                                        </button>
-                                                        <button className="dropdown-item delete">
-                                                            <Trash2 size={14} /> Hapus
-                                                        </button>
-                                                    </div>
+                                        </td>
+                                        <td>
+                                            <div className="price-cell">
+                                                <span className="base-price">
+                                                    {formatPrice(product.quantityTiers[0].pricePerUnit)}
+                                                </span>
+                                                <span className="price-unit">/pcs</span>
+                                            </div>
+                                        </td>
+                                        <td>{product.minOrderQty} pcs</td>
+                                        <td>
+                                            <div className="status-badges">
+                                                {product.isBestSeller && (
+                                                    <span className="status-badge bestseller">Best Seller</span>
+                                                )}
+                                                {product.isPromo && (
+                                                    <span className="status-badge promo">Promo</span>
+                                                )}
+                                                {product.isRetailProduct && (
+                                                    <span className="status-badge retail">Retail</span>
+                                                )}
+                                                {!product.isBestSeller && !product.isPromo && !product.isRetailProduct && (
+                                                    <span className="status-badge normal">Aktif</span>
                                                 )}
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                {filteredProducts.length === 0 && (
-                    <div className="empty-state">
-                        <Package size={48} />
-                        <h3>Tidak ada produk ditemukan</h3>
-                        <p>Coba ubah filter atau kata kunci pencarian</p>
+                                        </td>
+                                        <td>
+                                            <div className="actions-cell">
+                                                <button
+                                                    className="action-btn"
+                                                    title="Lihat"
+                                                    onClick={() => handleViewProduct(product)}
+                                                >
+                                                    <Eye size={16} />
+                                                </button>
+                                                <button className="action-btn" title="Edit">
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <div className="dropdown-container">
+                                                    <button
+                                                        className="action-btn"
+                                                        onClick={() => setActiveDropdown(
+                                                            activeDropdown === product.id ? null : product.id
+                                                        )}
+                                                    >
+                                                        <MoreVertical size={16} />
+                                                    </button>
+                                                    {activeDropdown === product.id && (
+                                                        <div className="dropdown-menu">
+                                                            <button
+                                                                className="dropdown-item"
+                                                                onClick={() => handleViewProduct(product)}
+                                                            >
+                                                                <Eye size={14} /> Lihat Detail
+                                                            </button>
+                                                            <button className="dropdown-item">
+                                                                <Edit2 size={14} /> Edit Produk
+                                                            </button>
+                                                            <button className="dropdown-item delete">
+                                                                <Trash2 size={14} /> Hapus
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
-                )}
-            </div>
+
+                    {filteredProducts.length === 0 && (
+                        <div className="empty-state">
+                            <Package size={48} />
+                            <h3>Tidak ada produk ditemukan</h3>
+                            <p>Coba ubah filter atau kata kunci pencarian</p>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <div className="products-grid">
+                    {filteredProducts.map((product) => (
+                        <div key={product.id} className="product-card" onClick={() => handleViewProduct(product)}>
+                            <img
+                                src={product.images[0]}
+                                alt={product.name}
+                                className="product-card-image"
+                            />
+                            <div className="product-card-content">
+                                <div>
+                                    <h3 className="product-card-title">{product.name}</h3>
+                                    <p className="product-card-desc">{product.shortDescription}</p>
+                                </div>
+
+                                <div className="product-card-price">
+                                    <span className="price">
+                                        {formatPrice(product.quantityTiers[0].pricePerUnit)}
+                                    </span>
+                                    <span className="unit">/pcs</span>
+                                </div>
+
+                                <div className="product-card-meta">
+                                    <span className="product-card-quantity">{product.minOrderQty} pcs</span>
+                                    <div className="product-card-badges">
+                                        {product.isBestSeller && (
+                                            <span className="status-badge bestseller">Best Seller</span>
+                                        )}
+                                        {product.isPromo && (
+                                            <span className="status-badge promo">Promo</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="product-card-actions">
+                                    <button
+                                        className="action-btn"
+                                        title="Lihat"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleViewProduct(product);
+                                        }}
+                                    >
+                                        <Eye size={16} />
+                                    </button>
+                                    <button
+                                        className="action-btn"
+                                        title="Edit"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <Edit2 size={16} />
+                                    </button>
+                                    <button
+                                        className="action-btn"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setActiveDropdown(activeDropdown === product.id ? null : product.id);
+                                        }}
+                                    >
+                                        <MoreVertical size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
+                    {filteredProducts.length === 0 && (
+                        <div className="empty-state">
+                            <Package size={48} />
+                            <h3>Tidak ada produk ditemukan</h3>
+                            <p>Coba ubah filter atau kata kunci pencarian</p>
+                        </div>
+                    )}
+                </div>
+            )}
 
             {/* Product Detail Modal */}
             {selectedProduct && (
