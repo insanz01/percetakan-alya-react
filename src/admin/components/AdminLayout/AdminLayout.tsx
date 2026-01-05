@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -40,6 +40,51 @@ export default function AdminLayout() {
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+    // Sample notifications data
+    const [notifications, setNotifications] = useState([
+        {
+            id: '1',
+            title: 'Pesanan Baru',
+            message: 'Pesanan #ORD-001 telah diterima',
+            time: '5 menit yang lalu',
+            read: false,
+            type: 'order'
+        },
+        {
+            id: '2',
+            title: 'Pembayaran Dikonfirmasi',
+            message: 'Pembayaran untuk pesanan #ORD-002 telah dikonfirmasi',
+            time: '1 jam yang lalu',
+            read: false,
+            type: 'payment'
+        },
+        {
+            id: '3',
+            title: 'Produk Stok Rendah',
+            message: 'Brosur A5 Premium memiliki stok rendah',
+            time: '3 jam yang lalu',
+            read: false,
+            type: 'stock'
+        }
+    ]);
+
+    const unreadCount = notifications.filter(n => !n.read).length;
+
+    const markAsRead = (id: string) => {
+        setNotifications(prev =>
+            prev.map(notif =>
+                notif.id === id ? { ...notif, read: true } : notif
+            )
+        );
+    };
+
+    const markAllAsRead = () => {
+        setNotifications(prev =>
+            prev.map(notif => ({ ...notif, read: true }))
+        );
+    };
 
     // Get admin user from localStorage or use default
     const adminUser = useMemo(() => {
@@ -71,6 +116,27 @@ export default function AdminLayout() {
         // In real app, clear admin session
         navigate('/admin/login');
     };
+
+    // Close dropdowns when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+
+            // Close notification dropdown if clicked outside
+            if (isNotificationOpen && !target.closest('.notification-dropdown')) {
+                setIsNotificationOpen(false);
+            }
+
+            // Close profile dropdown if clicked outside
+            if (isProfileOpen && !target.closest('.profile-dropdown')) {
+                setIsProfileOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isNotificationOpen, isProfileOpen]);
+
 
     return (
         <div className="admin-layout">
@@ -144,10 +210,62 @@ export default function AdminLayout() {
                     </div>
 
                     <div className="header-right">
-                        <button className="header-action-btn notification-btn">
-                            <Bell size={20} />
-                            <span className="notification-badge">3</span>
-                        </button>
+                        <div className="notification-dropdown">
+                            <button
+                                className="header-action-btn notification-btn"
+                                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                            >
+                                <Bell size={20} />
+                                {unreadCount > 0 && (
+                                    <span className="notification-badge">{unreadCount}</span>
+                                )}
+                            </button>
+
+                            {isNotificationOpen && (
+                                <div className="notification-menu">
+                                    <div className="notification-menu-header">
+                                        <h3>Notifikasi</h3>
+                                        {unreadCount > 0 && (
+                                            <button
+                                                className="mark-all-read-btn"
+                                                onClick={markAllAsRead}
+                                            >
+                                                Tandai Semua Dibaca
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="notification-list">
+                                        {notifications.length === 0 ? (
+                                            <div className="notification-empty">
+                                                <Bell size={32} />
+                                                <p>Tidak ada notifikasi</p>
+                                            </div>
+                                        ) : (
+                                            notifications.map((notif) => (
+                                                <div
+                                                    key={notif.id}
+                                                    className={`notification-item ${notif.read ? 'read' : 'unread'}`}
+                                                    onClick={() => markAsRead(notif.id)}
+                                                >
+                                                    <div className="notification-icon">
+                                                        {notif.type === 'order' && '📦'}
+                                                        {notif.type === 'payment' && '💳'}
+                                                        {notif.type === 'stock' && '📊'}
+                                                    </div>
+                                                    <div className="notification-content">
+                                                        <h4>{notif.title}</h4>
+                                                        <p>{notif.message}</p>
+                                                        <span className="notification-time">{notif.time}</span>
+                                                    </div>
+                                                    {!notif.read && <div className="notification-dot"></div>}
+                                                </div>
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
 
                         <div className="profile-dropdown">
                             <button

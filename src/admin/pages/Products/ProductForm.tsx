@@ -781,18 +781,20 @@ export default function ProductForm() {
                                 </label>
                                 <p className="setting-desc">Tampilkan badge promo</p>
                                 {formData.isPromo && (
-                                    <div className="promo-input">
+                                    <div className="promo-field-container">
                                         <label>Persentase Diskon</label>
-                                        <input
-                                            type="number"
-                                            name="promoPercentage"
-                                            value={formData.promoPercentage || ''}
-                                            onChange={handleChange}
-                                            min={0}
-                                            max={100}
-                                            placeholder="10"
-                                        />
-                                        <span>%</span>
+                                        <div className="promo-input-group">
+                                            <input
+                                                type="number"
+                                                name="promoPercentage"
+                                                value={formData.promoPercentage || ''}
+                                                onChange={handleChange}
+                                                min={0}
+                                                max={100}
+                                                placeholder="10"
+                                            />
+                                            <span>%</span>
+                                        </div>
                                     </div>
                                 )}
                             </div>

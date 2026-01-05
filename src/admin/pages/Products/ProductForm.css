@@ -369,25 +369,37 @@
     margin-left: 32px;
 }
 
-.promo-input {
+.promo-field-container {
+    margin-top: var(--spacing-4);
+    margin-left: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.promo-field-container label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.promo-input-group {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
-    margin-top: var(--spacing-3);
-    margin-left: 32px;
 }
 
-.promo-input label {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-}
-
-.promo-input input {
-    width: 80px;
+.promo-input-group input {
+    width: 100px;
     padding: var(--spacing-2);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
     text-align: center;
+}
+
+.promo-input-group span {
+    color: var(--text-muted);
+    font-weight: var(--font-weight-medium);
 }
 
 /* File Settings */

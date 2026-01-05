@@ -92,6 +92,7 @@
 }
 
 /* Products Table Card */
+/* Products Table Card */
 .products-table-card {
     background: var(--bg-primary);
     border-radius: var(--radius-xl);
@@ -99,42 +100,77 @@
     overflow: hidden;
 }
 
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--spacing-4);
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background: var(--bg-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover td {
+    background: var(--bg-tertiary);
+}
+
 /* Product Cell */
 .product-cell {
     display: flex;
     align-items: center;
-    gap: var(--spacing-3);
-    min-width: 0;
-    /* Allow flex items to shrink */
+    gap: var(--spacing-4);
+    min-width: 250px;
 }
 
 .product-image {
-    width: 64px;
-    height: 64px;
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px;
     border-radius: var(--radius-lg);
     object-fit: cover;
     flex-shrink: 0;
     border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
 }
 
 .product-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     min-width: 0;
-    /* Allow text truncation */
 }
 
 .product-info .product-name {
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
-    margin-bottom: 4px;
     font-size: var(--font-size-sm);
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    word-wrap: break-word;
 }
 
 .product-info .product-desc {
@@ -142,33 +178,37 @@
     color: var(--text-muted);
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    word-wrap: break-word;
 }
 
 /* Category Badge */
 .category-badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 4px 10px;
     background: var(--bg-secondary);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
     color: var(--text-secondary);
+    white-space: nowrap;
+    border: 1px solid var(--border-color);
 }
 
 /* Price Cell */
 .price-cell {
     display: flex;
-    align-items: baseline;
-    gap: 2px;
+    flex-direction: column;
+    gap: 0;
 }
 
 .base-price {
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
+    font-size: var(--font-size-sm);
 }
 
 .price-unit {
@@ -179,16 +219,17 @@
 /* Status Badges */
 .status-badges {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
     gap: var(--spacing-1);
 }
 
 .status-badge {
-    display: inline-block;
-    padding: 3px 8px;
+    display: inline-flex;
+    padding: 2px 8px;
     border-radius: var(--radius-sm);
     font-size: 10px;
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
