@@ -12,10 +12,15 @@ import {
     Menu,
     X,
     ChevronDown,
-    Bell
+    Bell,
+    CreditCard,
+    BarChart3
 } from 'lucide-react';
 import './AdminLayout.css';
 import '../../styles/admin-shared.css';
+
+
+
 
 // Default admin user
 const defaultAdminUser = {
@@ -248,15 +253,17 @@ export default function AdminLayout() {
                                                     className={`notification-item ${notif.read ? 'read' : 'unread'}`}
                                                     onClick={() => markAsRead(notif.id)}
                                                 >
-                                                    <div className="notification-icon">
-                                                        {notif.type === 'order' && '📦'}
-                                                        {notif.type === 'payment' && '💳'}
-                                                        {notif.type === 'stock' && '📊'}
+                                                    <div className={`notification-icon-wrapper ${notif.type}`}>
+                                                        {notif.type === 'order' && <Package size={20} />}
+                                                        {notif.type === 'payment' && <CreditCard size={20} />}
+                                                        {notif.type === 'stock' && <BarChart3 size={20} />}
                                                     </div>
                                                     <div className="notification-content">
-                                                        <h4>{notif.title}</h4>
+                                                        <div className="notification-header-row">
+                                                            <h4>{notif.title}</h4>
+                                                            <span className="notification-time">{notif.time}</span>
+                                                        </div>
                                                         <p>{notif.message}</p>
-                                                        <span className="notification-time">{notif.time}</span>
                                                     </div>
                                                     {!notif.read && <div className="notification-dot"></div>}
                                                 </div>

@@ -59,8 +59,16 @@ export default function Settings() {
                 <div className="settings-content">
                     {activeTab === 'general' && (
                         <div className="settings-section">
-                            <h3>Informasi Toko</h3>
-                            <p className="section-desc">Informasi dasar tentang toko Anda</p>
+                            <div className="section-header">
+                                <div>
+                                    <h3>Informasi Toko</h3>
+                                    <p className="section-desc">Informasi dasar tentang toko Anda</p>
+                                </div>
+                                <button className="btn btn-primary">
+                                    <Save size={18} />
+                                    Simpan Perubahan
+                                </button>
+                            </div>
 
                             <div className="settings-form">
                                 <div className="form-group">
@@ -104,8 +112,16 @@ export default function Settings() {
 
                     {activeTab === 'contact' && (
                         <div className="settings-section">
-                            <h3>Informasi Kontak</h3>
-                            <p className="section-desc">Detail kontak yang ditampilkan di website</p>
+                            <div className="section-header">
+                                <div>
+                                    <h3>Informasi Kontak</h3>
+                                    <p className="section-desc">Detail kontak yang ditampilkan di website</p>
+                                </div>
+                                <button className="btn btn-primary">
+                                    <Save size={18} />
+                                    Simpan Perubahan
+                                </button>
+                            </div>
 
                             <div className="settings-form">
                                 <div className="form-row">
@@ -157,8 +173,16 @@ export default function Settings() {
 
                     {activeTab === 'notifications' && (
                         <div className="settings-section">
-                            <h3>Pengaturan Notifikasi</h3>
-                            <p className="section-desc">Kelola notifikasi yang dikirim</p>
+                            <div className="section-header">
+                                <div>
+                                    <h3>Pengaturan Notifikasi</h3>
+                                    <p className="section-desc">Kelola notifikasi yang dikirim</p>
+                                </div>
+                                <button className="btn btn-primary">
+                                    <Save size={18} />
+                                    Simpan Perubahan
+                                </button>
+                            </div>
 
                             <div className="notification-settings">
                                 <div className="notification-item">
@@ -197,8 +221,12 @@ export default function Settings() {
 
                     {activeTab === 'appearance' && (
                         <div className="settings-section">
-                            <h3>Pengaturan Tampilan</h3>
-                            <p className="section-desc">Kustomisasi tampilan website</p>
+                            <div className="section-header">
+                                <div>
+                                    <h3>Pengaturan Tampilan</h3>
+                                    <p className="section-desc">Kustomisasi tampilan website</p>
+                                </div>
+                            </div>
 
                             <div className="appearance-info">
                                 <p>Fitur kustomisasi tampilan akan segera hadir.</p>
@@ -208,8 +236,16 @@ export default function Settings() {
 
                     {activeTab === 'security' && (
                         <div className="settings-section">
-                            <h3>Keamanan</h3>
-                            <p className="section-desc">Pengaturan keamanan akun admin</p>
+                            <div className="section-header">
+                                <div>
+                                    <h3>Keamanan</h3>
+                                    <p className="section-desc">Pengaturan keamanan akun admin</p>
+                                </div>
+                                <button className="btn btn-primary">
+                                    <Save size={18} />
+                                    Simpan Perubahan
+                                </button>
+                            </div>
 
                             <div className="settings-form">
                                 <div className="form-group">
@@ -227,14 +263,6 @@ export default function Settings() {
                             </div>
                         </div>
                     )}
-
-                    {/* Save Button */}
-                    <div className="settings-actions">
-                        <button className="btn btn-primary">
-                            <Save size={18} />
-                            Simpan Perubahan
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>

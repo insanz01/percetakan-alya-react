@@ -268,13 +268,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-4);
     border-bottom: 1px solid var(--border-color);
     background: var(--bg-secondary);
 }
 
 .notification-menu-header h3 {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
     margin: 0;
 }
@@ -286,13 +286,11 @@
     border: none;
     cursor: pointer;
     font-weight: var(--font-weight-medium);
-    padding: var(--spacing-1) var(--spacing-2);
-    border-radius: var(--radius-md);
     transition: all var(--transition-fast);
 }
 
 .mark-all-read-btn:hover {
-    background: var(--color-primary-100);
+    text-decoration: underline;
 }
 
 .notification-list {
@@ -304,7 +302,7 @@
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-3);
-    padding: var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-4);
     border-bottom: 1px solid var(--border-color);
     cursor: pointer;
     transition: all var(--transition-fast);
@@ -320,16 +318,42 @@
 }
 
 .notification-item.unread {
-    background: var(--color-primary-50);
+    background: rgba(59, 130, 246, 0.04);
 }
 
 .notification-item.unread:hover {
-    background: var(--color-primary-100);
+    background: rgba(59, 130, 246, 0.08);
 }
 
-.notification-icon {
-    font-size: var(--font-size-2xl);
+.notification-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
+    transition: all var(--transition-fast);
+}
+
+.notification-icon-wrapper.order {
+    background: var(--color-primary-50);
+    color: var(--color-primary-600);
+}
+
+.notification-icon-wrapper.payment {
+    background: var(--color-success-50);
+    color: var(--color-success-600);
+}
+
+.notification-icon-wrapper.stock {
+    background: var(--color-warning-50);
+    color: var(--color-warning-600);
+}
+
+/* Make unread icon slightly more vibrant */
+.notification-item.unread .notification-icon-wrapper.order {
+    background: var(--color-primary-100);
 }
 
 .notification-content {
@@ -337,33 +361,56 @@
     min-width: 0;
 }
 
+.notification-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2px;
+}
+
 .notification-content h4 {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
-    margin: 0 0 var(--spacing-1) 0;
+    margin: 0;
+    line-height: 1.4;
 }
 
 .notification-content p {
     font-size: var(--font-size-xs);
     color: var(--text-secondary);
-    margin: 0 0 var(--spacing-1) 0;
+    margin: 0;
     line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .notification-time {
-    font-size: var(--font-size-xs);
+    font-size: 11px;
     color: var(--text-muted);
+    white-space: nowrap;
+    margin-left: var(--spacing-2);
+    flex-shrink: 0;
 }
 
 .notification-dot {
     position: absolute;
     top: var(--spacing-4);
-    right: var(--spacing-4);
-    width: 8px;
-    height: 8px;
+    right: var(--spacing-2);
+    width: 6px;
+    height: 6px;
     background: var(--color-primary-600);
     border-radius: var(--radius-full);
+    display: none;
+    /* Hide dot as we now use background highlight */
+}
+
+/* Show dot only if strictly needed, but subtle bg is better */
+.notification-item.unread .notification-dot {
+    display: block;
 }
 
 .notification-empty {
