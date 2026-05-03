@@ -14,7 +14,9 @@ import {
     ChevronDown,
     Bell,
     CreditCard,
-    BarChart3
+    BarChart3,
+    Printer,
+    UserCircle
 } from 'lucide-react';
 import './AdminLayout.css';
 import '../../styles/admin-shared.css';
@@ -27,7 +29,6 @@ const defaultAdminUser = {
     name: 'Admin Semanggi Print',
     email: 'rudygrafika@gmail.com',
     role: 'Super Admin',
-    avatar: '👤'
 };
 
 const menuItems = [
@@ -101,7 +102,6 @@ export default function AdminLayout() {
                     name: user.name || defaultAdminUser.name,
                     email: user.email || defaultAdminUser.email,
                     role: user.role || 'Admin',
-                    avatar: '👤'
                 };
             }
         } catch {
@@ -157,7 +157,7 @@ export default function AdminLayout() {
             <aside className={`admin-sidebar ${isSidebarOpen ? 'open' : ''}`}>
                 <div className="sidebar-header">
                     <Link to="/admin" className="admin-logo">
-                        <span className="logo-icon">🖨️</span>
+                        <Printer className="logo-icon" size={22} />
                         <span className="logo-text">
                             Semanggi<span className="logo-accent">Print</span>
                         </span>
@@ -279,7 +279,7 @@ export default function AdminLayout() {
                                 className="profile-btn"
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                             >
-                                <span className="profile-avatar">{adminUser.avatar}</span>
+                                <span className="profile-avatar"><UserCircle size={28} /></span>
                                 <div className="profile-info">
                                     <span className="profile-name">{adminUser.name}</span>
                                     <span className="profile-role">{adminUser.role}</span>
@@ -290,7 +290,7 @@ export default function AdminLayout() {
                             {isProfileOpen && (
                                 <div className="profile-menu">
                                     <div className="profile-menu-header">
-                                        <span className="profile-avatar-lg">{adminUser.avatar}</span>
+                                        <span className="profile-avatar-lg"><UserCircle size={40} /></span>
                                         <div>
                                             <p className="profile-name">{adminUser.name}</p>
                                             <p className="profile-email">{adminUser.email}</p>

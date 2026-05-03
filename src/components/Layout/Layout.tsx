@@ -14,8 +14,10 @@ import {
     ChevronDown,
     Home,
     Grid3X3,
-    FileText
+    FileText,
+    Printer
 } from 'lucide-react';
+import { Icon } from '../../lib/iconMap';
 import { useState, useEffect } from 'react';
 import { useCartStore, useUIStore, useAuthStore } from '../../store';
 import { useCategories } from '../../hooks';
@@ -87,7 +89,7 @@ export default function Layout({ children }: LayoutProps) {
                     <div className="header-content">
                         {/* Logo */}
                         <Link to="/" className="logo">
-                            <span className="logo-icon">🖨️</span>
+                            <Printer className="logo-icon" size={24} />
                             <span className="logo-text">
                                 Semanggi<span className="logo-accent">Print</span>
                             </span>
@@ -119,7 +121,7 @@ export default function Layout({ children }: LayoutProps) {
                                                         to={`/kategori/${category.slug}`}
                                                         className="nav-dropdown-item"
                                                     >
-                                                        <span className="nav-dropdown-icon">{category.icon}</span>
+                                                        <span className="nav-dropdown-icon"><Icon name={category.icon || 'Package'} size={18} /></span>
                                                         <div className="nav-dropdown-info">
                                                             <span className="nav-dropdown-name">{category.name}</span>
                                                             <span className="nav-dropdown-count">{category.productCount} produk</span>
@@ -281,7 +283,7 @@ export default function Layout({ children }: LayoutProps) {
                                         to={`/kategori/${category.slug}`}
                                         className="mobile-nav-link mobile-nav-category"
                                     >
-                                        <span>{category.icon}</span>
+                                        <Icon name={category.icon || 'Package'} size={18} />
                                         {category.name}
                                     </Link>
                                 ))}
@@ -329,7 +331,7 @@ export default function Layout({ children }: LayoutProps) {
                         {/* About */}
                         <div className="footer-section">
                             <Link to="/" className="footer-logo">
-                                <span className="logo-icon">🖨️</span>
+                                <Printer className="logo-icon" size={24} />
                                 <span className="logo-text">
                                     Semanggi<span className="logo-accent">Print</span>
                                 </span>

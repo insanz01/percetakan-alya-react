@@ -11,7 +11,10 @@ import {
     AlertCircle,
     Loader2,
     Plus,
-    ChevronRight
+    ChevronRight,
+    Landmark,
+    Wallet,
+    QrCode
 } from 'lucide-react';
 import { useUIStore } from '../../store';
 import { shippingService, ShippingOption } from '../../lib/shippingService';
@@ -61,10 +64,10 @@ const mockAddresses: ShippingAddress[] = [
 ];
 
 const paymentMethods = [
-    { id: 'bank_transfer', name: 'Transfer Bank', icon: '🏦', description: 'BCA, Mandiri, BNI, BRI' },
-    { id: 'virtual_account', name: 'Virtual Account', icon: '💳', description: 'Pembayaran otomatis' },
-    { id: 'ewallet', name: 'E-Wallet', icon: '📱', description: 'OVO, GoPay, DANA, ShopeePay' },
-    { id: 'qris', name: 'QRIS', icon: '📲', description: 'Scan & bayar' },
+    { id: 'bank_transfer', name: 'Transfer Bank', icon: <Landmark size={24} />, description: 'BCA, Mandiri, BNI, BRI' },
+    { id: 'virtual_account', name: 'Virtual Account', icon: <CreditCard size={24} />, description: 'Pembayaran otomatis' },
+    { id: 'ewallet', name: 'E-Wallet', icon: <Wallet size={24} />, description: 'OVO, GoPay, DANA, ShopeePay' },
+    { id: 'qris', name: 'QRIS', icon: <QrCode size={24} />, description: 'Scan & bayar' },
 ];
 
 type CheckoutStep = 'address' | 'shipping' | 'payment' | 'review';

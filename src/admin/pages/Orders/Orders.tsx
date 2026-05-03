@@ -16,7 +16,8 @@ import {
     MapPin,
     Package,
     Calendar,
-    CreditCard
+    CreditCard,
+    User
 } from 'lucide-react';
 import { formatPrice } from '../../../lib/utils';
 import './Orders.css';
@@ -395,7 +396,7 @@ export default function Orders() {
                                     <h3>Informasi Pelanggan</h3>
                                     <div className="info-card">
                                         <div className="info-row">
-                                            <span className="info-icon">👤</span>
+                                            <User size={16} className="info-icon-svg" />
                                             <span>{selectedOrder.customer.name}</span>
                                         </div>
                                         <div className="info-row">

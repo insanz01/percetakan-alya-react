@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, ArrowRight, Star, Clock, Truck, Shield, Headphones, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight, Star, Clock, Truck, Shield, Headphones, Loader2, Flame, MessageCircle } from 'lucide-react';
 import { useCategories, useProducts } from '../../hooks';
 import { formatPrice } from '../../lib/utils';
 import type { Product } from '../../types';
@@ -205,7 +205,7 @@ export default function Home() {
                 <div className="container">
                     <div className="section-header">
                         <div>
-                            <h2 className="section-title">🔥 Best Seller</h2>
+                            <h2 className="section-title"><Flame size={22} /> Best Seller</h2>
                             <p className="section-subtitle">Produk terlaris pilihan pelanggan</p>
                         </div>
                         <Link to="/best-seller" className="btn btn-outline">
@@ -237,7 +237,7 @@ export default function Home() {
                         <p>Konsultasikan kebutuhan cetak Anda dengan tim kami</p>
                         <div className="cta-actions">
                             <a href="https://wa.me/6281311152071" className="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer">
-                                💬 Chat WhatsApp
+                                <MessageCircle size={18} /> Chat WhatsApp
                             </a>
                             <Link to="/kontak" className="btn btn-outline btn-lg">
                                 Hubungi Kami

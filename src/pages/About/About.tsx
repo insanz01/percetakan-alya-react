@@ -6,7 +6,8 @@ import {
     Clock,
     Shield,
     ThumbsUp,
-    ChevronRight
+    ChevronRight,
+    Printer
 } from 'lucide-react';
 import './About.css';
 
@@ -93,7 +94,7 @@ export default function About() {
                                 alt="Semanggi Print Office"
                             />
                             <div className="story-image-overlay">
-                                <span>🖨️</span>
+                                <Printer size={40} />
                             </div>
                         </div>
                         <div className="story-content">

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, User, Mail, Phone, Lock, ChevronRight, Loader2, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, User, Mail, Phone, Lock, ChevronRight, Loader2, CheckCircle, Printer } from 'lucide-react';
 import { authService } from '../../lib/authService';
 import { useUIStore } from '../../store';
 import './Register.css';
@@ -133,7 +133,7 @@ export default function Register() {
                 <div className="register-branding">
                     <div className="branding-content">
                         <Link to="/" className="logo">
-                            <span className="logo-icon">🖨️</span>
+                            <Printer className="logo-icon" size={24} />
                             <span className="logo-text">Semanggi<span className="logo-accent">Print</span></span>
                         </Link>
                         <h1>Bergabung dengan Semanggi Print</h1>

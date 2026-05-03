@@ -8,6 +8,7 @@ import {
     ArrowDownRight,
     Loader2
 } from 'lucide-react';
+import { Icon } from '../../../lib/iconMap';
 import {
     useOrderStatistics,
     useCustomerStatistics,
@@ -235,7 +236,7 @@ export default function Dashboard() {
                         {(categories || []).length > 0 ? (
                             categories!.map((category) => (
                                 <div key={category.id} className="category-item">
-                                    <span className="category-icon">{category.icon || '📁'}</span>
+                                    <span className="category-icon"><Icon name={category.icon || 'FolderOpen'} size={20} /></span>
                                     <div className="category-info">
                                         <p className="category-name">{category.name}</p>
                                         <p className="category-count">{category.productCount || 0} produk</p>

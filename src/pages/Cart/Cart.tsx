@@ -6,7 +6,9 @@ import {
     ShoppingCart,
     ArrowRight,
     ChevronRight,
-    FileText
+    FileText,
+    Package,
+    Gift
 } from 'lucide-react';
 import { useCartStore, useUIStore } from '../../store';
 import { useCategories } from '../../hooks';
@@ -234,12 +236,12 @@ export default function Cart() {
 
                         {/* Info Box */}
                         <div className="cart-info-box">
-                            <h4>📦 Informasi Pengiriman</h4>
+                            <h4><Package size={16} /> Informasi Pengiriman</h4>
                             <p>Pengiriman tersedia ke seluruh Indonesia. Estimasi ongkir akan dihitung berdasarkan berat dan tujuan saat checkout.</p>
                         </div>
 
                         <div className="cart-info-box">
-                            <h4>🎁 Promo Tersedia</h4>
+                            <h4><Gift size={16} /> Promo Tersedia</h4>
                             <p>Masukkan kode promo saat checkout untuk mendapatkan diskon tambahan!</p>
                         </div>
                     </div>

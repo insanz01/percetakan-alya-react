@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2, Printer, Sparkles, Banknote, Truck, Shield } from 'lucide-react';
 import { useAuthStore, useUIStore } from '../../store';
 import './Login.css';
 
@@ -62,9 +62,9 @@ export default function Login() {
                 <div className="auth-card">
                     {/* Logo */}
                     <Link to="/" className="auth-logo">
-                        <span className="logo-icon">🖨️</span>
+                        <Printer className="logo-icon" size={24} />
                         <span className="logo-text">
-                            Print<span className="logo-accent">Master</span>
+                            Semanggi<span className="logo-accent">Print</span>
                         </span>
                     </Link>
 
@@ -178,19 +178,19 @@ export default function Login() {
 
                         <div className="decoration-features">
                             <div className="feature-item">
-                                <span className="feature-icon">✨</span>
+                                <span className="feature-icon"><Sparkles size={20} /></span>
                                 <span>Kualitas Cetak Premium</span>
                             </div>
                             <div className="feature-item">
-                                <span className="feature-icon">💰</span>
+                                <span className="feature-icon"><Banknote size={20} /></span>
                                 <span>Harga Transparan</span>
                             </div>
                             <div className="feature-item">
-                                <span className="feature-icon">🚚</span>
+                                <span className="feature-icon"><Truck size={20} /></span>
                                 <span>Pengiriman Cepat</span>
                             </div>
                             <div className="feature-item">
-                                <span className="feature-icon">🛡️</span>
+                                <span className="feature-icon"><Shield size={20} /></span>
                                 <span>Garansi Kepuasan</span>
                             </div>
                         </div>
