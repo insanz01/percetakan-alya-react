@@ -15,7 +15,7 @@ const faqData: FAQItem[] = [
     {
         id: 'order-1',
         category: 'Pemesanan',
-        question: 'Bagaimana cara memesan produk di PrintMaster?',
+        question: 'Bagaimana cara memesan produk di Semanggi Print?',
         answer: 'Untuk memesan produk, pilih produk yang diinginkan, tentukan spesifikasi (ukuran, bahan, jumlah), upload file desain Anda, lalu lanjutkan ke checkout. Setelah pembayaran dikonfirmasi, pesanan akan segera diproses.'
     },
     {

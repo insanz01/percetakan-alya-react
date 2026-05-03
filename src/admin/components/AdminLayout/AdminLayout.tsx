@@ -24,8 +24,8 @@ import '../../styles/admin-shared.css';
 
 // Default admin user
 const defaultAdminUser = {
-    name: 'Admin PrintMaster',
-    email: 'admin@printmaster.id',
+    name: 'Admin Semanggi Print',
+    email: 'rudygrafika@gmail.com',
     role: 'Super Admin',
     avatar: '👤'
 };
@@ -159,7 +159,7 @@ export default function AdminLayout() {
                     <Link to="/admin" className="admin-logo">
                         <span className="logo-icon">🖨️</span>
                         <span className="logo-text">
-                            Print<span className="logo-accent">Master</span>
+                            Semanggi<span className="logo-accent">Print</span>
                         </span>
                     </Link>
                     <button

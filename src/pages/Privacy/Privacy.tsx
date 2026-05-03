@@ -27,7 +27,7 @@ export default function Privacy() {
                     <section>
                         <h2>1. Pendahuluan</h2>
                         <p>
-                            Selamat datang di PrintMaster. Kami menghargai privasi Anda dan berkomitmen untuk
+                            Selamat datang di Semanggi Print. Kami menghargai privasi Anda dan berkomitmen untuk
                             melindungi data pribadi Anda. Kebijakan Privasi ini menjelaskan bagaimana kami
                             mengumpulkan, menggunakan, dan melindungi informasi Anda ketika Anda menggunakan
                             layanan kami.
@@ -140,9 +140,9 @@ export default function Privacy() {
                             menggunakan hak Anda terkait data pribadi, silakan hubungi kami:
                         </p>
                         <div className="contact-info">
-                            <p><strong>Email:</strong> privacy@printmaster.id</p>
-                            <p><strong>Telepon:</strong> (021) 1234-5678</p>
-                            <p><strong>Alamat:</strong> Jl. Percetakan No. 123, Jakarta 12345</p>
+                            <p><strong>Email:</strong> rudygrafika@gmail.com</p>
+                            <p><strong>Telepon:</strong> 0813-1115-2071</p>
+                            <p><strong>Alamat:</strong> Jl. A.Yani No.39, Palangka Raya, Kalteng</p>
                         </div>
                     </section>
                 </div>

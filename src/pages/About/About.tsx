@@ -41,29 +41,6 @@ export default function About() {
         },
     ];
 
-    const team = [
-        {
-            name: 'Budi Santoso',
-            role: 'Founder & CEO',
-            image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop',
-        },
-        {
-            name: 'Siti Rahma',
-            role: 'Head of Production',
-            image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop',
-        },
-        {
-            name: 'Ahmad Wijaya',
-            role: 'Creative Director',
-            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop',
-        },
-        {
-            name: 'Maya Putri',
-            role: 'Customer Success',
-            image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop',
-        },
-    ];
-
     return (
         <div className="about-page">
             {/* Breadcrumb */}
@@ -83,7 +60,7 @@ export default function About() {
                     <div className="about-hero-content">
                         <h1>Mitra Percetakan Terpercaya untuk Bisnis Anda</h1>
                         <p>
-                            Sejak 2014, PrintMaster telah menjadi solusi percetakan online terlengkap
+                            Sejak 2014, Semanggi Print telah menjadi solusi percetakan online terlengkap
                             dengan menggabungkan teknologi modern dan keahlian tradisional untuk
                             menghasilkan produk cetak berkualitas tinggi.
                         </p>
@@ -113,7 +90,7 @@ export default function About() {
                         <div className="story-image">
                             <img
                                 src="https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?w=600"
-                                alt="PrintMaster Office"
+                                alt="Semanggi Print Office"
                             />
                             <div className="story-image-overlay">
                                 <span>🖨️</span>
@@ -123,14 +100,13 @@ export default function About() {
                             <span className="section-badge">Cerita Kami</span>
                             <h2>Dari Garasi ke Ribuan Pelanggan</h2>
                             <p>
-                                PrintMaster didirikan oleh Budi Santoso pada tahun 2014 dengan modal
-                                satu mesin cetak digital dan semangat untuk memberikan layanan percetakan
-                                yang berbeda. Berawal dari garasi rumah, kami kini melayani ribuan
-                                pelanggan dari seluruh Indonesia.
+                                Semanggi Print didirikan dengan semangat untuk memberikan layanan percetakan
+                                berkualitas yang mudah dijangkau oleh semua kalangan. Berawal dari usaha
+                                kecil, kami kini melayani ribuan pelanggan dari seluruh Indonesia.
                             </p>
                             <p>
                                 Perjalanan kami tidak selalu mulus, namun dengan komitmen pada kualitas
-                                dan kepuasan pelanggan, kami terus berkembang. Saat ini, PrintMaster
+                                dan kepuasan pelanggan, kami terus berkembang. Saat ini, Semanggi Print
                                 memiliki fasilitas produksi modern dengan berbagai mesin cetak offset
                                 dan digital untuk memenuhi kebutuhan percetakan Anda.
                             </p>
@@ -178,7 +154,7 @@ export default function About() {
                 <div className="container">
                     <div className="section-header text-center">
                         <span className="section-badge">Nilai-Nilai Kami</span>
-                        <h2>Mengapa Memilih PrintMaster?</h2>
+                        <h2>Mengapa Memilih Semanggi Print?</h2>
                         <p>Komitmen kami untuk memberikan yang terbaik</p>
                     </div>
 
@@ -188,31 +164,6 @@ export default function About() {
                                 <div className="value-icon">{value.icon}</div>
                                 <h4>{value.title}</h4>
                                 <p>{value.description}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Team Section */}
-            <section className="team-section py-16">
-                <div className="container">
-                    <div className="section-header text-center">
-                        <span className="section-badge">Tim Kami</span>
-                        <h2>Orang-orang di Balik PrintMaster</h2>
-                        <p>Tim profesional yang siap membantu Anda</p>
-                    </div>
-
-                    <div className="team-grid">
-                        {team.map((member, index) => (
-                            <div key={index} className="team-card">
-                                <div className="team-image">
-                                    <img src={member.image} alt={member.name} />
-                                </div>
-                                <div className="team-info">
-                                    <h4>{member.name}</h4>
-                                    <p>{member.role}</p>
-                                </div>
                             </div>
                         ))}
                     </div>

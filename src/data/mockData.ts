@@ -690,7 +690,7 @@ export const paymentMethods: PaymentMethod[] = [
         name: 'Transfer Bank Manual',
         type: 'bank_transfer',
         icon: '🏧',
-        instructions: 'Transfer ke rekening BCA 1234567890 a.n. PT PrintMaster',
+        instructions: 'Transfer ke rekening BCA 1234567890 a.n. Semanggi Print',
     },
 ];
 

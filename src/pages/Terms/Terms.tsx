@@ -27,7 +27,7 @@ export default function Terms() {
                     <section>
                         <h2>1. Penerimaan Syarat</h2>
                         <p>
-                            Dengan mengakses dan menggunakan layanan PrintMaster, Anda menyetujui untuk
+                            Dengan mengakses dan menggunakan layanan Semanggi Print, Anda menyetujui untuk
                             terikat oleh Syarat & Ketentuan ini. Jika Anda tidak menyetujui syarat-syarat
                             ini, mohon untuk tidak menggunakan layanan kami.
                         </p>
@@ -36,7 +36,7 @@ export default function Terms() {
                     <section>
                         <h2>2. Layanan Kami</h2>
                         <p>
-                            PrintMaster menyediakan layanan percetakan online yang meliputi cetak brosur,
+                            Semanggi Print menyediakan layanan percetakan online yang meliputi cetak brosur,
                             flyer, kartu nama, banner, dan berbagai produk cetak lainnya. Kami berhak
                             untuk mengubah, menangguhkan, atau menghentikan layanan kapan saja tanpa
                             pemberitahuan sebelumnya.
@@ -126,7 +126,7 @@ export default function Terms() {
                     <section>
                         <h2>10. Batasan Tanggung Jawab</h2>
                         <p>
-                            PrintMaster tidak bertanggung jawab atas kerugian tidak langsung,
+                            Semanggi Print tidak bertanggung jawab atas kerugian tidak langsung,
                             konsekuensial, atau kehilangan keuntungan yang timbul dari penggunaan
                             layanan kami. Tanggung jawab kami terbatas pada nilai pesanan yang bersangkutan.
                         </p>
@@ -155,9 +155,9 @@ export default function Terms() {
                             Jika Anda memiliki pertanyaan tentang Syarat & Ketentuan ini, silakan hubungi:
                         </p>
                         <div className="contact-info">
-                            <p><strong>Email:</strong> legal@printmaster.id</p>
-                            <p><strong>Telepon:</strong> (021) 1234-5678</p>
-                            <p><strong>Alamat:</strong> Jl. Percetakan No. 123, Jakarta 12345</p>
+                            <p><strong>Email:</strong> rudygrafika@gmail.com</p>
+                            <p><strong>Telepon:</strong> 0813-1115-2071</p>
+                            <p><strong>Alamat:</strong> Jl. A.Yani No.39, Palangka Raya, Kalteng</p>
                         </div>
                     </section>
                 </div>

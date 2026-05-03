@@ -33,7 +33,7 @@ export default function AdminLogin() {
                 setError(err.message);
             } else {
                 // Fallback to dummy login for development
-                if (email === 'admin@printmaster.id' && password === 'admin123') {
+                if (email === 'rudygrafika@gmail.com' && password === 'admin123') {
                     localStorage.setItem('adminLoggedIn', 'true');
                     navigate('/admin');
                 } else {
@@ -55,13 +55,13 @@ export default function AdminLogin() {
                             <Shield size={32} />
                         </div>
                         <h1>Admin Panel</h1>
-                        <p>Masuk untuk mengelola PrintMaster</p>
+                        <p>Masuk untuk mengelola Semanggi Print</p>
                     </div>
 
                     {/* Demo Credentials Info */}
                     <div className="demo-credentials">
                         <p><strong>Demo Login:</strong></p>
-                        <p>Email: admin@printmaster.id</p>
+                        <p>Email: rudygrafika@gmail.com</p>
                         <p>Password: admin123</p>
                     </div>
 
@@ -82,7 +82,7 @@ export default function AdminLogin() {
                                     type="email"
                                     id="email"
                                     className="input input-with-icon"
-                                    placeholder="admin@printmaster.id"
+                                    placeholder="rudygrafika@gmail.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required

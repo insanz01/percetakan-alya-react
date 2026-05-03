@@ -162,7 +162,7 @@
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
     padding: var(--spacing-4);
-    min-width: 500px;
+    min-width: min(500px, 90vw);
 }
 
 .nav-dropdown-grid {

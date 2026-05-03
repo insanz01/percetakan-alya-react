@@ -30,28 +30,28 @@ export default function Contact() {
         {
             icon: <Phone size={24} />,
             title: 'Telepon',
-            details: ['+62 812-3456-7890', '+62 21-1234-5678'],
-            action: 'tel:+6281234567890',
+            details: ['0813-1115-2071'],
+            action: 'tel:+6281311152071',
             actionLabel: 'Hubungi Sekarang',
         },
         {
             icon: <Mail size={24} />,
             title: 'Email',
-            details: ['info@printmaster.id', 'support@printmaster.id'],
-            action: 'mailto:info@printmaster.id',
+            details: ['rudygrafika@gmail.com'],
+            action: 'mailto:rudygrafika@gmail.com',
             actionLabel: 'Kirim Email',
         },
         {
             icon: <MessageCircle size={24} />,
             title: 'WhatsApp',
-            details: ['+62 812-3456-7890', 'Respon cepat 24 jam'],
-            action: 'https://wa.me/6281234567890',
+            details: ['0813-1115-2071', 'Respon cepat 24 jam'],
+            action: 'https://wa.me/6281311152071',
             actionLabel: 'Chat WhatsApp',
         },
         {
             icon: <Clock size={24} />,
             title: 'Jam Operasional',
-            details: ['Senin - Jumat: 08.00 - 17.00', 'Sabtu: 08.00 - 14.00'],
+            details: ['Senin - Sabtu: 08.00 - 17.00'],
         },
     ];
 
@@ -298,14 +298,14 @@ export default function Contact() {
                         <div className="contact-map-section">
                             <div className="map-container">
                                 <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.8195613!3d-6.175247299999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2ad6e1e0e9bcc8!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1234567890"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.5!2d113.9213!3d-2.2072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMTInMjUuOSJTIDExM8KwNTUnMTYuNyJF!5e0!3m2!1sid!2sid!4v1234567890!5m2!1sid!2sid&q=Jl.+A.Yani+No.39+Palangka+Raya+Kalimantan+Tengah"
                                     width="100%"
                                     height="300"
                                     style={{ border: 0, borderRadius: 'var(--radius-xl)' }}
                                     allowFullScreen
                                     loading="lazy"
                                     referrerPolicy="no-referrer-when-downgrade"
-                                    title="Lokasi PrintMaster"
+                                    title="Lokasi Semanggi Print"
                                 />
                             </div>
 
@@ -315,11 +315,11 @@ export default function Contact() {
                                 </div>
                                 <div className="address-content">
                                     <h3>Kantor & Workshop</h3>
-                                    <p>Jl. Percetakan No. 123</p>
-                                    <p>Kebayoran Baru, Jakarta Selatan</p>
-                                    <p>DKI Jakarta 12110</p>
+                                    <p>Jl. A.Yani No.39</p>
+                                    <p>Kelurahan Langkai, Kec. Pahandut</p>
+                                    <p>Kota Palangka Raya, Kalimantan Tengah 73111</p>
                                     <a
-                                        href="https://maps.google.com"
+                                        href="https://www.google.com/maps/search/Jl.+A.Yani+No.39+Palangka+Raya+Kalimantan+Tengah"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="btn btn-outline btn-sm"
@@ -360,7 +360,7 @@ export default function Contact() {
                     <div className="faq-more">
                         <p>Tidak menemukan jawaban yang Anda cari?</p>
                         <a
-                            href="https://wa.me/6281234567890?text=Halo, saya ingin bertanya tentang layanan PrintMaster"
+                            href="https://wa.me/6281311152071?text=Halo, saya ingin bertanya tentang layanan Semanggi Print"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-accent"

@@ -95,7 +95,7 @@ export default function Dashboard() {
             <div className="welcome-section">
                 <div className="welcome-content">
                     <h2>Selamat Datang, Admin! 👋</h2>
-                    <p>Berikut ringkasan aktivitas PrintMaster hari ini.</p>
+                    <p>Berikut ringkasan aktivitas Semanggi Print hari ini.</p>
                 </div>
                 <div className="welcome-date">
                     {new Date().toLocaleDateString('id-ID', {

@@ -76,7 +76,7 @@ export default function Settings() {
                                     <input
                                         type="text"
                                         className="input"
-                                        defaultValue="PrintMaster Indonesia"
+                                        defaultValue="Semanggi Print"
                                     />
                                 </div>
                                 <div className="form-group">
@@ -92,7 +92,7 @@ export default function Settings() {
                                     <textarea
                                         className="input textarea"
                                         rows={4}
-                                        defaultValue="PrintMaster adalah platform percetakan online yang menyediakan layanan cetak berkualitas tinggi dengan harga transparan."
+                                        defaultValue="Semanggi Print adalah percetakan online terpercaya yang menyediakan layanan cetak berkualitas tinggi dengan harga transparan di Palangka Raya."
                                     />
                                 </div>
                                 <div className="form-group">
@@ -102,7 +102,7 @@ export default function Settings() {
                                         <input
                                             type="url"
                                             className="input"
-                                            defaultValue="https://printmaster.id"
+                                            defaultValue="https://semanggiprintpalangkaraya.com"
                                         />
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@ export default function Settings() {
                                             <input
                                                 type="email"
                                                 className="input"
-                                                defaultValue="info@printmaster.id"
+                                                defaultValue="rudygrafika@gmail.com"
                                             />
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@ export default function Settings() {
                                             <input
                                                 type="tel"
                                                 className="input"
-                                                defaultValue="021-12345678"
+                                                defaultValue="0813-1115-2071"
                                             />
                                         </div>
                                     </div>
@@ -153,7 +153,7 @@ export default function Settings() {
                                     <input
                                         type="text"
                                         className="input"
-                                        defaultValue="+62 812-3456-7890"
+                                        defaultValue="0813-1115-2071"
                                     />
                                 </div>
                                 <div className="form-group">
@@ -163,7 +163,7 @@ export default function Settings() {
                                         <textarea
                                             className="input textarea"
                                             rows={3}
-                                            defaultValue="Jl. Percetakan No. 123, Jakarta Pusat, 10110"
+                                            defaultValue="Jl. A.Yani No.39, Kelurahan Langkai, Kec. Pahandut, Kota Palangka Raya, Kalimantan Tengah 73111"
                                         />
                                     </div>
                                 </div>

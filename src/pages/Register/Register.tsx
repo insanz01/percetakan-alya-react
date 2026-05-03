@@ -85,7 +85,7 @@ export default function Register() {
                 addToast({
                     type: 'success',
                     title: 'Registrasi Berhasil!',
-                    message: 'Selamat datang di PrintMaster',
+                    message: 'Selamat datang di Semanggi Print',
                 });
                 navigate('/');
             }
@@ -134,9 +134,9 @@ export default function Register() {
                     <div className="branding-content">
                         <Link to="/" className="logo">
                             <span className="logo-icon">🖨️</span>
-                            <span className="logo-text">PrintMaster</span>
+                            <span className="logo-text">Semanggi<span className="logo-accent">Print</span></span>
                         </Link>
-                        <h1>Bergabung dengan PrintMaster</h1>
+                        <h1>Bergabung dengan Semanggi Print</h1>
                         <p>Nikmati kemudahan mencetak dengan kualitas terbaik dan harga terjangkau.</p>
 
                         <div className="benefits-list">

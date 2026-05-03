@@ -62,13 +62,13 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="container">
                     <div className="top-bar-content">
                         <div className="top-bar-left">
-                            <a href="tel:+6281234567890" className="top-bar-link">
+                            <a href="tel:+6281311152071" className="top-bar-link">
                                 <Phone size={14} />
-                                <span>0812-3456-7890</span>
+                                <span>0813-1115-2071</span>
                             </a>
-                            <a href="mailto:info@printmaster.id" className="top-bar-link">
+                            <a href="mailto:rudygrafika@gmail.com" className="top-bar-link">
                                 <Mail size={14} />
-                                <span>info@printmaster.id</span>
+                                <span>rudygrafika@gmail.com</span>
                             </a>
                         </div>
                         <div className="top-bar-right">
@@ -89,7 +89,7 @@ export default function Layout({ children }: LayoutProps) {
                         <Link to="/" className="logo">
                             <span className="logo-icon">🖨️</span>
                             <span className="logo-text">
-                                Print<span className="logo-accent">Master</span>
+                                Semanggi<span className="logo-accent">Print</span>
                             </span>
                         </Link>
 
@@ -131,10 +131,6 @@ export default function Layout({ children }: LayoutProps) {
                                     </div>
                                 )}
                             </div>
-
-                            <Link to="/promo" className={`nav-link ${location.pathname === '/promo' ? 'active' : ''}`}>
-                                Promo
-                            </Link>
 
                             <Link to="/tentang" className={`nav-link ${location.pathname === '/tentang' ? 'active' : ''}`}>
                                 Tentang Kami
@@ -267,7 +263,7 @@ export default function Layout({ children }: LayoutProps) {
                     <nav className="mobile-menu animate-slideDown">
                         <div className="mobile-menu-header">
                             <span className="logo-text">
-                                Print<span className="logo-accent">Master</span>
+                                Semanggi<span className="logo-accent">Print</span>
                             </span>
                         </div>
 
@@ -290,10 +286,6 @@ export default function Layout({ children }: LayoutProps) {
                                     </Link>
                                 ))}
                             </div>
-
-                            <Link to="/promo" className="mobile-nav-link">
-                                Promo
-                            </Link>
 
                             <Link to="/tentang" className="mobile-nav-link">
                                 <FileText size={20} />
@@ -339,7 +331,7 @@ export default function Layout({ children }: LayoutProps) {
                             <Link to="/" className="footer-logo">
                                 <span className="logo-icon">🖨️</span>
                                 <span className="logo-text">
-                                    Print<span className="logo-accent">Master</span>
+                                    Semanggi<span className="logo-accent">Print</span>
                                 </span>
                             </Link>
                             <p className="footer-about">
@@ -364,7 +356,6 @@ export default function Layout({ children }: LayoutProps) {
                             <h4 className="footer-title">Menu Cepat</h4>
                             <ul className="footer-links">
                                 <li><Link to="/">Beranda</Link></li>
-                                <li><Link to="/promo">Promo</Link></li>
                                 <li><Link to="/tentang">Tentang Kami</Link></li>
                                 <li><Link to="/kontak">Hubungi Kami</Link></li>
                                 <li><Link to="/faq">FAQ</Link></li>
@@ -389,22 +380,22 @@ export default function Layout({ children }: LayoutProps) {
                             <ul className="footer-contact">
                                 <li>
                                     <MapPin size={16} />
-                                    <span>Jl. Percetakan No. 123, Jakarta Selatan</span>
+                                    <span>Jl. A.Yani No.39, Palangka Raya, Kalteng</span>
                                 </li>
                                 <li>
                                     <Phone size={16} />
-                                    <span>0812-3456-7890</span>
+                                    <span>0813-1115-2071</span>
                                 </li>
                                 <li>
                                     <Mail size={16} />
-                                    <span>info@printmaster.id</span>
+                                    <span>rudygrafika@gmail.com</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
                     <div className="footer-bottom">
-                        <p>&copy; {new Date().getFullYear()} PrintMaster. All rights reserved.</p>
+                        <p>&copy; {new Date().getFullYear()} Semanggi Print. All rights reserved.</p>
                         <div className="footer-bottom-links">
                             <Link to="/privacy">Kebijakan Privasi</Link>
                             <Link to="/terms">Syarat & Ketentuan</Link>

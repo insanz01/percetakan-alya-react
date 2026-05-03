@@ -1,5 +1,5 @@
 /* ============================================
-   PrintMaster - Premium Printing Platform
+   Semanggi Print - Premium Printing Platform
    Design System & Global Styles
    ============================================ */
 
@@ -771,6 +771,16 @@ a:hover {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes pulse {
 
   0%,
@@ -809,6 +819,10 @@ a:hover {
 
 .animate-scaleIn {
   animation: scaleIn var(--transition-base) ease-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .animate-pulse {

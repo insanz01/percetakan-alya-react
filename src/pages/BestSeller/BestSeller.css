@@ -50,16 +50,6 @@
     animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 /* Empty State */
 .bestseller-page .empty-state {
     display: flex;
@@ -80,7 +70,7 @@
 /* Products Grid */
 .bestseller-page .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-6);
 }
 
@@ -178,7 +168,7 @@
 .bestseller-page .product-price .price {
     font-size: var(--font-size-xl);
     font-weight: 700;
-    color: var(--color-primary);
+    color: var(--color-primary-500);
 }
 
 .bestseller-page .product-price .unit {
@@ -205,10 +195,22 @@
     gap: var(--spacing-1);
     font-size: var(--font-size-sm);
     font-weight: 600;
-    color: var(--color-primary);
+    color: var(--color-primary-500);
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .bestseller-page .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .bestseller-page .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .bestseller-hero h1 {
         font-size: var(--font-size-3xl);
