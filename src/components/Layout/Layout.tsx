@@ -123,7 +123,7 @@ export default function Layout({ children }: LayoutProps) {
                                                     >
                                                         <span className="nav-dropdown-icon"><Icon name={category.icon || 'Package'} size={18} /></span>
                                                         <div className="nav-dropdown-info">
-                                                            <span className="nav-dropdown-name">{category.name}</span>
+                                                            <span className="nav-dropdown-name">{category.nama}</span>
                                                             <span className="nav-dropdown-count">{category.productCount} produk</span>
                                                         </div>
                                                     </Link>
@@ -163,7 +163,7 @@ export default function Layout({ children }: LayoutProps) {
                             {isAuthenticated ? (
                                 <Link to="/akun" className="header-action-btn user-btn" title="Akun Saya">
                                     <User size={20} />
-                                    <span className="user-name">{user?.name}</span>
+                                    <span className="user-name">{user?.nama}</span>
                                 </Link>
                             ) : (
                                 <Link to="/login" className="btn btn-primary btn-sm">
@@ -208,12 +208,12 @@ export default function Layout({ children }: LayoutProps) {
                                         {items.slice(0, 3).map((item) => (
                                             <div key={item.id} className="cart-item">
                                                 <img
-                                                    src={item.product.images[0]}
-                                                    alt={item.product.name}
+                                                    src={item.product.gambar[0]}
+                                                    alt={item.product.nama}
                                                     className="cart-item-image"
                                                 />
                                                 <div className="cart-item-info">
-                                                    <h4>{item.product.name}</h4>
+                                                    <h4>{item.product.nama}</h4>
                                                     <p className="cart-item-qty">Qty: {item.config.quantity}</p>
                                                     <p className="cart-item-price">{formatPrice(item.totalPrice)}</p>
                                                 </div>
@@ -284,7 +284,7 @@ export default function Layout({ children }: LayoutProps) {
                                         className="mobile-nav-link mobile-nav-category"
                                     >
                                         <Icon name={category.icon || 'Package'} size={18} />
-                                        {category.name}
+                                        {category.nama}
                                     </Link>
                                 ))}
                             </div>
@@ -370,7 +370,7 @@ export default function Layout({ children }: LayoutProps) {
                             <ul className="footer-links">
                                 {(categories || []).slice(0, 6).map((category) => (
                                     <li key={category.id}>
-                                        <Link to={`/kategori/${category.slug}`}>{category.name}</Link>
+                                        <Link to={`/kategori/${category.slug}`}>{category.nama}</Link>
                                     </li>
                                 ))}
                             </ul>

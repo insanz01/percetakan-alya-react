@@ -17,7 +17,7 @@ export default function Categories() {
 
     const filteredCategories = useMemo(() => {
         return (categories || []).filter(cat =>
-            cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+            cat.nama.toLowerCase().includes(searchQuery.toLowerCase())
         );
     }, [categories, searchQuery]);
 
@@ -65,12 +65,12 @@ export default function Categories() {
                 {filteredCategories.map((category) => (
                     <div key={category.id} className="category-card">
                         <div className="category-card-image">
-                            <img src={category.image} alt={category.name} />
-                            <span className="category-icon-badge">{category.icon}</span>
+                            <img src={category.gambar} alt={category.nama} />
+                            <span className="category-icon-badge">{category.ikon}</span>
                         </div>
                         <div className="category-card-content">
-                            <h3 className="category-card-name">{category.name}</h3>
-                            <p className="category-card-desc">{category.description}</p>
+                            <h3 className="category-card-name">{category.nama}</h3>
+                            <p className="category-card-desc">{category.deskripsi}</p>
                             <div className="category-card-stats">
                                 <span className="product-count">
                                     <Grid3X3 size={14} />

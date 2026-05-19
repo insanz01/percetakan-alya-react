@@ -173,8 +173,8 @@ export default function UserOrderDetail() {
                     <div className="order-title">
                         <h1>Detail Pesanan</h1>
                         <div className="order-number-row">
-                            <span className="order-id">{order.orderNumber}</span>
-                            <button className="copy-btn" onClick={() => copyToClipboard(order.orderNumber)}>
+                            <span className="order-id">{order.nomorPesanan}</span>
+                            <button className="copy-btn" onClick={() => copyToClipboard(order.nomorPesanan)}>
                                 <Copy size={14} />
                             </button>
                         </div>
@@ -200,17 +200,17 @@ export default function UserOrderDetail() {
                                 {order.items?.map((item, index) => (
                                     <div key={index} className="order-item">
                                         <img
-                                            src={item.product?.images?.[0] || 'https://via.placeholder.com/80'}
-                                            alt={item.product?.name}
+                                            src={item.product?.gambar?.[0] || 'https://via.placeholder.com/80'}
+                                            alt={item.product?.nama}
                                         />
                                         <div className="item-info">
-                                            <div className="item-name">{item.product?.name}</div>
+                                            <div className="item-name">{item.product?.nama}</div>
                                             <div className="item-specs">
                                                 {item.config?.sizeName && <span>{item.config.sizeName}</span>}
                                                 {item.config?.materialName && <span>{item.config.materialName}</span>}
                                                 {item.config?.printSideName && <span>{item.config.printSideName}</span>}
                                             </div>
-                                            <div className="item-qty">Qty: {item.config?.quantity} pcs</div>
+                                            <div className="item-qty">Qty: {item.config?.jumlah} pcs</div>
                                         </div>
                                         <div className="item-price">
                                             {formatPrice(item.totalPrice)}
@@ -224,20 +224,20 @@ export default function UserOrderDetail() {
                         <div className="detail-section">
                             <h3><MapPin size={20} /> Alamat Pengiriman</h3>
                             <div className="info-card">
-                                <p className="recipient">{order.shippingAddress?.recipientName}</p>
-                                <p className="phone">{order.shippingAddress?.phone}</p>
-                                <p className="address">{order.shippingAddress?.address}</p>
+                                <p className="recipient">{order.shippingAddress?.namaPenerima}</p>
+                                <p className="phone">{order.shippingAddress?.telepon}</p>
+                                <p className="address">{order.shippingAddress?.alamat}</p>
                                 <p className="location">
-                                    {order.shippingAddress?.city}, {order.shippingAddress?.province} {order.shippingAddress?.postalCode}
+                                    {order.shippingAddress?.kota}, {order.shippingAddress?.provinsi} {order.shippingAddress?.kodePos}
                                 </p>
                             </div>
                         </div>
 
                         {/* Notes */}
-                        {order.notes && (
+                        {order.catatan && (
                             <div className="detail-section">
                                 <h3><MessageSquare size={20} /> Catatan</h3>
-                                <p className="order-notes">{order.notes}</p>
+                                <p className="order-notes">{order.catatan}</p>
                             </div>
                         )}
                     </div>
@@ -254,23 +254,23 @@ export default function UserOrderDetail() {
                                 </div>
                                 <div className="summary-row">
                                     <span>Ongkos Kirim</span>
-                                    <span>{formatPrice(order.shippingCost)}</span>
+                                    <span>{formatPrice(order.biayaKirim)}</span>
                                 </div>
-                                {order.discount > 0 && (
+                                {order.diskon > 0 && (
                                     <div className="summary-row discount">
                                         <span>Diskon</span>
-                                        <span>-{formatPrice(order.discount)}</span>
+                                        <span>-{formatPrice(order.diskon)}</span>
                                     </div>
                                 )}
                                 <div className="summary-divider"></div>
                                 <div className="summary-row total">
                                     <span>Total</span>
-                                    <span>{formatPrice(order.totalAmount)}</span>
+                                    <span>{formatPrice(order.total)}</span>
                                 </div>
                             </div>
                             <div className="payment-method">
                                 <CreditCard size={16} />
-                                <span>{typeof order.paymentMethod === 'string' ? order.paymentMethod : order.paymentMethod?.name || 'Transfer Bank'}</span>
+                                <span>{typeof order.metodePembayaran === 'string' ? order.metodePembayaran : order.metodePembayaran?.nama || 'Transfer Bank'}</span>
                             </div>
                         </div>
 

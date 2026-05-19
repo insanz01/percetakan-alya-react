@@ -95,38 +95,34 @@ export function transformKeys(obj: Record<string, any>): Record<string, any> {
 export function transformProduct(apiProduct: any): any {
     return {
         id: apiProduct.id,
-        name: apiProduct.name,
+        nama: apiProduct.nama,
         slug: apiProduct.slug,
-        categoryId: apiProduct.category_id,
-        description: apiProduct.description,
-        shortDescription: apiProduct.short_description,
-        images: apiProduct.images || [],
-        basePrice: parseFloat(apiProduct.base_price) || 0,
+        kategoriId: apiProduct.kategori_id,
+        deskripsi: apiProduct.deskripsi,
+        deskripsiSingkat: apiProduct.deskripsi_singkat,
+        gambar: apiProduct.gambar || [],
 
-        // Arrays - keep as is since they have their own structure
-        sizes: apiProduct.sizes || [],
-        materials: apiProduct.materials || [],
-        printSides: apiProduct.print_sides || [],
-        finishings: apiProduct.finishings || [],
-        quantityTiers: apiProduct.quantity_tiers || [],
+        hargaDasar: parseFloat(apiProduct.harga_dasar) || 0,
 
-        // Meta
-        isBestSeller: apiProduct.is_best_seller || false,
-        isPromo: apiProduct.is_promo || false,
-        promoPercentage: apiProduct.promo_percentage || 0,
-        minOrderQty: apiProduct.min_order_qty || 1,
-        estimatedDays: apiProduct.estimated_days || 3,
-        weightPerPiece: apiProduct.weight_per_piece || 0,
+        ukuran: apiProduct.ukuran || [],
+        bahan: apiProduct.bahan || [],
+        sisiCetak: apiProduct.sisi_cetak || [],
+        finishing: apiProduct.finishing || [],
+        tierJumlah: apiProduct.tier_jumlah || [],
 
-        // Product type
-        isRetailProduct: apiProduct.is_retail_product || false,
-        requiresDesignFile: apiProduct.requires_design_file !== false,
+        terlaris: apiProduct.terlaris || false,
+        promo: apiProduct.promo || false,
+        persenPromo: apiProduct.persen_promo || 0,
+        minPesan: apiProduct.min_pesan || 1,
+        estimasiHari: apiProduct.estimasi_hari || 3,
+        beratPerPcs: apiProduct.berat_per_pcs || 0,
 
-        // File requirements
-        allowedFileTypes: apiProduct.allowed_file_types || [],
-        maxFileSize: apiProduct.max_file_size || 50,
+        produkRetail: apiProduct.produk_retail || false,
+        butuhFileDesain: apiProduct.butuh_file_desain !== false,
 
-        // Category relation
+        tipeFileDiperbolehkan: apiProduct.tipe_file_diperbolehkan || [],
+        ukuranFileMaks: apiProduct.ukuran_file_maks || 50,
+
         category: apiProduct.category,
     };
 }
@@ -146,14 +142,14 @@ export function transformProducts(apiProducts: any[]): any[] {
 export function transformCategory(apiCategory: any): any {
     return {
         id: apiCategory.id,
-        name: apiCategory.name,
+        nama: apiCategory.nama,
         slug: apiCategory.slug,
-        icon: apiCategory.icon,
-        description: apiCategory.description,
-        image: apiCategory.image,
-        isActive: apiCategory.is_active ?? true,
-        sortOrder: apiCategory.sort_order ?? 0,
-        productCount: apiCategory.product_count ?? 0,
+        ikon: apiCategory.ikon,
+        deskripsi: apiCategory.deskripsi,
+        gambar: apiCategory.gambar,
+        aktif: apiCategory.aktif ?? true,
+        urutan: apiCategory.urutan ?? 0,
+        productCount: apiCategory.jumlah_produk ?? 0,
     };
 }
 

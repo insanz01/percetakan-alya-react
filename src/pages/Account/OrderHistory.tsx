@@ -35,8 +35,8 @@ export default function OrderHistory() {
 
     const filteredOrders = orders?.filter(order => {
         const matchesSearch =
-            order.orderNumber?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            order.items?.some(item => item.product?.name?.toLowerCase().includes(searchQuery.toLowerCase()));
+            order.nomorPesanan?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            order.items?.some(item => item.product?.nama?.toLowerCase().includes(searchQuery.toLowerCase()));
 
         const matchesStatus = filterStatus === 'all' || order.status === filterStatus;
 
@@ -127,7 +127,7 @@ export default function OrderHistory() {
                                 <div className="order-header">
                                     <div className="order-number">
                                         <span className="label">No. Pesanan</span>
-                                        <span className="value">{order.orderNumber}</span>
+                                        <span className="value">{order.nomorPesanan}</span>
                                     </div>
                                     <div className="order-date">
                                         {formatDate(order.createdAt?.toString() || '')}
@@ -142,12 +142,12 @@ export default function OrderHistory() {
                                     {order.items?.slice(0, 2).map((item, index) => (
                                         <div key={index} className="order-item">
                                             <img
-                                                src={item.product?.images?.[0] || 'https://via.placeholder.com/80'}
-                                                alt={item.product?.name}
+                                                src={item.product?.gambar?.[0] || 'https://via.placeholder.com/80'}
+                                                alt={item.product?.nama}
                                             />
                                             <div className="item-info">
-                                                <div className="item-name">{item.product?.name}</div>
-                                                <div className="item-qty">Qty: {item.config?.quantity}</div>
+                                                <div className="item-name">{item.product?.nama}</div>
+                                                <div className="item-qty">Qty: {item.config?.jumlah}</div>
                                             </div>
                                             <div className="item-price">{formatPrice(item.totalPrice)}</div>
                                         </div>
@@ -162,7 +162,7 @@ export default function OrderHistory() {
                                 <div className="order-footer">
                                     <div className="order-total">
                                         <span className="label">Total Pesanan</span>
-                                        <span className="value">{formatPrice(order.totalAmount)}</span>
+                                        <span className="value">{formatPrice(order.total)}</span>
                                     </div>
                                     <Link to={`/akun/pesanan/${order.id}`} className="btn btn-outline btn-sm">
                                         <Eye size={16} />

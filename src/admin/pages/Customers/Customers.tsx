@@ -21,11 +21,11 @@ export default function Customers() {
     const customers = useMemo(() => {
         const customerList = apiCustomers || fallbackCustomers.map(c => ({
             id: c.id,
-            name: c.name,
+            nama: c.name,
             email: c.email,
-            phone: c.phone,
+            telepon: c.phone,
             role: 'customer' as const,
-            is_active: true,
+            aktif: true,
             created_at: c.joinDate,
             orders: [],
             addresses: [],
@@ -34,7 +34,7 @@ export default function Customers() {
         // Filter by search
         if (searchQuery) {
             return customerList.filter(c =>
-                c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                c.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 c.email.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
@@ -95,23 +95,23 @@ export default function Customers() {
                                     <td>
                                         <div className="customer-cell">
                                             <div className="customer-avatar">
-                                                {customer.name.charAt(0)}
+                                                {customer.nama.charAt(0)}
                                             </div>
-                                            <span className="customer-name">{customer.name}</span>
+                                            <span className="customer-name">{customer.nama}</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div className="contact-cell">
                                             <span><Mail size={12} /> {customer.email}</span>
-                                            {customer.phone && <span><Phone size={12} /> {customer.phone}</span>}
+                                            {customer.telepon && <span><Phone size={12} /> {customer.telepon}</span>}
                                         </div>
                                     </td>
                                     <td>
                                         <span className="orders-count">{customer.orders?.length || 0} pesanan</span>
                                     </td>
                                     <td>
-                                        <span className={`status-badge ${customer.is_active ? 'green' : 'red'}`}>
-                                            {customer.is_active ? 'Aktif' : 'Tidak Aktif'}
+                                        <span className={`status-badge ${customer.aktif ? 'green' : 'red'}`}>
+                                            {customer.aktif ? 'Aktif' : 'Tidak Aktif'}
                                         </span>
                                     </td>
                                     <td>

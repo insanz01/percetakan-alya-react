@@ -26,7 +26,7 @@ import '../../styles/admin-shared.css';
 
 // Default admin user
 const defaultAdminUser = {
-    name: 'Admin Semanggi Print',
+    nama: 'Admin Semanggi Print',
     email: 'rudygrafika@gmail.com',
     role: 'Super Admin',
 };
@@ -99,7 +99,7 @@ export default function AdminLayout() {
             if (stored) {
                 const user = JSON.parse(stored);
                 return {
-                    name: user.name || defaultAdminUser.name,
+                    nama: user.nama || defaultAdminUser.nama,
                     email: user.email || defaultAdminUser.email,
                     role: user.role || 'Admin',
                 };
@@ -281,7 +281,7 @@ export default function AdminLayout() {
                             >
                                 <span className="profile-avatar"><UserCircle size={28} /></span>
                                 <div className="profile-info">
-                                    <span className="profile-name">{adminUser.name}</span>
+                                    <span className="profile-name">{adminUser.nama}</span>
                                     <span className="profile-role">{adminUser.role}</span>
                                 </div>
                                 <ChevronDown size={16} className={isProfileOpen ? 'rotate' : ''} />
@@ -292,7 +292,7 @@ export default function AdminLayout() {
                                     <div className="profile-menu-header">
                                         <span className="profile-avatar-lg"><UserCircle size={40} /></span>
                                         <div>
-                                            <p className="profile-name">{adminUser.name}</p>
+                                            <p className="profile-name">{adminUser.nama}</p>
                                             <p className="profile-email">{adminUser.email}</p>
                                         </div>
                                     </div>

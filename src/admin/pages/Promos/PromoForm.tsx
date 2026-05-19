@@ -48,7 +48,7 @@ export default function PromoForm() {
                 const promo = response.data;
                 setFormData({
                     code: promo.code,
-                    description: promo.description || '',
+                    description: promo.deskripsi || '',
                     type: promo.type,
                     discount: promo.discount,
                     min_purchase: promo.min_purchase || 0,
@@ -56,7 +56,7 @@ export default function PromoForm() {
                     usage_limit: promo.usage_limit,
                     start_date: promo.start_date || '',
                     end_date: promo.end_date || '',
-                    is_active: promo.is_active,
+                    is_active: promo.aktif,
                 });
             }
         } catch (error) {

@@ -4,7 +4,7 @@ import type { Product } from '../types';
 
 // Product filters
 export interface ProductFilters {
-    category_id?: string;
+    kategori_id?: string;
     active?: boolean;
     best_seller?: boolean;
     promo?: boolean;
@@ -184,10 +184,10 @@ export const productService = {
 // Popular product type for dashboard
 export interface PopularProduct {
     id: string;
-    name: string;
+    nama: string;
     slug: string;
-    image: string | null;
-    base_price: number;
+    gambar: string | null;
+    harga_dasar: number;
     category: string | null;
     sales_count: number;
     total_sold: number;

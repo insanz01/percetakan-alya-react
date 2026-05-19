@@ -206,11 +206,11 @@ export default function OrderDetail() {
                             {order.items?.map((item, index) => (
                                 <div key={index} className="order-item">
                                     <img
-                                        src={item.product?.images?.[0] || 'https://via.placeholder.com/80'}
-                                        alt={item.product?.name}
+                                        src={item.product?.gambar?.[0] || 'https://via.placeholder.com/80'}
+                                        alt={item.product?.nama}
                                     />
                                     <div className="item-info">
-                                        <div className="item-name">{item.product?.name}</div>
+                                        <div className="item-name">{item.product?.nama}</div>
                                         <div className="item-specs">
                                             {item.config?.sizeName && <span>{item.config.sizeName}</span>}
                                             {item.config?.materialName && <span>{item.config.materialName}</span>}
@@ -240,7 +240,7 @@ export default function OrderDetail() {
                                             <FileText size={24} />
                                             <div className="file-info">
                                                 <span className="file-name">{item.designFile.name || 'Design File'}</span>
-                                                <span className="file-size">{item.product?.name}</span>
+                                                <span className="file-size">{item.product?.nama}</span>
                                             </div>
                                             <button className="btn btn-ghost btn-sm">
                                                 <Download size={16} />
@@ -259,12 +259,12 @@ export default function OrderDetail() {
                     </div>
 
                     {/* Order Notes */}
-                    {order.notes && (
+                    {order.catatan && (
                         <div className="detail-card">
                             <div className="card-header">
                                 <h3><MessageSquare size={20} /> Catatan Pesanan</h3>
                             </div>
-                            <p className="order-notes">{order.notes}</p>
+                            <p className="order-notes">{order.catatan}</p>
                         </div>
                     )}
                 </div>
@@ -309,7 +309,7 @@ export default function OrderDetail() {
                         <div className="customer-info">
                             <div className="info-row">
                                 <span className="label">Nama</span>
-                                <span className="value">{order.user?.name}</span>
+                                <span className="value">{order.user?.nama}</span>
                             </div>
                             <div className="info-row">
                                 <span className="label">Email</span>
@@ -317,7 +317,7 @@ export default function OrderDetail() {
                             </div>
                             <div className="info-row">
                                 <span className="label">Telepon</span>
-                                <span className="value">{order.user?.phone || '-'}</span>
+                                <span className="value">{order.user?.telepon || '-'}</span>
                             </div>
                         </div>
                     </div>
@@ -329,10 +329,10 @@ export default function OrderDetail() {
                         </div>
                         <div className="shipping-info">
                             <p className="recipient">{order.shippingAddress?.recipientName}</p>
-                            <p className="phone">{order.shippingAddress?.phone}</p>
-                            <p className="address">{order.shippingAddress?.address}</p>
+                            <p className="phone">{order.shippingAddress?.telepon}</p>
+                            <p className="address">{order.shippingAddress?.alamat}</p>
                             <p className="location">
-                                {order.shippingAddress?.city}, {order.shippingAddress?.province} {order.shippingAddress?.postalCode}
+                                {order.shippingAddress?.kota}, {order.shippingAddress?.provinsi} {order.shippingAddress?.kode_pos}
                             </p>
                         </div>
                     </div>

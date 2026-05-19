@@ -64,8 +64,8 @@ export default function AccountSettings() {
             const response = await authService.getProfile();
             if (response.success) {
                 setProfileForm({
-                    name: response.data.name,
-                    phone: response.data.phone || '',
+                    nama: response.data.nama,
+                    telepon: response.data.telepon || '',
                 });
             }
         } catch (error) {

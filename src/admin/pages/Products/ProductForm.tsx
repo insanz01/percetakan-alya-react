@@ -91,20 +91,20 @@ export default function ProductForm() {
             if (response.success) {
                 const product = response.data;
                 setFormData({
-                    name: product.name,
+                    name: product.nama,
                     slug: product.slug,
                     shortDescription: product.shortDescription,
-                    description: product.description,
+                    description: product.deskripsi,
                     categoryId: product.categoryId,
                     basePrice: product.basePrice,
                     minOrderQty: product.minOrderQty,
                     estimatedDays: product.estimatedDays,
                     weightPerPiece: product.weightPerPiece || 10,
-                    images: product.images,
-                    sizes: product.sizes,
-                    materials: product.materials,
+                    images: product.gambar,
+                    sizes: product.ukuran,
+                    materials: product.bahan,
                     printSides: product.printSides,
-                    finishings: product.finishings,
+                    finishings: product.finishing,
                     quantityTiers: product.quantityTiers,
                     isBestSeller: product.isBestSeller,
                     isPromo: product.isPromo,
@@ -318,15 +318,30 @@ export default function ProductForm() {
 
         setIsSaving(true);
         try {
+            const payload = {
+                ...formData,
+                nama: formData.name,
+                deskripsi: formData.description,
+                gambar: formData.images,
+                ukuran: formData.sizes,
+                bahan: formData.materials,
+                finishing: formData.finishings,
+            };
+            delete (payload as Record<string, unknown>).name;
+            delete (payload as Record<string, unknown>).description;
+            delete (payload as Record<string, unknown>).images;
+            delete (payload as Record<string, unknown>).sizes;
+            delete (payload as Record<string, unknown>).materials;
+            delete (payload as Record<string, unknown>).finishings;
             if (isEdit) {
-                await productService.updateProduct(id!, formData);
+                await productService.updateProduct(id!, payload);
                 addToast({
                     type: 'success',
                     title: 'Berhasil',
                     message: 'Produk berhasil diperbarui',
                 });
             } else {
-                await productService.createProduct(formData);
+                await productService.createProduct(payload);
                 addToast({
                     type: 'success',
                     title: 'Berhasil',
@@ -452,7 +467,7 @@ export default function ProductForm() {
                                 >
                                     <option value="">Pilih Kategori</option>
                                     {categories?.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                        <option key={cat.id} value={cat.id}>{cat.nama}</option>
                                     ))}
                                 </select>
                             </div>

@@ -3,17 +3,17 @@ import { api, ApiResponse, PaginatedResponse } from './api';
 // Promo type
 export interface Promo {
     id: string;
-    code: string;
-    description?: string;
+    kode: string;
+    deskripsi?: string;
     type: 'percentage' | 'fixed';
-    discount: number;
-    min_purchase: number;
-    max_discount?: number;
-    usage_limit?: number;
-    usage_count: number;
-    start_date?: string;
-    end_date?: string;
-    is_active: boolean;
+    diskon: number;
+    min_beli: number;
+    maks_diskon?: number;
+    batas_penggunaan?: number;
+    jumlah_penggunaan: number;
+    tanggal_mulai?: string;
+    tanggal_berakhir?: string;
+    aktif: boolean;
     created_at: string;
     updated_at: string;
 }
@@ -32,22 +32,22 @@ export interface PromoFilters {
 // Promo validation result
 export interface PromoValidationResult {
     promo: Promo;
-    discount: number;
+    diskon: number;
     final_amount: number;
 }
 
 // Create/Update promo
 export interface PromoInput {
-    code: string;
-    description?: string;
+    kode: string;
+    deskripsi?: string;
     type: 'percentage' | 'fixed';
-    discount: number;
-    min_purchase?: number;
-    max_discount?: number;
-    usage_limit?: number;
-    start_date?: string;
-    end_date?: string;
-    is_active?: boolean;
+    diskon: number;
+    min_beli?: number;
+    maks_diskon?: number;
+    batas_penggunaan?: number;
+    tanggal_mulai?: string;
+    tanggal_berakhir?: string;
+    aktif?: boolean;
 }
 
 // Promo Service
@@ -57,9 +57,9 @@ export const promoService = {
     /**
      * Validate promo code
      */
-    async validateCode(code: string, amount: number): Promise<ApiResponse<PromoValidationResult>> {
+    async validateCode(kode: string, amount: number): Promise<ApiResponse<PromoValidationResult>> {
         return api.post<ApiResponse<PromoValidationResult>>('/promos/validate', {
-            code,
+            kode,
             amount,
         });
     },

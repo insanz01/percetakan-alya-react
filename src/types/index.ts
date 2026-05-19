@@ -1,27 +1,26 @@
-// Product Types
 export interface ProductCategory {
     id: string;
-    name: string;
+    nama: string;
     slug: string;
-    icon?: string;
-    description?: string;
-    image?: string;
-    productCount?: number;
+    ikon?: string;
+    deskripsi?: string;
+    gambar?: string;
+    jumlah_produk?: number;
 }
 
 export interface ProductSize {
     id: string;
     name: string;
-    width?: number;  // in mm
-    height?: number; // in mm
-    dimensions?: string; // formatted string e.g., "148 x 210 mm"
+    width?: number;
+    height?: number;
+    dimensions?: string;
     priceMultiplier: number;
 }
 
 export interface ProductMaterial {
     id: string;
     name: string;
-    weight?: string; // e.g., "190gr", "210gr"
+    weight?: string;
     pricePerUnit: number;
     description?: string;
 }
@@ -29,7 +28,7 @@ export interface ProductMaterial {
 export interface PrintSide {
     id: string;
     name: string;
-    code?: string; // e.g., "4/0" for 1 side, "4/4" for 2 sides
+    code?: string;
     priceMultiplier: number;
 }
 
@@ -49,77 +48,69 @@ export interface QuantityTier {
 
 export interface Product {
     id: string;
-    name: string;
+    nama: string;
     slug: string;
-    categoryId: string;
-    description: string;
-    shortDescription: string;
-    images: string[];
-    basePrice: number;
+    kategori_id: string;
+    deskripsi: string;
+    deskripsi_singkat: string;
+    gambar: string[];
+    harga_dasar: number;
 
-    // Available options
-    sizes: ProductSize[];
-    materials: ProductMaterial[];
-    printSides: PrintSide[];
-    finishings: Finishing[];
-    quantityTiers: QuantityTier[];
+    ukuran: ProductSize[];
+    bahan: ProductMaterial[];
+    sisi_cetak: PrintSide[];
+    finishing: Finishing[];
+    tier_jumlah: QuantityTier[];
 
-    // Meta
-    isBestSeller: boolean;
-    isPromo: boolean;
-    promoPercentage?: number;
-    minOrderQty: number;
-    estimatedDays: number;
-    weightPerPiece: number; // in grams
+    terlaris: boolean;
+    promo: boolean;
+    persen_promo?: number;
+    min_pesan: number;
+    estimasi_hari: number;
+    berat_per_pcs: number;
 
-    // Product type
-    isRetailProduct?: boolean; // true = retail/ATK product, false/undefined = print service
-    requiresDesignFile?: boolean; // true = requires file upload (default true for print services)
+    produk_retail?: boolean;
+    butuh_file_desain?: boolean;
 
-    // File requirements (only for print services)
-    allowedFileTypes: string[];
-    maxFileSize: number; // in MB
+    tipe_file_diperbolehkan: string[];
+    ukuran_file_maks: number;
 }
 
-// Cart Types
 export interface CartItemConfig {
-    sizeId: string;
-    materialId: string;
-    printSideId: string;
+    ukuran_id: string;
+    bahan_id: string;
+    sisi_cetak_id: string;
     finishingIds: string[];
-    quantity: number;
-    customWidth?: number;
-    customHeight?: number;
-    // Display names for order history
-    sizeName?: string;
-    materialName?: string;
-    printSideName?: string;
-    finishingNames?: string[];
+    jumlah: number;
+    lebar_kustom?: number;
+    tinggi_kustom?: number;
+    nama_ukuran?: string;
+    nama_bahan?: string;
+    nama_sisi_cetak?: string;
+    nama_finishing?: string[];
 }
 
 export interface CartItem {
     id: string;
-    productId: string;
+    produk_id: string;
     product: Product;
     config: CartItemConfig;
     uploadedFile?: UploadedFile;
     designFile?: UploadedFile;
-    unitPrice: number;
-    totalPrice: number;
-    createdAt: Date;
+    harga_satuan: number;
+    harga_total: number;
+    created_at: Date;
 }
 
-// File Upload Types
 export interface UploadedFile {
     id: string;
-    name: string;
-    size: number;
-    type: string;
+    nama_asli: string;
+    ukuran: number;
+    tipe: string;
     url: string;
     status: 'uploading' | 'success' | 'error';
 }
 
-// Order Types
 export type OrderStatus =
     | 'pending_payment'
     | 'payment_verified'
@@ -133,80 +124,77 @@ export type OrderStatus =
 
 export interface OrderItem extends CartItem {
     status: OrderStatus;
-    notes?: string;
+    catatan?: string;
 }
 
 export interface ShippingAddress {
     id: string;
-    recipientName: string;
-    phone: string;
-    address: string;
-    city: string;
-    province: string;
-    postalCode: string;
-    isDefault: boolean;
+    nama_penerima: string;
+    telepon: string;
+    alamat: string;
+    kota: string;
+    provinsi: string;
+    kode_pos: string;
+    utama: boolean;
 }
 
 export interface ShippingMethod {
     id: string;
-    name: string;
-    provider: string;
-    estimatedDays: string;
+    nama: string;
+    kurir: string;
+    estimasi_hari: string;
     price: number;
 }
 
 export interface PaymentMethod {
     id: string;
-    name: string;
-    type: 'bank_transfer' | 'virtual_account' | 'ewallet' | 'qris';
-    icon: string;
+    nama: string;
+    tipe: 'bank_transfer' | 'virtual_account' | 'ewallet' | 'qris';
+    ikon: string;
     instructions?: string;
 }
 
 export interface Order {
     id: string;
-    orderNumber: string;
-    userId?: string;
+    nomor_pesanan: string;
+    pengguna_id?: string;
     user?: {
         id: string;
-        name: string;
+        nama: string;
         email: string;
-        phone?: string;
+        telepon?: string;
     };
     items: OrderItem[];
-    shippingAddress: ShippingAddress;
-    shippingMethod: ShippingMethod;
-    paymentMethod: PaymentMethod | string;
-    notes?: string;
+    alamat_pengiriman: ShippingAddress;
+    metode_pengiriman: ShippingMethod;
+    metode_pembayaran: PaymentMethod | string;
+    catatan?: string;
     subtotal: number;
-    shippingCost: number;
-    discount: number;
-    totalAmount: number;
+    biaya_kirim: number;
+    diskon: number;
+    total: number;
     status: OrderStatus;
-    paymentStatus: 'pending' | 'paid' | 'expired' | 'refunded';
-    paymentDeadline?: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    status_bayar: 'pending' | 'paid' | 'expired' | 'refunded';
+    batas_bayar?: Date;
+    created_at: Date;
+    updated_at: Date;
 }
 
-// User Types
 export interface User {
     id: string;
     email: string;
-    name: string;
-    phone?: string;
+    nama: string;
+    telepon?: string;
     avatar?: string;
     addresses: ShippingAddress[];
     orders?: Order[];
-    role?: 'customer' | 'admin' | 'super_admin';
-    is_active?: boolean;
-    email_verified_at?: string;
-    createdAt?: Date;
+    peran?: 'customer' | 'admin' | 'super_admin';
+    aktif?: boolean;
+    email_diverifikasi_pada?: string;
     created_at?: string;
     updated_at?: string;
 }
 
-// UI Types
 export interface Toast {
     id: string;
     type: 'success' | 'error' | 'warning' | 'info';
@@ -220,7 +208,6 @@ export interface ModalState {
     type: 'login' | 'register' | 'cart' | 'search' | null;
 }
 
-// Search Types
 export interface SearchResult {
     products: Product[];
     categories: ProductCategory[];

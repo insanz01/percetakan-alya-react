@@ -51,10 +51,10 @@ export default function CategoryForm() {
             if (response.success) {
                 const category = response.data;
                 setFormData({
-                    name: category.name,
+                    name: category.nama,
                     slug: category.slug,
-                    description: category.description || '',
-                    image: category.image || '',
+                    description: category.deskripsi || '',
+                    image: category.gambar || '',
                     isActive: true,
                 });
             }
@@ -125,15 +125,22 @@ export default function CategoryForm() {
 
         setIsSaving(true);
         try {
+            const payload = {
+                nama: formData.name,
+                slug: formData.slug,
+                deskripsi: formData.description,
+                gambar: formData.image,
+                isActive: formData.isActive,
+            };
             if (isEdit) {
-                await categoryService.updateCategory(id!, formData);
+                await categoryService.updateCategory(id!, payload);
                 addToast({
                     type: 'success',
                     title: 'Berhasil',
                     message: 'Kategori berhasil diperbarui',
                 });
             } else {
-                await categoryService.createCategory(formData);
+                await categoryService.createCategory(payload);
                 addToast({
                     type: 'success',
                     title: 'Berhasil',

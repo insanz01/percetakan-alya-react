@@ -42,7 +42,7 @@ export const useCartStore = create<CartState>()(
                     items: state.items.map((item) => {
                         if (item.id === itemId) {
                             const newTotalPrice = item.unitPrice * quantity;
-                            return { ...item, config: { ...item.config, quantity }, totalPrice: newTotalPrice };
+                            return { ...item, config: { ...item.config, jumlah }, totalPrice: newTotalPrice };
                         }
                         return item;
                     }),
@@ -60,7 +60,7 @@ export const useCartStore = create<CartState>()(
             clearCart: () => set({ items: [] }),
 
             getTotalItems: () => {
-                return get().items.reduce((total, item) => total + item.config.quantity, 0);
+                return get().items.reduce((total, item) => total + item.config.jumlah, 0);
             },
 
             getTotalPrice: () => {
@@ -69,7 +69,7 @@ export const useCartStore = create<CartState>()(
 
             getTotalWeight: () => {
                 return get().items.reduce((total, item) => {
-                    return total + item.product.weightPerPiece * item.config.quantity;
+                    return total + item.product.beratPerPcs * item.config.jumlah;
                 }, 0);
             },
         }),
@@ -132,7 +132,7 @@ interface AuthState {
     isLoading: boolean;
     error: string | null;
     login: (email: string, password: string) => Promise<boolean>;
-    register: (name: string, email: string, password: string, phone?: string) => Promise<boolean>;
+    register: (nama: string, email: string, password: string, telepon?: string) => Promise<boolean>;
     logout: () => Promise<void>;
     fetchProfile: () => Promise<void>;
     clearError: () => void;
@@ -175,16 +175,16 @@ export const useAuthStore = create<AuthState>()(
                 }
             },
 
-            register: async (name, email, password, phone) => {
+            register: async (nama, email, password, telepon) => {
                 set({ isLoading: true, error: null });
 
                 try {
                     const response = await authService.register({
-                        name,
+                        nama,
                         email,
                         password,
                         password_confirmation: password,
-                        phone
+                        telepon
                     });
 
                     if (response.success) {

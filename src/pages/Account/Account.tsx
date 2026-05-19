@@ -17,11 +17,11 @@ import './Account.css';
 
 interface UserData {
     id: string;
-    name: string;
+    nama: string;
     email: string;
-    phone?: string;
+    telepon?: string;
     avatar?: string;
-    role?: string;
+    peran?: string;
     created_at?: string;
 }
 
@@ -113,13 +113,13 @@ export default function Account() {
                             <div className="user-card">
                                 <div className="user-avatar">
                                     {user?.avatar ? (
-                                        <img src={user.avatar} alt={user.name} />
+                                        <img src={user.avatar} alt={user.nama} />
                                     ) : (
-                                        <span>{user?.name?.charAt(0).toUpperCase()}</span>
+                                        <span>{user?.nama?.charAt(0).toUpperCase()}</span>
                                     )}
                                 </div>
                                 <div className="user-info">
-                                    <div className="user-name">{user?.name}</div>
+                                    <div className="user-name">{user?.nama}</div>
                                     <div className="user-email">{user?.email}</div>
                                 </div>
                             </div>
@@ -162,14 +162,14 @@ export default function Account() {
                     <aside className="account-sidebar">
                         <div className="user-card">
                             <div className="user-avatar">
-                                {user?.avatar ? (
-                                    <img src={user.avatar} alt={user.name} />
+                                    {user?.avatar ? (
+                                    <img src={user.avatar} alt={user.nama} />
                                 ) : (
-                                    <span>{user?.name?.charAt(0).toUpperCase()}</span>
+                                    <span>{user?.nama?.charAt(0).toUpperCase()}</span>
                                 )}
                             </div>
                             <div className="user-info">
-                                <div className="user-name">{user?.name}</div>
+                                <div className="user-name">{user?.nama}</div>
                                 <div className="user-email">{user?.email}</div>
                             </div>
                         </div>
@@ -207,16 +207,16 @@ export default function Account() {
                             <div className="profile-card">
                                 <div className="profile-avatar-large">
                                     {user?.avatar ? (
-                                        <img src={user.avatar} alt={user.name} />
+                                        <img src={user.avatar} alt={user.nama} />
                                     ) : (
-                                        <span>{user?.name?.charAt(0).toUpperCase()}</span>
+                                        <span>{user?.nama?.charAt(0).toUpperCase()}</span>
                                     )}
                                 </div>
 
                                 <div className="profile-details">
                                     <div className="detail-group">
                                         <label>Nama Lengkap</label>
-                                        <p>{user?.name}</p>
+                                        <p>{user?.nama}</p>
                                     </div>
                                     <div className="detail-group">
                                         <label>Email</label>
@@ -224,7 +224,7 @@ export default function Account() {
                                     </div>
                                     <div className="detail-group">
                                         <label>Nomor Telepon</label>
-                                        <p>{user?.phone || '-'}</p>
+                                        <p>{user?.telepon || '-'}</p>
                                     </div>
                                     <div className="detail-group">
                                         <label>Bergabung Sejak</label>

@@ -13,14 +13,14 @@ const fallbackPromos: Promo[] = [
         code: 'BROSUR20',
         discount: 20,
         type: 'percentage',
-        description: 'Diskon 20% untuk semua produk brosur',
+        deskripsi: 'Diskon 20% untuk semua produk brosur',
         min_purchase: 100000,
         max_discount: 50000,
         usage_limit: 100,
         usage_count: 45,
         start_date: '2024-12-01',
         end_date: '2024-12-31',
-        is_active: true,
+        aktif: true,
         created_at: '2024-12-01',
         updated_at: '2024-12-01',
     },
@@ -29,14 +29,14 @@ const fallbackPromos: Promo[] = [
         code: 'KARTUNAMA15',
         discount: 15,
         type: 'percentage',
-        description: 'Diskon 15% untuk kartu nama premium',
+        deskripsi: 'Diskon 15% untuk kartu nama premium',
         min_purchase: 50000,
         max_discount: 25000,
         usage_limit: 50,
         usage_count: 23,
         start_date: '2024-12-01',
         end_date: '2024-12-15',
-        is_active: true,
+        aktif: true,
         created_at: '2024-12-01',
         updated_at: '2024-12-01',
     },
@@ -45,14 +45,14 @@ const fallbackPromos: Promo[] = [
         code: 'FREESHIP',
         discount: 15000,
         type: 'fixed',
-        description: 'Gratis ongkir untuk pembelian min Rp 200.000',
+        deskripsi: 'Gratis ongkir untuk pembelian min Rp 200.000',
         min_purchase: 200000,
         max_discount: 15000,
         usage_limit: 200,
         usage_count: 156,
         start_date: '2024-11-01',
         end_date: '2024-12-31',
-        is_active: true,
+        aktif: true,
         created_at: '2024-11-01',
         updated_at: '2024-11-01',
     },
@@ -65,7 +65,7 @@ export default function Promos() {
         return apiPromos || fallbackPromos;
     }, [apiPromos]);
 
-    const activeCount = promos.filter(p => p.is_active).length;
+    const activeCount = promos.filter(p => p.aktif).length;
 
     if (isLoading) {
         return (
@@ -101,8 +101,8 @@ export default function Promos() {
                                 {promo.type === 'percentage' ? <Percent size={14} /> : null}
                                 {promo.type === 'percentage' ? 'Persentase' : 'Fixed'}
                             </span>
-                            <span className={`promo-status ${promo.is_active ? 'active' : 'inactive'}`}>
-                                {promo.is_active ? 'Aktif' : 'Nonaktif'}
+                            <span className={`promo-status ${promo.aktif ? 'active' : 'inactive'}`}>
+                                {promo.aktif ? 'Aktif' : 'Nonaktif'}
                             </span>
                         </div>
 
@@ -118,7 +118,7 @@ export default function Promos() {
                             }
                         </div>
 
-                        <p className="promo-description">{promo.description}</p>
+                        <p className="promo-description">{promo.deskripsi}</p>
 
                         <div className="promo-details">
                             <div className="promo-detail-item">

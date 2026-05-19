@@ -152,7 +152,7 @@ export default function Dashboard() {
                                 <tbody>
                                     {recentOrders.map((order) => (
                                         <tr key={order.id}>
-                                            <td className="order-id">{order.order_number}</td>
+                                            <td className="order-id">{order.nomor_pesanan}</td>
                                             <td>{order.customer}</td>
                                             <td className="product-name">
                                                 {order.product}
@@ -160,8 +160,8 @@ export default function Dashboard() {
                                                     <span className="items-more"> +{order.items_count - 1} lainnya</span>
                                                 )}
                                             </td>
-                                            <td>{order.quantity}</td>
-                                            <td className="order-total">{formatPrice(order.total_amount)}</td>
+                                            <td>{order.jumlah}</td>
+                                            <td className="order-total">{formatPrice(order.total)}</td>
                                             <td>
                                                 <span className={`status-badge ${statusLabels[order.status]?.color || 'gray'}`}>
                                                     {statusLabels[order.status]?.label || order.status}
@@ -194,10 +194,10 @@ export default function Dashboard() {
                             popularProducts.map((product, index) => (
                                 <div key={product.id} className="popular-product-item">
                                     <span className="product-rank">#{index + 1}</span>
-                                    {product.image ? (
+                                    {product.gambar ? (
                                         <img
-                                            src={product.image}
-                                            alt={product.name}
+                                            src={product.gambar}
+                                            alt={product.nama}
                                             className="product-thumb"
                                         />
                                     ) : (
@@ -206,7 +206,7 @@ export default function Dashboard() {
                                         </div>
                                     )}
                                     <div className="product-details">
-                                        <p className="product-name">{product.name}</p>
+                                        <p className="product-name">{product.nama}</p>
                                         <div className="product-stats">
                                             <span><ShoppingCart size={12} /> {product.total_sold} terjual</span>
                                             <span className="category-tag">{product.category || 'Uncategorized'}</span>
@@ -236,9 +236,9 @@ export default function Dashboard() {
                         {(categories || []).length > 0 ? (
                             categories!.map((category) => (
                                 <div key={category.id} className="category-item">
-                                    <span className="category-icon"><Icon name={category.icon || 'FolderOpen'} size={20} /></span>
+                                    <span className="category-icon"><Icon name={category.ikon || 'FolderOpen'} size={20} /></span>
                                     <div className="category-info">
-                                        <p className="category-name">{category.name}</p>
+                                        <p className="category-name">{category.nama}</p>
                                         <p className="category-count">{category.productCount || 0} produk</p>
                                     </div>
                                 </div>

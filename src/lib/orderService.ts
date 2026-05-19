@@ -4,11 +4,11 @@ import type { Order } from '../types';
 // Order filters
 export interface OrderFilters {
     status?: string;
-    payment_status?: string;
-    user_id?: string;
+    status_bayar?: string;
+    pengguna_id?: string;
     search?: string;
-    start_date?: string;
-    end_date?: string;
+    tanggal_mulai?: string;
+    tanggal_berakhir?: string;
     sort_by?: string;
     sort_dir?: 'asc' | 'desc';
     per_page?: number;
@@ -17,36 +17,36 @@ export interface OrderFilters {
 
 // Order item input
 export interface OrderItemInput {
-    product_id: string;
-    size_id?: string;
-    size_name?: string;
-    material_id?: string;
-    material_name?: string;
-    print_side_id?: string;
-    print_side_name?: string;
+    produk_id: string;
+    ukuran_id?: string;
+    nama_ukuran?: string;
+    bahan_id?: string;
+    nama_bahan?: string;
+    sisi_cetak_id?: string;
+    nama_sisi_cetak?: string;
     finishing_ids?: string[];
-    finishing_names?: string[];
-    custom_width?: number;
-    custom_height?: number;
-    quantity: number;
-    unit_price: number;
-    total_price: number;
-    uploaded_file_name?: string;
-    uploaded_file_url?: string;
+    nama_finishing?: string[];
+    lebar_kustom?: number;
+    tinggi_kustom?: number;
+    jumlah: number;
+    harga_satuan: number;
+    harga_total: number;
+    nama_file_diunggah?: string;
+    url_file_diunggah?: string;
 }
 
 // Create order request
 export interface CreateOrderRequest {
-    user_id: string;
-    shipping_address_id: string;
-    shipping_method: string;
-    shipping_provider?: string;
-    payment_method: string;
-    payment_type?: string;
+    pengguna_id: string;
+    alamat_pengiriman_id: string;
+    metode_pengiriman: string;
+    kurir?: string;
+    metode_pembayaran: string;
+    tipe_pembayaran?: string;
     subtotal: number;
-    shipping_cost: number;
-    discount?: number;
-    notes?: string;
+    biaya_kirim: number;
+    diskon?: number;
+    catatan?: string;
     items: OrderItemInput[];
 }
 
@@ -113,7 +113,7 @@ export const orderService = {
     async updateOrderStatus(id: string, status: string, trackingNumber?: string): Promise<ApiResponse<Order>> {
         return api.put<ApiResponse<Order>>(`/admin/orders/${id}/status`, {
             status,
-            tracking_number: trackingNumber,
+            nomor_resi: trackingNumber,
         });
     },
 
@@ -122,7 +122,7 @@ export const orderService = {
      */
     async updatePaymentStatus(id: string, paymentStatus: string): Promise<ApiResponse<Order>> {
         return api.put<ApiResponse<Order>>(`/admin/orders/${id}/payment-status`, {
-            payment_status: paymentStatus,
+            status_bayar: paymentStatus,
         });
     },
 
@@ -144,15 +144,15 @@ export const orderService = {
 // Recent order type for dashboard
 export interface RecentOrder {
     id: string;
-    order_number: string;
+    nomor_pesanan: string;
     customer: string;
     customer_email: string | null;
     product: string;
     items_count: number;
-    quantity: number;
-    total_amount: number;
+    jumlah: number;
+    total: number;
     status: string;
-    payment_status: string;
+    status_bayar: string;
     created_at: string;
 }
 

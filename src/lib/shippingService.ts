@@ -7,7 +7,7 @@ export interface ShippingMethod {
     provider_code: string;
     service: string;
     service_code: string;
-    estimated_days: string;
+    estimasi_hari: string;
 }
 
 // Shipping option with cost

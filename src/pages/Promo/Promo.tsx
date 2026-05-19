@@ -16,7 +16,7 @@ import './Promo.css';
 export default function Promo() {
     const { data: allProducts } = useProducts({ active: true });
 
-    const promoProducts = (allProducts || []).filter(p => p.isPromo);
+    const promoProducts = (allProducts || []).filter(p => p.promo);
 
     // Calculate countdown (dummy - 3 days from now)
     const endDate = new Date();
@@ -229,25 +229,25 @@ export default function Promo() {
 }
 
 function PromoProductCard({ product }: { product: Product }) {
-    const lowestPrice = product.quantityTiers[product.quantityTiers.length - 1].pricePerUnit;
-    const originalPrice = lowestPrice / (1 - (product.promoPercentage || 0) / 100);
+    const lowestPrice = product.tierJumlah[product.tierJumlah.length - 1].pricePerUnit;
+    const originalPrice = lowestPrice / (1 - (product.persenPromo || 0) / 100);
 
     return (
         <Link to={`/produk/${product.slug}`} className="promo-product-card">
             <div className="promo-product-image-wrapper">
                 <img
-                    src={product.images[0]}
-                    alt={product.name}
+                    src={product.gambar[0]}
+                    alt={product.nama}
                     className="promo-product-image"
                     loading="lazy"
                 />
                 <div className="promo-product-badges">
-                    {product.promoPercentage && (
+                    {product.persenPromo && (
                         <span className="promo-badge-discount">
-                            -{product.promoPercentage}%
+                            -{product.persenPromo}%
                         </span>
                     )}
-                    {product.isBestSeller && (
+                    {product.terlaris && (
                         <span className="promo-badge-bestseller">
                             <Star size={12} /> Best Seller
                         </span>
@@ -259,23 +259,23 @@ function PromoProductCard({ product }: { product: Product }) {
             </div>
 
             <div className="promo-product-content">
-                <h3 className="promo-product-name">{product.name}</h3>
-                <p className="promo-product-description">{product.shortDescription}</p>
+                <h3 className="promo-product-name">{product.nama}</h3>
+                <p className="promo-product-description">{product.deskripsiSingkat}</p>
 
                 <div className="promo-product-meta">
                     <div className="promo-product-delivery">
                         <Clock size={14} />
-                        <span>{product.estimatedDays} hari</span>
+                        <span>{product.estimasiHari} hari</span>
                     </div>
                     <div className="promo-product-min-order">
-                        Min. {product.minOrderQty} pcs
+                        Min. {product.minPesan} pcs
                     </div>
                 </div>
 
                 <div className="promo-product-pricing">
                     <div className="promo-price-row">
                         <span className="promo-original-price">{formatPrice(originalPrice)}</span>
-                        <span className="promo-discount-badge">-{product.promoPercentage}%</span>
+                        <span className="promo-discount-badge">-{product.persenPromo}%</span>
                     </div>
                     <div className="promo-price-row">
                         <span className="promo-current-price">{formatPrice(lowestPrice)}</span>

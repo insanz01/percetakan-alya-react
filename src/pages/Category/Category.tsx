@@ -49,12 +49,12 @@ function AllCategories() {
                             className="category-list-card"
                         >
                             <div className="category-list-image">
-                                <img src={category.image} alt={category.name} />
+                                <img src={category.gambar} alt={category.nama} />
                             </div>
                             <div className="category-list-content">
-                                <span className="category-list-icon">{category.icon}</span>
-                                <h3>{category.name}</h3>
-                                <p>{category.description}</p>
+                                <span className="category-list-icon">{category.ikon}</span>
+                                <h3>{category.nama}</h3>
+                                <p>{category.deskripsi}</p>
                                 <span className="category-list-count">{category.productCount} Produk</span>
                             </div>
                         </Link>
@@ -109,19 +109,19 @@ function CategoryDetail({ slug }: { slug: string }) {
                         <ChevronRight size={14} />
                         <Link to="/kategori">Kategori</Link>
                         <ChevronRight size={14} />
-                        <span>{category.name}</span>
+                        <span>{category.nama}</span>
                     </nav>
                 </div>
             </div>
 
             {/* Category Header */}
-            <div className="category-header" style={{ backgroundImage: `url(${category.image})` }}>
+            <div className="category-header" style={{ backgroundImage: `url(${category.gambar})` }}>
                 <div className="category-header-overlay" />
                 <div className="container">
                     <div className="category-header-content">
-                        <span className="category-header-icon">{category.icon}</span>
-                        <h1>{category.name}</h1>
-                        <p>{category.description}</p>
+                        <span className="category-header-icon">{category.ikon}</span>
+                        <h1>{category.nama}</h1>
+                        <p>{category.deskripsi}</p>
                         <span className="category-product-count">{category.productCount} Produk tersedia</span>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ function CategoryDetail({ slug }: { slug: string }) {
 }
 
 function ProductCard({ product }: { product: Product }) {
-    const lowestPrice = product.quantityTiers?.[product.quantityTiers.length - 1]?.pricePerUnit || product.basePrice || 0;
+    const lowestPrice = product.tierJumlah?.[product.tierJumlah.length - 1]?.pricePerUnit || product.hargaDasar || 0;
 
     return (
         <Link to={`/produk/${product.slug}`} className="product-card">
@@ -181,8 +181,8 @@ function ProductCard({ product }: { product: Product }) {
                 }}
             >
                 <img
-                    src={product.images[0]}
-                    alt={product.name}
+                    src={product.gambar[0]}
+                    alt={product.nama}
                     className="product-image"
                     loading="lazy"
                     style={{
@@ -193,30 +193,30 @@ function ProductCard({ product }: { product: Product }) {
                     }}
                 />
                 <div className="product-badges">
-                    {product.isBestSeller && (
+                    {product.terlaris && (
                         <span className="product-badge badge-bestseller">
                             <Star size={12} /> Best Seller
                         </span>
                     )}
-                    {product.isPromo && product.promoPercentage && (
+                    {product.promo && product.persenPromo && (
                         <span className="product-badge badge-promo">
-                            -{product.promoPercentage}%
+                            -{product.persenPromo}%
                         </span>
                     )}
                 </div>
             </div>
 
             <div className="product-content">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-description">{product.shortDescription}</p>
+                <h3 className="product-name">{product.nama}</h3>
+                <p className="product-description">{product.deskripsiSingkat}</p>
 
                 <div className="product-meta">
                     <div className="product-delivery">
                         <Clock size={14} />
-                        <span>{product.estimatedDays} hari</span>
+                        <span>{product.estimasiHari} hari</span>
                     </div>
                     <div className="product-min-order">
-                        Min. {product.minOrderQty} pcs
+                        Min. {product.minPesan} pcs
                     </div>
                 </div>
 

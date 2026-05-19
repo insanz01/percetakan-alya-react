@@ -15,13 +15,13 @@ import './AddressList.css';
 
 interface ShippingAddress {
     id: string;
-    recipient_name: string;
-    phone: string;
-    address: string;
-    city: string;
-    province: string;
-    postal_code: string;
-    is_default: boolean;
+    nama_penerima: string;
+    telepon: string;
+    alamat: string;
+    kota: string;
+    provinsi: string;
+    kode_pos: string;
+    utama: boolean;
 }
 
 export default function AddressList() {
@@ -32,13 +32,13 @@ export default function AddressList() {
     const [editingAddress, setEditingAddress] = useState<ShippingAddress | null>(null);
     const [isSaving, setIsSaving] = useState(false);
     const [formData, setFormData] = useState({
-        recipient_name: '',
-        phone: '',
-        address: '',
-        city: '',
-        province: '',
-        postal_code: '',
-        is_default: false,
+        nama_penerima: '',
+        telepon: '',
+        alamat: '',
+        kota: '',
+        provinsi: '',
+        kode_pos: '',
+        utama: false,
     });
 
     useEffect(() => {
@@ -66,24 +66,24 @@ export default function AddressList() {
         if (address) {
             setEditingAddress(address);
             setFormData({
-                recipient_name: address.recipient_name,
-                phone: address.phone,
-                address: address.address,
-                city: address.city,
-                province: address.province,
-                postal_code: address.postal_code,
-                is_default: address.is_default,
+                nama_penerima: address.nama_penerima,
+                telepon: address.telepon,
+                alamat: address.alamat,
+                kota: address.kota,
+                provinsi: address.provinsi,
+                kode_pos: address.kode_pos,
+                utama: address.utama,
             });
         } else {
             setEditingAddress(null);
             setFormData({
-                recipient_name: '',
-                phone: '',
-                address: '',
-                city: '',
-                province: '',
-                postal_code: '',
-                is_default: false,
+                nama_penerima: '',
+                telepon: '',
+                alamat: '',
+                kota: '',
+                provinsi: '',
+                kode_pos: '',
+                utama: false,
             });
         }
         setShowModal(true);
@@ -196,21 +196,21 @@ export default function AddressList() {
             ) : (
                 <div className="address-cards">
                     {addresses.map(address => (
-                        <div key={address.id} className={`address-card ${address.is_default ? 'default' : ''}`}>
-                            {address.is_default && (
+                        <div key={address.id} className={`address-card ${address.utama ? 'default' : ''}`}>
+                            {address.utama && (
                                 <div className="default-badge">
                                     <Star size={14} />
                                     Alamat Utama
                                 </div>
                             )}
                             <div className="address-content">
-                                <div className="recipient-name">{address.recipient_name}</div>
-                                <div className="recipient-phone">{address.phone}</div>
+                                <div className="recipient-name">{address.nama_penerima}</div>
+                                <div className="recipient-phone">{address.telepon}</div>
                                 <div className="address-text">
-                                    {address.address}
+                                    {address.alamat}
                                 </div>
                                 <div className="address-location">
-                                    {address.city}, {address.province} {address.postal_code}
+                                    {address.kota}, {address.provinsi} {address.kode_pos}
                                 </div>
                             </div>
                             <div className="address-actions">
@@ -250,8 +250,8 @@ export default function AddressList() {
                                 <label>Nama Penerima</label>
                                 <input
                                     type="text"
-                                    name="recipient_name"
-                                    value={formData.recipient_name}
+                                    name="nama_penerima"
+                                    value={formData.nama_penerima}
                                     onChange={handleChange}
                                     placeholder="Nama lengkap penerima"
                                     required
@@ -262,8 +262,8 @@ export default function AddressList() {
                                 <label>Nomor Telepon</label>
                                 <input
                                     type="tel"
-                                    name="phone"
-                                    value={formData.phone}
+                                    name="telepon"
+                                    value={formData.telepon}
                                     onChange={handleChange}
                                     placeholder="08xxxxxxxxxx"
                                     required
@@ -273,8 +273,8 @@ export default function AddressList() {
                             <div className="form-group">
                                 <label>Alamat Lengkap</label>
                                 <textarea
-                                    name="address"
-                                    value={formData.address}
+                                    name="alamat"
+                                    value={formData.alamat}
                                     onChange={handleChange}
                                     placeholder="Nama jalan, nomor rumah, RT/RW, dll"
                                     rows={3}
@@ -287,8 +287,8 @@ export default function AddressList() {
                                     <label>Kota/Kabupaten</label>
                                     <input
                                         type="text"
-                                        name="city"
-                                        value={formData.city}
+                                        name="kota"
+                                        value={formData.kota}
                                         onChange={handleChange}
                                         placeholder="Jakarta Selatan"
                                         required
@@ -299,8 +299,8 @@ export default function AddressList() {
                                     <label>Kode Pos</label>
                                     <input
                                         type="text"
-                                        name="postal_code"
-                                        value={formData.postal_code}
+                                        name="kode_pos"
+                                        value={formData.kode_pos}
                                         onChange={handleChange}
                                         placeholder="12345"
                                         required
@@ -311,8 +311,8 @@ export default function AddressList() {
                             <div className="form-group">
                                 <label>Provinsi</label>
                                 <select
-                                    name="province"
-                                    value={formData.province}
+                                    name="provinsi"
+                                    value={formData.provinsi}
                                     onChange={handleChange}
                                     required
                                 >
@@ -327,8 +327,8 @@ export default function AddressList() {
                                 <label className="checkbox-label">
                                     <input
                                         type="checkbox"
-                                        name="is_default"
-                                        checked={formData.is_default}
+                                        name="utama"
+                                        checked={formData.utama}
                                         onChange={handleChange}
                                     />
                                     <span className="checkmark"></span>

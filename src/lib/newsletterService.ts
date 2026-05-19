@@ -4,8 +4,8 @@ import { api, ApiResponse } from './api';
 export interface NewsletterSubscriber {
     id: string;
     email: string;
-    is_active: boolean;
-    subscribed_at: string;
+    aktif: boolean;
+    berlangganan_pada: string;
     unsubscribed_at?: string;
     created_at: string;
 }

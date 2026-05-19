@@ -60,22 +60,22 @@ export default function BestSeller() {
                                 </div>
                                 <div className="product-image">
                                     <img
-                                        src={product.images[0] || 'https://via.placeholder.com/300'}
-                                        alt={product.name}
+                                        src={product.gambar[0] || 'https://via.placeholder.com/300'}
+                                        alt={product.nama}
                                     />
                                 </div>
                                 <div className="product-content">
-                                    <h3 className="product-name">{product.name}</h3>
-                                    <p className="product-desc">{product.shortDescription}</p>
+                                    <h3 className="product-name">{product.nama}</h3>
+                                    <p className="product-desc">{product.deskripsiSingkat}</p>
                                     <div className="product-price">
                                         <span className="price">
-                                            {formatPrice(product.quantityTiers[0]?.pricePerUnit || product.basePrice)}
+                                            {formatPrice(product.tierJumlah[0]?.pricePerUnit || product.hargaDasar)}
                                         </span>
                                         <span className="unit">/pcs</span>
                                     </div>
                                     <div className="product-footer">
                                         <span className="min-order">
-                                            Min. {product.minOrderQty} pcs
+                                            Min. {product.minPesan} pcs
                                         </span>
                                         <span className="view-link">
                                             Lihat

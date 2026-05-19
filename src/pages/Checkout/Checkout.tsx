@@ -42,24 +42,24 @@ const mockCartItems = [
 
 interface ShippingAddress {
     id: string;
-    recipientName: string;
-    phone: string;
-    address: string;
-    city: string;
-    province: string;
-    postalCode: string;
+    namaPenerima: string;
+    telepon: string;
+    alamat: string;
+    kota: string;
+    provinsi: string;
+    kodePos: string;
 }
 
 // Mock addresses - in real app, get from API
 const mockAddresses: ShippingAddress[] = [
     {
         id: 'addr-1',
-        recipientName: 'Budi Santoso',
-        phone: '081234567890',
-        address: 'Jl. Jendral Sudirman No. 123',
-        city: 'Jakarta Selatan',
-        province: 'DKI Jakarta',
-        postalCode: '12930',
+        namaPenerima: 'Budi Santoso',
+        telepon: '081234567890',
+        alamat: 'Jl. Jendral Sudirman No. 123',
+        kota: 'Jakarta Selatan',
+        provinsi: 'DKI Jakarta',
+        kodePos: '12930',
     },
 ];
 
@@ -110,8 +110,8 @@ export default function Checkout() {
         setIsLoadingShipping(true);
         try {
             const response = await shippingService.calculate({
-                destination_city: selectedAddress.city,
-                destination_province: selectedAddress.province,
+                destination_kota: selectedAddress.kota,
+                destination_provinsi: selectedAddress.provinsi,
                 weight: totalWeight,
             });
             if (response.success) {
@@ -135,12 +135,12 @@ export default function Checkout() {
         try {
             const response = await promoService.validateCode(promoCode, subtotal);
             if (response.success && response.data.promo) {
-                setPromoDiscount(response.data.discount);
+                setPromoDiscount(response.data.diskon);
                 setPromoApplied(true);
                 addToast({
                     type: 'success',
                     title: 'Promo Applied!',
-                    message: `Diskon ${formatPrice(response.data.discount)} berhasil diterapkan`,
+                    message: `Diskon ${formatPrice(response.data.diskon)} berhasil diterapkan`,
                 });
             }
         } catch (error) {
@@ -167,24 +167,24 @@ export default function Checkout() {
         setIsSubmitting(true);
         try {
             const orderData = {
-                user_id: 'current-user-id', // Get from auth
-                shipping_address_id: selectedAddress.id,
-                shipping_method: selectedShipping.service,
-                shipping_provider: selectedShipping.provider,
-                payment_method: selectedPayment,
+                pengguna_id: 'current-user-id',
+                alamat_pengiriman_id: selectedAddress.id,
+                metode_pengiriman: selectedShipping.service,
+                kurir: selectedShipping.provider,
+                metode_pembayaran: selectedPayment,
                 subtotal,
-                shipping_cost: shippingCost,
-                discount,
-                notes,
+                biaya_kirim: shippingCost,
+                diskon: discount,
+                catatan: notes,
                 items: cartItems.map(item => ({
-                    product_id: item.productId,
-                    size_name: item.sizeName,
-                    material_name: item.materialName,
-                    print_side_name: item.printSideName,
-                    finishing_names: item.finishingNames,
-                    quantity: item.quantity,
-                    unit_price: item.unitPrice,
-                    total_price: item.totalPrice,
+                    produk_id: item.productId,
+                    nama_ukuran: item.sizeName,
+                    nama_bahan: item.materialName,
+                    nama_sisi_cetak: item.printSideName,
+                    nama_finishing: item.finishingNames,
+                    jumlah: item.quantity,
+                    harga_satuan: item.unitPrice,
+                    harga_total: item.totalPrice,
                 })),
             };
 
@@ -297,10 +297,10 @@ export default function Checkout() {
                                                     <div className="radio-dot"></div>
                                                 </div>
                                                 <div className="address-content">
-                                                    <div className="address-name">{addr.recipientName}</div>
-                                                    <div className="address-phone">{addr.phone}</div>
+                                                    <div className="address-name">{addr.namaPenerima}</div>
+                                                    <div className="address-phone">{addr.telepon}</div>
                                                     <div className="address-text">
-                                                        {addr.address}, {addr.city}, {addr.province} {addr.postalCode}
+                                                        {addr.alamat}, {addr.kota}, {addr.provinsi} {addr.kodePos}
                                                     </div>
                                                 </div>
                                             </div>
@@ -344,7 +344,7 @@ export default function Checkout() {
                                                 <div className="shipping-content">
                                                     <div className="shipping-provider">{option.provider}</div>
                                                     <div className="shipping-service">{option.service}</div>
-                                                    <div className="shipping-eta">{option.estimated_days}</div>
+                                                    <div className="shipping-eta">{option.estimasi_hari}</div>
                                                 </div>
                                                 <div className="shipping-price">
                                                     {formatPrice(option.cost)}
@@ -414,12 +414,12 @@ export default function Checkout() {
                                     <h3>Pengiriman</h3>
                                     <div className="review-info">
                                         <div>
-                                            <strong>{selectedAddress?.recipientName}</strong>
-                                            <p>{selectedAddress?.address}, {selectedAddress?.city}</p>
+                                            <strong>{selectedAddress?.namaPenerima}</strong>
+                                            <p>{selectedAddress?.alamat}, {selectedAddress?.kota}</p>
                                         </div>
                                         <div>
                                             <strong>{selectedShipping?.provider} - {selectedShipping?.service}</strong>
-                                            <p>{selectedShipping?.estimated_days}</p>
+                                            <p>{selectedShipping?.estimasi_hari}</p>
                                         </div>
                                     </div>
                                 </div>

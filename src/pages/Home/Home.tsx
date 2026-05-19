@@ -43,7 +43,7 @@ export default function Home() {
     const { data: categories, isLoading: categoriesLoading } = useCategories({ active: true });
     const { data: allProducts, isLoading: productsLoading } = useProducts({ active: true });
 
-    const bestSellers = (allProducts || []).filter(p => p.isBestSeller).slice(0, 4);
+    const bestSellers = (allProducts || []).filter(p => p.terlaris).slice(0, 4);
 
     // Auto-slide banner
     useEffect(() => {
@@ -185,12 +185,12 @@ export default function Home() {
                                     style={{ animationDelay: `${index * 50}ms` }}
                                 >
                                     <div className="category-image">
-                                        <img src={category.image} alt={category.name} />
+                                        <img src={category.gambar} alt={category.nama} />
                                         <div className="category-overlay" />
                                     </div>
                                     <div className="category-content">
-                                        <span className="category-icon">{category.icon}</span>
-                                        <h3 className="category-name">{category.name}</h3>
+                                        <span className="category-icon">{category.ikon}</span>
+                                        <h3 className="category-name">{category.nama}</h3>
                                         <p className="category-count">{category.productCount} Produk</p>
                                     </div>
                                 </Link>
@@ -252,7 +252,7 @@ export default function Home() {
 
 // Product Card Component
 function ProductCard({ product }: { product: Product }) {
-    const lowestPrice = product.quantityTiers?.[product.quantityTiers.length - 1]?.pricePerUnit || product.basePrice || 0;
+    const lowestPrice = product.tierJumlah?.[product.tierJumlah.length - 1]?.pricePerUnit || product.hargaDasar || 0;
 
     return (
         <Link to={`/produk/${product.slug}`} className="product-card">
@@ -266,8 +266,8 @@ function ProductCard({ product }: { product: Product }) {
                 }}
             >
                 <img
-                    src={product.images[0]}
-                    alt={product.name}
+                    src={product.gambar[0]}
+                    alt={product.nama}
                     className="product-image"
                     loading="lazy"
                     style={{
@@ -278,7 +278,7 @@ function ProductCard({ product }: { product: Product }) {
                     }}
                 />
                 <div className="product-badges">
-                    {product.isBestSeller && (
+                    {product.terlaris && (
                         <span className="product-badge badge-bestseller">
                             <Star size={12} /> Best Seller
                         </span>
@@ -287,16 +287,16 @@ function ProductCard({ product }: { product: Product }) {
             </div>
 
             <div className="product-content">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-description">{product.shortDescription}</p>
+                <h3 className="product-name">{product.nama}</h3>
+                <p className="product-description">{product.deskripsiSingkat}</p>
 
                 <div className="product-meta">
                     <div className="product-delivery">
                         <Clock size={14} />
-                        <span>{product.estimatedDays} hari</span>
+                        <span>{product.estimasiHari} hari</span>
                     </div>
                     <div className="product-min-order">
-                        Min. {product.minOrderQty} pcs
+                        Min. {product.minPesan} pcs
                     </div>
                 </div>
 

@@ -81,25 +81,25 @@ export default function Cart() {
                     {/* Cart Items */}
                     <div className="cart-items-section">
                         {items.map((item) => {
-                            const selectedSize = item.product.sizes.find(s => s.id === item.config.sizeId);
-                            const selectedMaterial = item.product.materials.find(m => m.id === item.config.materialId);
-                            const selectedPrintSide = item.product.printSides.find(p => p.id === item.config.printSideId);
-                            const selectedFinishings = item.product.finishings.filter(f => item.config.finishingIds.includes(f.id));
-                            const category = (categories || []).find(c => c.id === item.product.categoryId);
+                            const selectedSize = item.product.ukuran.find(s => s.id === item.config.sizeId);
+                            const selectedMaterial = item.product.bahan.find(m => m.id === item.config.materialId);
+                            const selectedPrintSide = item.product.sisiCetak.find(p => p.id === item.config.printSideId);
+                            const selectedFinishings = item.product.finishing.filter(f => item.config.finishingIds.includes(f.id));
+                            const category = (categories || []).find(c => c.id === item.product.kategoriId);
 
                             return (
                                 <div key={item.id} className="cart-item-card">
                                     <div className="cart-item-image">
-                                        <img src={item.product.images[0]} alt={item.product.name} />
+                                        <img src={item.product.gambar[0]} alt={item.product.nama} />
                                     </div>
 
                                     <div className="cart-item-details">
                                         <div className="cart-item-header">
                                             <div>
                                                 <Link to={`/kategori/${category?.slug}`} className="cart-item-category">
-                                                    {category?.name}
+                                                    {category?.nama}
                                                 </Link>
-                                                <h3 className="cart-item-name">{item.product.name}</h3>
+                                                <h3 className="cart-item-name">{item.product.nama}</h3>
                                             </div>
                                             <button
                                                 className="cart-item-remove"
@@ -114,23 +114,23 @@ export default function Cart() {
                                         <div className="cart-item-specs">
                                             <div className="spec-tag">
                                                 <span className="spec-label">Ukuran:</span>
-                                                <span>{selectedSize?.name}</span>
+                                                <span>{selectedSize?.nama}</span>
                                                 {item.config.customWidth && item.config.customHeight && (
                                                     <span> ({item.config.customWidth} x {item.config.customHeight} mm)</span>
                                                 )}
                                             </div>
                                             <div className="spec-tag">
                                                 <span className="spec-label">Bahan:</span>
-                                                <span>{selectedMaterial?.name} {selectedMaterial?.weight}</span>
+                                                <span>{selectedMaterial?.nama} {selectedMaterial?.weight}</span>
                                             </div>
                                             <div className="spec-tag">
                                                 <span className="spec-label">Cetak:</span>
-                                                <span>{selectedPrintSide?.name} ({selectedPrintSide?.code})</span>
+                                                <span>{selectedPrintSide?.nama} ({selectedPrintSide?.kode})</span>
                                             </div>
                                             {selectedFinishings.length > 0 && (
                                                 <div className="spec-tag">
                                                     <span className="spec-label">Finishing:</span>
-                                                    <span>{selectedFinishings.map(f => f.name).join(', ')}</span>
+                                                    <span>{selectedFinishings.map(f => f.nama).join(', ')}</span>
                                                 </div>
                                             )}
                                         </div>
@@ -148,21 +148,21 @@ export default function Cart() {
                                             <div className="cart-item-quantity">
                                                 <button
                                                     className="quantity-btn"
-                                                    onClick={() => handleQuantityChange(item.id, item.config.quantity - 50, item.product.minOrderQty)}
-                                                    disabled={item.config.quantity <= item.product.minOrderQty}
+                                                    onClick={() => handleQuantityChange(item.id, item.config.jumlah - 50, item.product.minPesan)}
+                                                    disabled={item.config.jumlah <= item.product.minPesan}
                                                 >
                                                     <Minus size={16} />
                                                 </button>
                                                 <input
                                                     type="number"
-                                                    value={item.config.quantity}
-                                                    onChange={(e) => handleQuantityChange(item.id, Number(e.target.value), item.product.minOrderQty)}
-                                                    min={item.product.minOrderQty}
+                                                    value={item.config.jumlah}
+                                                    onChange={(e) => handleQuantityChange(item.id, Number(e.target.value), item.product.minPesan)}
+                                                    min={item.product.minPesan}
                                                     className="quantity-display"
                                                 />
                                                 <button
                                                     className="quantity-btn"
-                                                    onClick={() => handleQuantityChange(item.id, item.config.quantity + 50, item.product.minOrderQty)}
+                                                    onClick={() => handleQuantityChange(item.id, item.config.jumlah + 50, item.product.minPesan)}
                                                 >
                                                     <Plus size={16} />
                                                 </button>

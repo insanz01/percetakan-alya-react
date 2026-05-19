@@ -26,25 +26,25 @@ import './Orders.css';
 interface Order {
     id: string;
     customer: {
-        name: string;
+        nama: string;
         email: string;
-        phone: string;
-        address?: string;
+        telepon: string;
+        alamat?: string;
     };
     products: Array<{
-        name: string;
-        qty: number;
-        price: number;
+        nama: string;
+        jumlah: number;
+        harga: number;
     }>;
     subtotal?: number;
-    shippingCost?: number;
+    biayaKirim?: number;
     total: number;
     status: string;
-    paymentStatus: string;
-    paymentMethod?: string;
-    shippingMethod?: string;
-    trackingNumber?: string;
-    notes?: string;
+    statusBayar: string;
+    metodePembayaran?: string;
+    metodePengiriman?: string;
+    nomorResi?: string;
+    catatan?: string;
     createdAt: string;
 }
 
@@ -53,117 +53,117 @@ const dummyOrders: Order[] = [
     {
         id: 'ORD-001234',
         customer: {
-            name: 'Budi Santoso',
+            nama: 'Budi Santoso',
             email: 'budi@email.com',
-            phone: '081234567890',
-            address: 'Jl. Sudirman No. 123, Jakarta Pusat 10110'
+            telepon: '081234567890',
+            alamat: 'Jl. Sudirman No. 123, Jakarta Pusat 10110'
         },
-        products: [{ name: 'Brosur A5 Premium', qty: 500, price: 350000 }],
+        products: [{ nama: 'Brosur A5 Premium', jumlah: 500, harga: 350000 }],
         subtotal: 350000,
-        shippingCost: 35000,
+        biayaKirim: 35000,
         total: 385000,
         status: 'processing',
-        paymentStatus: 'paid',
-        paymentMethod: 'Bank Transfer - BCA',
-        shippingMethod: 'JNE Regular',
-        notes: 'Tolong dipacking dengan rapih',
+        statusBayar: 'paid',
+        metodePembayaran: 'Bank Transfer - BCA',
+        metodePengiriman: 'JNE Regular',
+        catatan: 'Tolong dipacking dengan rapih',
         createdAt: '2024-12-12 10:30',
     },
     {
         id: 'ORD-001233',
         customer: {
-            name: 'Siti Rahma',
+            nama: 'Siti Rahma',
             email: 'siti@email.com',
-            phone: '081234567891',
-            address: 'Jl. Gatot Subroto No. 45, Jakarta Selatan 12950'
+            telepon: '081234567891',
+            alamat: 'Jl. Gatot Subroto No. 45, Jakarta Selatan 12950'
         },
-        products: [{ name: 'Kartu Nama Premium', qty: 200, price: 100000 }],
+        products: [{ nama: 'Kartu Nama Premium', jumlah: 200, harga: 100000 }],
         subtotal: 100000,
-        shippingCost: 15000,
+        biayaKirim: 15000,
         total: 115000,
         status: 'completed',
-        paymentStatus: 'paid',
-        paymentMethod: 'QRIS',
-        shippingMethod: 'SiCepat Express',
-        trackingNumber: 'JNE123456789',
+        statusBayar: 'paid',
+        metodePembayaran: 'QRIS',
+        metodePengiriman: 'SiCepat Express',
+        nomorResi: 'JNE123456789',
         createdAt: '2024-12-12 09:15',
     },
     {
         id: 'ORD-001232',
         customer: {
-            name: 'Ahmad Wijaya',
+            nama: 'Ahmad Wijaya',
             email: 'ahmad@email.com',
-            phone: '081234567892',
-            address: 'Jl. Thamrin No. 78, Jakarta Pusat 10350'
+            telepon: '081234567892',
+            alamat: 'Jl. Thamrin No. 78, Jakarta Pusat 10350'
         },
-        products: [{ name: 'X-Banner Indoor', qty: 5, price: 425000 }],
+        products: [{ nama: 'X-Banner Indoor', jumlah: 5, harga: 425000 }],
         subtotal: 425000,
-        shippingCost: 35000,
+        biayaKirim: 35000,
         total: 460000,
         status: 'shipped',
-        paymentStatus: 'paid',
-        paymentMethod: 'Bank Transfer - Mandiri',
-        shippingMethod: 'J&T Express',
-        trackingNumber: 'JT987654321',
+        statusBayar: 'paid',
+        metodePembayaran: 'Bank Transfer - Mandiri',
+        metodePengiriman: 'J&T Express',
+        nomorResi: 'JT987654321',
         createdAt: '2024-12-11 16:45',
     },
     {
         id: 'ORD-001231',
         customer: {
-            name: 'Maya Putri',
+            nama: 'Maya Putri',
             email: 'maya@email.com',
-            phone: '081234567893',
-            address: 'Jl. Kemang Raya No. 12, Jakarta Selatan 12730'
+            telepon: '081234567893',
+            alamat: 'Jl. Kemang Raya No. 12, Jakarta Selatan 12730'
         },
-        products: [{ name: 'Stiker Vinyl Outdoor', qty: 100, price: 300000 }],
+        products: [{ nama: 'Stiker Vinyl Outdoor', jumlah: 100, harga: 300000 }],
         subtotal: 300000,
-        shippingCost: 35000,
+        biayaKirim: 35000,
         total: 335000,
         status: 'pending',
-        paymentStatus: 'pending',
-        paymentMethod: 'Menunggu Pembayaran',
-        shippingMethod: 'JNE Regular',
+        statusBayar: 'pending',
+        metodePembayaran: 'Menunggu Pembayaran',
+        metodePengiriman: 'JNE Regular',
         createdAt: '2024-12-11 14:20',
     },
     {
         id: 'ORD-001230',
         customer: {
-            name: 'Rudi Hartono',
+            nama: 'Rudi Hartono',
             email: 'rudi@email.com',
-            phone: '081234567894',
-            address: 'Jl. Rasuna Said No. 56, Jakarta Selatan 12940'
+            telepon: '081234567894',
+            alamat: 'Jl. Rasuna Said No. 56, Jakarta Selatan 12940'
         },
         products: [
-            { name: 'Poster A3+ Photo Paper', qty: 10, price: 300000 },
-            { name: 'Kertas HVS A4', qty: 5, price: 225000 }
+            { nama: 'Poster A3+ Photo Paper', jumlah: 10, harga: 300000 },
+            { nama: 'Kertas HVS A4', jumlah: 5, harga: 225000 }
         ],
         subtotal: 525000,
-        shippingCost: 35000,
+        biayaKirim: 35000,
         total: 560000,
         status: 'completed',
-        paymentStatus: 'paid',
-        paymentMethod: 'Bank Transfer - BNI',
-        shippingMethod: 'SiCepat Regular',
-        trackingNumber: 'SC555666777',
+        statusBayar: 'paid',
+        metodePembayaran: 'Bank Transfer - BNI',
+        metodePengiriman: 'SiCepat Regular',
+        nomorResi: 'SC555666777',
         createdAt: '2024-12-10 11:00',
     },
     {
         id: 'ORD-001229',
         customer: {
-            name: 'Lisa Permata',
+            nama: 'Lisa Permata',
             email: 'lisa@email.com',
-            phone: '081234567895',
-            address: 'Jl. Senopati No. 89, Jakarta Selatan 12190'
+            telepon: '081234567895',
+            alamat: 'Jl. Senopati No. 89, Jakarta Selatan 12190'
         },
-        products: [{ name: 'Undangan Hardcover Premium', qty: 100, price: 4500000 }],
+        products: [{ nama: 'Undangan Hardcover Premium', jumlah: 100, harga: 4500000 }],
         subtotal: 4500000,
-        shippingCost: 150000,
+        biayaKirim: 150000,
         total: 4650000,
         status: 'in_production',
-        paymentStatus: 'paid',
-        paymentMethod: 'Bank Transfer - BCA',
-        shippingMethod: 'JNE YES',
-        notes: 'Deadline: 20 Desember 2024',
+        statusBayar: 'paid',
+        metodePembayaran: 'Bank Transfer - BCA',
+        metodePengiriman: 'JNE YES',
+        catatan: 'Deadline: 20 Desember 2024',
         createdAt: '2024-12-10 09:30',
     },
 ];
@@ -191,7 +191,7 @@ export default function Orders() {
 
     const filteredOrders = dummyOrders.filter(order => {
         const matchesSearch = order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            order.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
+            order.customer.nama.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
         return matchesSearch && matchesStatus;
     });
@@ -269,7 +269,7 @@ export default function Orders() {
                                     </td>
                                     <td>
                                         <div className="customer-cell">
-                                            <p className="customer-name">{order.customer.name}</p>
+                                            <p className="customer-name">{order.customer.nama}</p>
                                             <p className="customer-email">{order.customer.email}</p>
                                         </div>
                                     </td>
@@ -277,7 +277,7 @@ export default function Orders() {
                                         <div className="products-cell">
                                             {order.products.map((p, i) => (
                                                 <span key={i} className="product-item">
-                                                    {p.name} x {p.qty}
+                                                    {p.nama} x {p.jumlah}
                                                 </span>
                                             ))}
                                         </div>
@@ -286,8 +286,8 @@ export default function Orders() {
                                         <span className="order-total">{formatPrice(order.total)}</span>
                                     </td>
                                     <td>
-                                        <span className={`payment-badge ${paymentStatusConfig[order.paymentStatus].color}`}>
-                                            {paymentStatusConfig[order.paymentStatus].label}
+                                        <span className={`payment-badge ${paymentStatusConfig[order.statusBayar].color}`}>
+                                            {paymentStatusConfig[order.statusBayar].label}
                                         </span>
                                     </td>
                                     <td>
@@ -397,7 +397,7 @@ export default function Orders() {
                                     <div className="info-card">
                                         <div className="info-row">
                                             <User size={16} className="info-icon-svg" />
-                                            <span>{selectedOrder.customer.name}</span>
+                                            <span>{selectedOrder.customer.nama}</span>
                                         </div>
                                         <div className="info-row">
                                             <Mail size={16} className="info-icon-svg" />
@@ -405,12 +405,12 @@ export default function Orders() {
                                         </div>
                                         <div className="info-row">
                                             <Phone size={16} className="info-icon-svg" />
-                                            <span>{selectedOrder.customer.phone}</span>
+                                            <span>{selectedOrder.customer.telepon}</span>
                                         </div>
-                                        {selectedOrder.customer.address && (
+                                        {selectedOrder.customer.alamat && (
                                             <div className="info-row">
                                                 <MapPin size={16} className="info-icon-svg" />
-                                                <span>{selectedOrder.customer.address}</span>
+                                                <span>{selectedOrder.customer.alamat}</span>
                                             </div>
                                         )}
                                     </div>
@@ -445,7 +445,7 @@ export default function Orders() {
                                     {selectedOrder.products.map((product, index) => (
                                         <div key={index} className="product-row">
                                             <div className="product-info">
-                                                <span className="product-name">{product.name}</span>
+                                                <span className="product-name">{product.nama}</span>
                                                 <span className="product-qty">x {product.qty}</span>
                                             </div>
                                             <span className="product-price">{formatPrice(product.price)}</span>
@@ -455,11 +455,11 @@ export default function Orders() {
                             </div>
 
                             {/* Notes */}
-                            {selectedOrder.notes && (
+                            {selectedOrder.catatan && (
                                 <div className="modal-section">
                                     <h3>Catatan</h3>
                                     <div className="notes-box">
-                                        {selectedOrder.notes}
+                                        {selectedOrder.catatan}
                                     </div>
                                 </div>
                             )}

@@ -92,21 +92,21 @@ export default function Search() {
                                     >
                                         <div className="product-image">
                                             <img
-                                                src={product.images?.[0] || 'https://via.placeholder.com/300'}
-                                                alt={product.name}
+                                                src={product.gambar?.[0] || 'https://via.placeholder.com/300'}
+                                                alt={product.nama}
                                             />
-                                            {product.isPromo && product.promoPercentage && (
+                                            {product.promo && product.persenPromo && (
                                                 <div className="promo-badge">
-                                                    -{product.promoPercentage}%
+                                                    -{product.persenPromo}%
                                                 </div>
                                             )}
                                         </div>
                                         <div className="product-content">
-                                            <h3 className="product-name">{product.name}</h3>
-                                            <p className="product-category">{product.shortDescription}</p>
+                                            <h3 className="product-name">{product.nama}</h3>
+                                            <p className="product-category">{product.deskripsiSingkat}</p>
                                             <div className="product-price">
                                                 <span className="price">
-                                                    {formatPrice(product.basePrice)}
+                                                    {formatPrice(product.hargaDasar)}
                                                 </span>
                                                 <span className="unit">/lembar</span>
                                             </div>

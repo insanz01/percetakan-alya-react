@@ -39,15 +39,15 @@ export default function Products() {
 
     const filteredProducts = useMemo(() => {
         return (products || []).filter(product => {
-            const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                product.shortDescription.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesCategory = selectedCategory === 'all' || product.categoryId === selectedCategory;
+            const matchesSearch = product.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                product.deskripsiSingkat.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesCategory = selectedCategory === 'all' || product.kategoriId === selectedCategory;
             return matchesSearch && matchesCategory;
         });
     }, [products, searchQuery, selectedCategory]);
 
     const getCategoryName = (categoryId: string) => {
-        return (categories || []).find(c => c.id === categoryId)?.name || 'Unknown';
+        return (categories || []).find(c => c.id === categoryId)?.nama || 'Unknown';
     };
 
     const handleViewProduct = (product: Product) => {
@@ -105,7 +105,7 @@ export default function Products() {
                     >
                         <option value="all">Semua Kategori</option>
                         {(categories || []).map(cat => (
-                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            <option key={cat.id} value={cat.id}>{cat.nama}</option>
                         ))}
                     </select>
                 </div>
@@ -148,13 +148,13 @@ export default function Products() {
                                         <td>
                                             <div className="product-cell">
                                                 <img
-                                                    src={product.images[0]}
-                                                    alt={product.name}
+                                                    src={product.gambar[0]}
+                                                    alt={product.nama}
                                                     className="product-image"
                                                 />
                                                 <div className="product-info">
-                                                    <p className="product-name">{product.name}</p>
-                                                    <p className="product-desc">{product.shortDescription}</p>
+                                                    <p className="product-name">{product.nama}</p>
+                                                    <p className="product-desc">{product.deskripsiSingkat}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -171,19 +171,19 @@ export default function Products() {
                                                 <span className="price-unit">/pcs</span>
                                             </div>
                                         </td>
-                                        <td>{product.minOrderQty} pcs</td>
+                                        <td>{product.minPesan} pcs</td>
                                         <td>
                                             <div className="status-badges">
-                                                {product.isBestSeller && (
+                                                {product.terlaris && (
                                                     <span className="status-badge bestseller">Best Seller</span>
                                                 )}
-                                                {product.isPromo && (
+                                                {product.promo && (
                                                     <span className="status-badge promo">Promo</span>
                                                 )}
-                                                {product.isRetailProduct && (
+                                                {product.produkRetail && (
                                                     <span className="status-badge retail">Retail</span>
                                                 )}
-                                                {!product.isBestSeller && !product.isPromo && !product.isRetailProduct && (
+                                                {!product.terlaris && !product.promo && !product.produkRetail && (
                                                     <span className="status-badge normal">Aktif</span>
                                                 )}
                                             </div>
@@ -247,14 +247,14 @@ export default function Products() {
                     {filteredProducts.map((product) => (
                         <div key={product.id} className="product-card" onClick={() => handleViewProduct(product)}>
                             <img
-                                src={product.images[0]}
-                                alt={product.name}
+                                src={product.gambar[0]}
+                                alt={product.nama}
                                 className="product-card-image"
                             />
                             <div className="product-card-content">
                                 <div>
-                                    <h3 className="product-card-title">{product.name}</h3>
-                                    <p className="product-card-desc">{product.shortDescription}</p>
+                                    <h3 className="product-card-title">{product.nama}</h3>
+                                    <p className="product-card-desc">{product.deskripsiSingkat}</p>
                                 </div>
 
                                 <div className="product-card-price">
@@ -265,12 +265,12 @@ export default function Products() {
                                 </div>
 
                                 <div className="product-card-meta">
-                                    <span className="product-card-quantity">{product.minOrderQty} pcs</span>
+                                    <span className="product-card-quantity">{product.minPesan} pcs</span>
                                     <div className="product-card-badges">
-                                        {product.isBestSeller && (
+                                        {product.terlaris && (
                                             <span className="status-badge bestseller">Best Seller</span>
                                         )}
-                                        {product.isPromo && (
+                                        {product.promo && (
                                             <span className="status-badge promo">Promo</span>
                                         )}
                                     </div>
@@ -337,17 +337,17 @@ export default function Products() {
                             <div className="product-detail-header">
                                 <div className="product-images">
                                     <img
-                                        src={selectedProduct.images[0]}
-                                        alt={selectedProduct.name}
+                                        src={selectedProduct.gambar[0]}
+                                        alt={selectedProduct.nama}
                                         className="main-image"
                                     />
-                                    {selectedProduct.images.length > 1 && (
+                                    {selectedProduct.gambar.length > 1 && (
                                         <div className="thumbnail-list">
-                                            {selectedProduct.images.slice(0, 4).map((img, idx) => (
+                                            {selectedProduct.gambar.slice(0, 4).map((img, idx) => (
                                                 <img
                                                     key={idx}
                                                     src={img}
-                                                    alt={`${selectedProduct.name} ${idx + 1}`}
+                                                    alt={`${selectedProduct.nama} ${idx + 1}`}
                                                     className="thumbnail"
                                                 />
                                             ))}
@@ -356,38 +356,38 @@ export default function Products() {
                                 </div>
                                 <div className="product-header-info">
                                     <div className="product-badges">
-                                        {selectedProduct.isBestSeller && (
+                                        {selectedProduct.terlaris && (
                                             <span className="status-badge bestseller">Best Seller</span>
                                         )}
-                                        {selectedProduct.isPromo && (
+                                        {selectedProduct.promo && (
                                             <span className="status-badge promo">Promo</span>
                                         )}
-                                        {selectedProduct.isRetailProduct && (
+                                        {selectedProduct.produkRetail && (
                                             <span className="status-badge retail">Retail</span>
                                         )}
                                     </div>
-                                    <h3 className="product-title">{selectedProduct.name}</h3>
-                                    <p className="product-short-desc">{selectedProduct.shortDescription}</p>
+                                    <h3 className="product-title">{selectedProduct.nama}</h3>
+                                    <p className="product-short-desc">{selectedProduct.deskripsiSingkat}</p>
 
                                     <div className="product-meta">
                                         <div className="meta-item">
                                             <Tag size={16} />
-                                            <span>{getCategoryName(selectedProduct.categoryId)}</span>
+                                            <span>{getCategoryName(selectedProduct.kategoriId)}</span>
                                         </div>
                                         <div className="meta-item">
                                             <Package size={16} />
-                                            <span>Min. Order: {selectedProduct.minOrderQty} pcs</span>
+                                            <span>Min. Order: {selectedProduct.minPesan} pcs</span>
                                         </div>
                                         <div className="meta-item">
                                             <Clock size={16} />
-                                            <span>Estimasi: {selectedProduct.estimatedDays} hari kerja</span>
+                                            <span>Estimasi: {selectedProduct.estimasiHari} hari kerja</span>
                                         </div>
                                     </div>
 
                                     <div className="product-price-display">
                                         <span className="price-label">Harga Mulai</span>
                                         <span className="price-value">
-                                            {formatPrice(selectedProduct.quantityTiers[0].pricePerUnit)}
+                                            {formatPrice(selectedProduct.tierJumlah[0].pricePerUnit)}
                                             <span className="price-suffix">/pcs</span>
                                         </span>
                                     </div>
@@ -397,19 +397,19 @@ export default function Products() {
                             {/* Description */}
                             <div className="modal-section">
                                 <h4><FileText size={16} /> Deskripsi</h4>
-                                <p className="description-text">{selectedProduct.description}</p>
+                                <p className="description-text">{selectedProduct.deskripsi}</p>
                             </div>
 
                             {/* Options Grid */}
                             <div className="options-grid">
                                 {/* Sizes */}
-                                {selectedProduct.sizes.length > 0 && (
+                                {selectedProduct.ukuran.length > 0 && (
                                     <div className="modal-section">
                                         <h4><Layers size={16} /> Ukuran Tersedia</h4>
                                         <div className="option-tags">
-                                            {selectedProduct.sizes.map(size => (
+                                            {selectedProduct.ukuran.map(size => (
                                                 <span key={size.id} className="option-tag">
-                                                    {size.name}
+                                                    {size.nama}
                                                     {size.priceMultiplier > 1 && (
                                                         <span className="option-price">x{size.priceMultiplier}</span>
                                                     )}
@@ -420,13 +420,13 @@ export default function Products() {
                                 )}
 
                                 {/* Materials */}
-                                {selectedProduct.materials.length > 0 && (
+                                {selectedProduct.bahan.length > 0 && (
                                     <div className="modal-section">
                                         <h4><Layers size={16} /> Material Tersedia</h4>
                                         <div className="option-tags">
-                                            {selectedProduct.materials.map(material => (
+                                            {selectedProduct.bahan.map(material => (
                                                 <span key={material.id} className="option-tag">
-                                                    {material.name}
+                                                    {material.nama}
                                                     {material.pricePerUnit > 0 && (
                                                         <span className="option-price">+{formatPrice(material.pricePerUnit)}</span>
                                                     )}
@@ -437,13 +437,13 @@ export default function Products() {
                                 )}
 
                                 {/* Finishings */}
-                                {selectedProduct.finishings.length > 0 && (
+                                {selectedProduct.finishing.length > 0 && (
                                     <div className="modal-section">
                                         <h4><CheckCircle size={16} /> Finishing Tersedia</h4>
                                         <div className="option-tags">
-                                            {selectedProduct.finishings.map(finishing => (
+                                            {selectedProduct.finishing.map(finishing => (
                                                 <span key={finishing.id} className="option-tag">
-                                                    {finishing.name}
+                                                    {finishing.nama}
                                                     <span className="option-price">+{formatPrice(finishing.price)}</span>
                                                 </span>
                                             ))}
@@ -460,7 +460,7 @@ export default function Products() {
                                         <span>Jumlah</span>
                                         <span>Harga per Pcs</span>
                                     </div>
-                                    {selectedProduct.quantityTiers.map((tier, idx) => (
+                                    {selectedProduct.tierJumlah.map((tier, idx) => (
                                         <div key={idx} className="tier-row">
                                             <span>
                                                 {tier.minQty} - {tier.maxQty === 99999 ? '∞' : tier.maxQty} pcs
@@ -472,19 +472,19 @@ export default function Products() {
                             </div>
 
                             {/* File Requirements */}
-                            {!selectedProduct.isRetailProduct && selectedProduct.requiresDesignFile !== false && (
+                            {!selectedProduct.produkRetail && selectedProduct.butuhFileDesain !== false && (
                                 <div className="modal-section">
                                     <h4><FileText size={16} /> Persyaratan File</h4>
                                     <div className="file-requirements">
                                         <div className="requirement-item">
                                             <span className="req-label">Format yang diterima:</span>
                                             <span className="req-value">
-                                                {selectedProduct.allowedFileTypes.map(t => t.toUpperCase()).join(', ')}
+                                                {selectedProduct.tipeFileDiperbolehkan.map(t => t.toUpperCase()).join(', ')}
                                             </span>
                                         </div>
                                         <div className="requirement-item">
                                             <span className="req-label">Ukuran maksimal:</span>
-                                            <span className="req-value">{selectedProduct.maxFileSize} MB</span>
+                                            <span className="req-value">{selectedProduct.ukuranFileMaks} MB</span>
                                         </div>
                                     </div>
                                 </div>
