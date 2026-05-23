@@ -13,16 +13,16 @@ import { useUIStore } from '../../../store';
 import './PromoForm.css';
 
 const defaultFormData: PromoInput = {
-    code: '',
-    description: '',
+    kode: '',
+    deskripsi: '',
     type: 'percentage',
-    discount: 0,
-    min_purchase: 0,
-    max_discount: undefined,
-    usage_limit: undefined,
-    start_date: '',
-    end_date: '',
-    is_active: true,
+    diskon: 0,
+    min_beli: 0,
+    maks_diskon: undefined,
+    batas_penggunaan: undefined,
+    tanggal_mulai: '',
+    tanggal_berakhir: '',
+    aktif: true,
 };
 
 export default function PromoForm() {
@@ -47,16 +47,16 @@ export default function PromoForm() {
             if (response.success) {
                 const promo = response.data;
                 setFormData({
-                    code: promo.code,
-                    description: promo.deskripsi || '',
+                    kode: promo.kode,
+                    deskripsi: promo.deskripsi || '',
                     type: promo.type,
-                    discount: promo.discount,
-                    min_purchase: promo.min_purchase || 0,
-                    max_discount: promo.max_discount,
-                    usage_limit: promo.usage_limit,
-                    start_date: promo.start_date || '',
-                    end_date: promo.end_date || '',
-                    is_active: promo.aktif,
+                    diskon: promo.diskon,
+                    min_beli: promo.min_beli || 0,
+                    maks_diskon: promo.maks_diskon,
+                    batas_penggunaan: promo.batas_penggunaan,
+                    tanggal_mulai: promo.tanggal_mulai || '',
+                    tanggal_berakhir: promo.tanggal_berakhir || '',
+                    aktif: promo.aktif,
                 });
             }
         } catch (error) {
@@ -95,7 +95,7 @@ export default function PromoForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.code || formData.discount <= 0) {
+        if (!formData.kode || formData.diskon <= 0) {
             addToast({
                 type: 'error',
                 title: 'Validasi Error',
@@ -184,8 +184,8 @@ export default function PromoForm() {
                             <label>Kode Promo *</label>
                             <input
                                 type="text"
-                                name="code"
-                                value={formData.code}
+                                name="kode"
+                                value={formData.kode}
                                 onChange={handleChange}
                                 placeholder="DISKON10"
                                 style={{ textTransform: 'uppercase' }}
@@ -197,8 +197,8 @@ export default function PromoForm() {
                         <div className="form-group">
                             <label>Deskripsi</label>
                             <textarea
-                                name="description"
-                                value={formData.description}
+                                name="deskripsi"
+                                value={formData.deskripsi}
                                 onChange={handleChange}
                                 rows={3}
                                 placeholder="Deskripsi promo..."
@@ -223,8 +223,8 @@ export default function PromoForm() {
                                 <div className="input-with-addon">
                                     <input
                                         type="number"
-                                        name="discount"
-                                        value={formData.discount}
+                                        name="diskon"
+                                        value={formData.diskon}
                                         onChange={handleChange}
                                         min={0}
                                         max={formData.type === 'percentage' ? 100 : undefined}
@@ -246,10 +246,10 @@ export default function PromoForm() {
                             <label>Minimal Pembelian</label>
                             <div className="input-with-addon">
                                 <span className="addon left">Rp</span>
-                                <input
-                                    type="number"
-                                    name="min_purchase"
-                                    value={formData.min_purchase || ''}
+                                    <input
+                                        type="number"
+                                        name="min_beli"
+                                        value={formData.min_beli || ''}
                                     onChange={handleChange}
                                     min={0}
                                     placeholder="0"
@@ -265,8 +265,8 @@ export default function PromoForm() {
                                     <span className="addon left">Rp</span>
                                     <input
                                         type="number"
-                                        name="max_discount"
-                                        value={formData.max_discount || ''}
+                                        name="maks_diskon"
+                                        value={formData.maks_diskon || ''}
                                         onChange={handleChange}
                                         min={0}
                                         placeholder="Tidak terbatas"
@@ -280,8 +280,8 @@ export default function PromoForm() {
                             <label>Batas Penggunaan</label>
                             <input
                                 type="number"
-                                name="usage_limit"
-                                value={formData.usage_limit || ''}
+                                name="batas_penggunaan"
+                                value={formData.batas_penggunaan || ''}
                                 onChange={handleChange}
                                 min={1}
                                 placeholder="Tidak terbatas"
@@ -299,8 +299,8 @@ export default function PromoForm() {
                                 <label>Tanggal Mulai</label>
                                 <input
                                     type="date"
-                                    name="start_date"
-                                    value={formData.start_date}
+                                    name="tanggal_mulai"
+                                    value={formData.tanggal_mulai}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -309,8 +309,8 @@ export default function PromoForm() {
                                 <label>Tanggal Berakhir</label>
                                 <input
                                     type="date"
-                                    name="end_date"
-                                    value={formData.end_date}
+                                    name="tanggal_berakhir"
+                                    value={formData.tanggal_berakhir}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -326,8 +326,8 @@ export default function PromoForm() {
                         <label className="checkbox-label">
                             <input
                                 type="checkbox"
-                                name="is_active"
-                                checked={formData.is_active}
+                                name="aktif"
+                                checked={formData.aktif}
                                 onChange={handleChange}
                             />
                             <span className="checkmark"></span>

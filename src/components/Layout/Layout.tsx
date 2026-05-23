@@ -121,10 +121,10 @@ export default function Layout({ children }: LayoutProps) {
                                                         to={`/kategori/${category.slug}`}
                                                         className="nav-dropdown-item"
                                                     >
-                                                        <span className="nav-dropdown-icon"><Icon name={category.icon || 'Package'} size={18} /></span>
+                                                        <span className="nav-dropdown-icon"><Icon name={category.ikon || 'Package'} size={18} /></span>
                                                         <div className="nav-dropdown-info">
                                                             <span className="nav-dropdown-name">{category.nama}</span>
-                                                            <span className="nav-dropdown-count">{category.productCount} produk</span>
+                                                            <span className="nav-dropdown-count">{category.jumlah_produk} produk</span>
                                                         </div>
                                                     </Link>
                                                 ))}
@@ -214,8 +214,8 @@ export default function Layout({ children }: LayoutProps) {
                                                 />
                                                 <div className="cart-item-info">
                                                     <h4>{item.product.nama}</h4>
-                                                    <p className="cart-item-qty">Qty: {item.config.quantity}</p>
-                                                    <p className="cart-item-price">{formatPrice(item.totalPrice)}</p>
+                                                    <p className="cart-item-qty">Qty: {item.config.jumlah}</p>
+                                                    <p className="cart-item-price">{formatPrice(item.harga_total)}</p>
                                                 </div>
                                                 <button
                                                     className="cart-item-remove"
@@ -283,7 +283,7 @@ export default function Layout({ children }: LayoutProps) {
                                         to={`/kategori/${category.slug}`}
                                         className="mobile-nav-link mobile-nav-category"
                                     >
-                                        <Icon name={category.icon || 'Package'} size={18} />
+                                        <Icon name={category.ikon || 'Package'} size={18} />
                                         {category.nama}
                                     </Link>
                                 ))}

@@ -164,7 +164,7 @@ export default function OrderDetail() {
     }
 
     const status = statusConfig[order.status] || statusConfig['pending_payment'];
-    const paymentStatus = paymentStatusConfig[order.paymentStatus] || paymentStatusConfig['pending'];
+    const paymentStatus = paymentStatusConfig[order.status_bayar] || paymentStatusConfig['pending'];
     const StatusIcon = status.icon;
 
     return (
@@ -179,8 +179,8 @@ export default function OrderDetail() {
                     <div>
                         <h2>Detail Pesanan</h2>
                         <div className="order-number-row">
-                            <span className="order-number">{order.orderNumber}</span>
-                            <button className="copy-btn" onClick={() => copyToClipboard(order.orderNumber)}>
+                            <span className="order-number">{order.nomor_pesanan}</span>
+                            <button className="copy-btn" onClick={() => copyToClipboard(order.nomor_pesanan)}>
                                 <Copy size={14} />
                             </button>
                         </div>
@@ -212,15 +212,15 @@ export default function OrderDetail() {
                                     <div className="item-info">
                                         <div className="item-name">{item.product?.nama}</div>
                                         <div className="item-specs">
-                                            {item.config?.sizeName && <span>{item.config.sizeName}</span>}
-                                            {item.config?.materialName && <span>{item.config.materialName}</span>}
-                                            {item.config?.printSideName && <span>{item.config.printSideName}</span>}
+                                            {item.config?.nama_ukuran && <span>{item.config.nama_ukuran}</span>}
+                                            {item.config?.nama_bahan && <span>{item.config.nama_bahan}</span>}
+                                            {item.config?.nama_sisi_cetak && <span>{item.config.nama_sisi_cetak}</span>}
                                         </div>
-                                        <div className="item-qty">Qty: {item.config?.quantity}</div>
+                                        <div className="item-qty">Qty: {item.config?.jumlah}</div>
                                     </div>
                                     <div className="item-price">
-                                        <div className="unit-price">{formatPrice(item.unitPrice)}/pcs</div>
-                                        <div className="total-price">{formatPrice(item.totalPrice)}</div>
+                                        <div className="unit-price">{formatPrice(item.harga_satuan)}/pcs</div>
+                                        <div className="total-price">{formatPrice(item.harga_total)}</div>
                                     </div>
                                 </div>
                             ))}
@@ -239,7 +239,7 @@ export default function OrderDetail() {
                                         <div key={index} className="file-item">
                                             <FileText size={24} />
                                             <div className="file-info">
-                                                <span className="file-name">{item.designFile.name || 'Design File'}</span>
+                                                <span className="file-name">{item.designFile.nama_asli || 'Design File'}</span>
                                                 <span className="file-size">{item.product?.nama}</span>
                                             </div>
                                             <button className="btn btn-ghost btn-sm">
@@ -290,7 +290,7 @@ export default function OrderDetail() {
 
                             <label>Status Pembayaran</label>
                             <select
-                                value={order.paymentStatus}
+                                value={order.status_bayar}
                                 onChange={(e) => handleUpdatePaymentStatus(e.target.value)}
                                 disabled={isUpdating}
                             >
@@ -328,7 +328,7 @@ export default function OrderDetail() {
                             <h3><MapPin size={18} /> Alamat Pengiriman</h3>
                         </div>
                         <div className="shipping-info">
-                            <p className="recipient">{order.shippingAddress?.recipientName}</p>
+                            <p className="recipient">{order.shippingAddress?.nama_penerima}</p>
                             <p className="phone">{order.shippingAddress?.telepon}</p>
                             <p className="address">{order.shippingAddress?.alamat}</p>
                             <p className="location">
@@ -349,18 +349,18 @@ export default function OrderDetail() {
                             </div>
                             <div className="summary-row">
                                 <span>Ongkos Kirim</span>
-                                <span>{formatPrice(order.shippingCost)}</span>
+                                <span>{formatPrice(order.biaya_kirim)}</span>
                             </div>
-                            {order.discount > 0 && (
+                            {order.diskon > 0 && (
                                 <div className="summary-row discount">
                                     <span>Diskon</span>
-                                    <span>-{formatPrice(order.discount)}</span>
+                                    <span>-{formatPrice(order.diskon)}</span>
                                 </div>
                             )}
                             <div className="summary-divider"></div>
                             <div className="summary-row total">
                                 <span>Total</span>
-                                <span>{formatPrice(order.totalAmount)}</span>
+                                <span>{formatPrice(order.total)}</span>
                             </div>
                             <div className="payment-status-row">
                                 <span>Status Pembayaran</span>
@@ -370,7 +370,7 @@ export default function OrderDetail() {
                             </div>
                             <div className="payment-method">
                                 <span>Metode</span>
-                                <span>{typeof order.paymentMethod === 'string' ? order.paymentMethod : order.paymentMethod?.name || '-'}</span>
+                                <span>{typeof order.metode_pembayaran === 'string' ? order.metode_pembayaran : order.metode_pembayaran?.nama || '-'}</span>
                             </div>
                         </div>
                     </div>
@@ -385,15 +385,15 @@ export default function OrderDetail() {
                                 <div className="timeline-dot"></div>
                                 <div className="timeline-content">
                                     <span className="timeline-label">Pesanan Dibuat</span>
-                                    <span className="timeline-date">{formatDate(order.createdAt?.toString() || '')}</span>
+                                    <span className="timeline-date">{formatDate(order.created_at?.toString() || '')}</span>
                                 </div>
                             </div>
-                            {order.updatedAt && order.updatedAt !== order.createdAt && (
+                            {order.updated_at && order.updated_at !== order.created_at && (
                                 <div className="timeline-item">
                                     <div className="timeline-dot"></div>
                                     <div className="timeline-content">
                                         <span className="timeline-label">Terakhir Diupdate</span>
-                                        <span className="timeline-date">{formatDate(order.updatedAt.toString())}</span>
+                                        <span className="timeline-date">{formatDate(order.updated_at.toString())}</span>
                                     </div>
                                 </div>
                             )}

@@ -35,7 +35,7 @@ export default function OrderHistory() {
 
     const filteredOrders = orders?.filter(order => {
         const matchesSearch =
-            order.nomorPesanan?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            order.nomor_pesanan?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             order.items?.some(item => item.product?.nama?.toLowerCase().includes(searchQuery.toLowerCase()));
 
         const matchesStatus = filterStatus === 'all' || order.status === filterStatus;
@@ -127,10 +127,10 @@ export default function OrderHistory() {
                                 <div className="order-header">
                                     <div className="order-number">
                                         <span className="label">No. Pesanan</span>
-                                        <span className="value">{order.nomorPesanan}</span>
+                                        <span className="value">{order.nomor_pesanan}</span>
                                     </div>
                                     <div className="order-date">
-                                        {formatDate(order.createdAt?.toString() || '')}
+                                        {formatDate(order.created_at?.toString() || '')}
                                     </div>
                                     <div className={`order-status status-${status.color}`}>
                                         <StatusIcon size={16} />
@@ -149,7 +149,7 @@ export default function OrderHistory() {
                                                 <div className="item-name">{item.product?.nama}</div>
                                                 <div className="item-qty">Qty: {item.config?.jumlah}</div>
                                             </div>
-                                            <div className="item-price">{formatPrice(item.totalPrice)}</div>
+                                            <div className="item-price">{formatPrice(item.harga_total)}</div>
                                         </div>
                                     ))}
                                     {order.items && order.items.length > 2 && (

@@ -81,9 +81,9 @@ export default function Cart() {
                     {/* Cart Items */}
                     <div className="cart-items-section">
                         {items.map((item) => {
-                            const selectedSize = item.product.ukuran.find(s => s.id === item.config.sizeId);
-                            const selectedMaterial = item.product.bahan.find(m => m.id === item.config.materialId);
-                            const selectedPrintSide = item.product.sisiCetak.find(p => p.id === item.config.printSideId);
+                            const selectedSize = item.product.ukuran.find(s => s.id === item.config.ukuran_id);
+                            const selectedMaterial = item.product.bahan.find(m => m.id === item.config.bahan_id);
+                            const selectedPrintSide = item.product.sisiCetak.find(p => p.id === item.config.sisi_cetak_id);
                             const selectedFinishings = item.product.finishing.filter(f => item.config.finishingIds.includes(f.id));
                             const category = (categories || []).find(c => c.id === item.product.kategoriId);
 
@@ -139,7 +139,7 @@ export default function Cart() {
                                         {item.uploadedFile && (
                                             <div className="cart-item-file">
                                                 <FileText size={16} />
-                                                <span>{item.uploadedFile.name}</span>
+                                                <span>{item.uploadedFile.nama_asli}</span>
                                             </div>
                                         )}
 
@@ -170,8 +170,8 @@ export default function Cart() {
                                             </div>
 
                                             <div className="cart-item-pricing">
-                                                <span className="unit-price">{formatPrice(item.unitPrice)}/pcs</span>
-                                                <span className="total-price">{formatPrice(item.totalPrice)}</span>
+                                                <span className="unit-price">{formatPrice(item.harga_satuan)}/pcs</span>
+                                                <span className="total-price">{formatPrice(item.harga_total)}</span>
                                             </div>
                                         </div>
                                     </div>

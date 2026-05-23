@@ -113,8 +113,8 @@ export default function Promos() {
 
                         <div className="promo-discount">
                             {promo.type === 'percentage'
-                                ? `${promo.discount}% OFF`
-                                : formatPrice(promo.discount)
+                                ? `${promo.diskon}% OFF`
+                                : formatPrice(promo.diskon)
                             }
                         </div>
 

@@ -173,8 +173,8 @@ export default function UserOrderDetail() {
                     <div className="order-title">
                         <h1>Detail Pesanan</h1>
                         <div className="order-number-row">
-                            <span className="order-id">{order.nomorPesanan}</span>
-                            <button className="copy-btn" onClick={() => copyToClipboard(order.nomorPesanan)}>
+                            <span className="order-id">{order.nomor_pesanan}</span>
+                            <button className="copy-btn" onClick={() => copyToClipboard(order.nomor_pesanan)}>
                                 <Copy size={14} />
                             </button>
                         </div>
@@ -206,14 +206,14 @@ export default function UserOrderDetail() {
                                         <div className="item-info">
                                             <div className="item-name">{item.product?.nama}</div>
                                             <div className="item-specs">
-                                                {item.config?.sizeName && <span>{item.config.sizeName}</span>}
-                                                {item.config?.materialName && <span>{item.config.materialName}</span>}
-                                                {item.config?.printSideName && <span>{item.config.printSideName}</span>}
+                                                {item.config?.nama_ukuran && <span>{item.config.nama_ukuran}</span>}
+                                                {item.config?.nama_bahan && <span>{item.config.nama_bahan}</span>}
+                                                {item.config?.nama_sisi_cetak && <span>{item.config.nama_sisi_cetak}</span>}
                                             </div>
                                             <div className="item-qty">Qty: {item.config?.jumlah} pcs</div>
                                         </div>
                                         <div className="item-price">
-                                            {formatPrice(item.totalPrice)}
+                                            {formatPrice(item.harga_total)}
                                         </div>
                                     </div>
                                 ))}
@@ -224,11 +224,11 @@ export default function UserOrderDetail() {
                         <div className="detail-section">
                             <h3><MapPin size={20} /> Alamat Pengiriman</h3>
                             <div className="info-card">
-                                <p className="recipient">{order.shippingAddress?.namaPenerima}</p>
+                                <p className="recipient">{order.shippingAddress?.nama_penerima}</p>
                                 <p className="phone">{order.shippingAddress?.telepon}</p>
                                 <p className="address">{order.shippingAddress?.alamat}</p>
                                 <p className="location">
-                                    {order.shippingAddress?.kota}, {order.shippingAddress?.provinsi} {order.shippingAddress?.kodePos}
+                                    {order.shippingAddress?.kota}, {order.shippingAddress?.provinsi} {order.shippingAddress?.kode_pos}
                                 </p>
                             </div>
                         </div>
@@ -254,7 +254,7 @@ export default function UserOrderDetail() {
                                 </div>
                                 <div className="summary-row">
                                     <span>Ongkos Kirim</span>
-                                    <span>{formatPrice(order.biayaKirim)}</span>
+                                    <span>{formatPrice(order.biaya_kirim)}</span>
                                 </div>
                                 {order.diskon > 0 && (
                                     <div className="summary-row discount">
@@ -270,7 +270,7 @@ export default function UserOrderDetail() {
                             </div>
                             <div className="payment-method">
                                 <CreditCard size={16} />
-                                <span>{typeof order.metodePembayaran === 'string' ? order.metodePembayaran : order.metodePembayaran?.nama || 'Transfer Bank'}</span>
+                                <span>{typeof order.metode_pembayaran === 'string' ? order.metode_pembayaran : order.metode_pembayaran?.nama || 'Transfer Bank'}</span>
                             </div>
                         </div>
 
@@ -283,7 +283,7 @@ export default function UserOrderDetail() {
                                     <div className="timeline-content">
                                         <span className="timeline-label">Pesanan Dibuat</span>
                                         <span className="timeline-date">
-                                            {formatDate(order.createdAt?.toString() || '')}
+                                            {formatDate(order.created_at?.toString() || '')}
                                         </span>
                                     </div>
                                 </div>

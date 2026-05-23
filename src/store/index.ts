@@ -23,12 +23,12 @@ export const useCartStore = create<CartState>()(
             addItem: (product, config, unitPrice, totalPrice) => {
                 const newItem: CartItem = {
                     id: `cart-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                    productId: product.id,
+                    produk_id: product.id,
                     product,
                     config,
-                    unitPrice,
-                    totalPrice,
-                    createdAt: new Date(),
+                    harga_satuan: unitPrice,
+                    harga_total: totalPrice,
+                    created_at: new Date(),
                 };
                 set((state) => ({ items: [...state.items, newItem] }));
             },
@@ -41,8 +41,8 @@ export const useCartStore = create<CartState>()(
                 set((state) => ({
                     items: state.items.map((item) => {
                         if (item.id === itemId) {
-                            const newTotalPrice = item.unitPrice * quantity;
-                            return { ...item, config: { ...item.config, jumlah }, totalPrice: newTotalPrice };
+                            const newTotalPrice = item.harga_satuan * quantity;
+                            return { ...item, config: { ...item.config, jumlah }, harga_total: newTotalPrice };
                         }
                         return item;
                     }),
@@ -64,7 +64,7 @@ export const useCartStore = create<CartState>()(
             },
 
             getTotalPrice: () => {
-                return get().items.reduce((total, item) => total + item.totalPrice, 0);
+                return get().items.reduce((total, item) => total + item.harga_total, 0);
             },
 
             getTotalWeight: () => {

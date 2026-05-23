@@ -193,7 +193,7 @@ export default function Checkout() {
                 addToast({
                     type: 'success',
                     title: 'Pesanan Berhasil!',
-                    message: `Nomor pesanan: ${response.data.orderNumber}`,
+                    message: `Nomor pesanan: ${response.data.nomor_pesanan}`,
                 });
                 navigate(`/akun/pesanan`);
             }
