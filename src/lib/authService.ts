@@ -8,11 +8,11 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-    name: string;
+    nama: string;
     email: string;
     password: string;
     password_confirmation: string;
-    phone?: string;
+    telepon?: string;
 }
 
 export interface AuthResponse {

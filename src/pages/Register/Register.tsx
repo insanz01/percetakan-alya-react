@@ -6,17 +6,17 @@ import { useUIStore } from '../../store';
 import './Register.css';
 
 interface FormData {
-    name: string;
+    nama: string;
     email: string;
-    phone: string;
+    telepon: string;
     password: string;
     password_confirmation: string;
 }
 
 interface FormErrors {
-    name?: string;
+    nama?: string;
     email?: string;
-    phone?: string;
+    telepon?: string;
     password?: string;
     password_confirmation?: string;
 }
@@ -25,9 +25,9 @@ export default function Register() {
     const navigate = useNavigate();
     const { addToast } = useUIStore();
     const [formData, setFormData] = useState<FormData>({
-        name: '',
+        nama: '',
         email: '',
-        phone: '',
+        telepon: '',
         password: '',
         password_confirmation: '',
     });
@@ -39,10 +39,10 @@ export default function Register() {
     const validateForm = (): boolean => {
         const newErrors: FormErrors = {};
 
-        if (!formData.name.trim()) {
-            newErrors.name = 'Nama lengkap wajib diisi';
-        } else if (formData.name.trim().length < 3) {
-            newErrors.name = 'Nama minimal 3 karakter';
+        if (!formData.nama.trim()) {
+            newErrors.nama = 'Nama lengkap wajib diisi';
+        } else if (formData.nama.trim().length < 3) {
+            newErrors.nama = 'Nama minimal 3 karakter';
         }
 
         if (!formData.email.trim()) {
@@ -51,8 +51,8 @@ export default function Register() {
             newErrors.email = 'Format email tidak valid';
         }
 
-        if (formData.phone && !/^[0-9+\-\s]{10,15}$/.test(formData.phone.replace(/\s/g, ''))) {
-            newErrors.phone = 'Format nomor telepon tidak valid';
+        if (formData.telepon && !/^[0-9+\-\s]{10,15}$/.test(formData.telepon.replace(/\s/g, ''))) {
+            newErrors.telepon = 'Format nomor telepon tidak valid';
         }
 
         if (!formData.password) {
@@ -175,21 +175,21 @@ export default function Register() {
 
                     <form onSubmit={handleSubmit} className="register-form">
                         {/* Name Field */}
-                        <div className={`form-group ${errors.name ? 'error' : ''}`}>
-                            <label htmlFor="name">Nama Lengkap</label>
+                        <div className={`form-group ${errors.nama ? 'error' : ''}`}>
+                            <label htmlFor="nama">Nama Lengkap</label>
                             <div className="input-wrapper">
                                 <User className="input-icon" size={18} />
                                 <input
                                     type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
+                                    id="nama"
+                                    name="nama"
+                                    value={formData.nama}
                                     onChange={handleChange}
                                     placeholder="Masukkan nama lengkap"
                                     disabled={isLoading}
                                 />
                             </div>
-                            {errors.name && <span className="error-message">{errors.name}</span>}
+                            {errors.nama && <span className="error-message">{errors.nama}</span>}
                         </div>
 
                         {/* Email Field */}
@@ -211,21 +211,21 @@ export default function Register() {
                         </div>
 
                         {/* Phone Field */}
-                        <div className={`form-group ${errors.phone ? 'error' : ''}`}>
-                            <label htmlFor="phone">Nomor Telepon <span className="optional">(opsional)</span></label>
+                        <div className={`form-group ${errors.telepon ? 'error' : ''}`}>
+                            <label htmlFor="telepon">Nomor Telepon <span className="optional">(opsional)</span></label>
                             <div className="input-wrapper">
                                 <Phone className="input-icon" size={18} />
                                 <input
                                     type="tel"
-                                    id="phone"
-                                    name="phone"
-                                    value={formData.phone}
+                                    id="telepon"
+                                    name="telepon"
+                                    value={formData.telepon}
                                     onChange={handleChange}
                                     placeholder="081234567890"
                                     disabled={isLoading}
                                 />
                             </div>
-                            {errors.phone && <span className="error-message">{errors.phone}</span>}
+                            {errors.telepon && <span className="error-message">{errors.telepon}</span>}
                         </div>
 
                         {/* Password Field */}
