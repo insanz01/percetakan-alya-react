@@ -29,7 +29,7 @@ const mockCartItems = [
         id: '1',
         productId: 'prod-1',
         productName: 'Brosur A5 Premium',
-        productImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600',
+        productImage: '/gambar/brosur/1.jpeg',
         quantity: 100,
         sizeName: 'A5 (148 x 210 mm)',
         materialName: 'Art Paper 120gr',

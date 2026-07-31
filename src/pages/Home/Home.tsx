@@ -14,7 +14,7 @@ const heroBanners = [
         subtitle: 'Solusi percetakan terpercaya untuk bisnis dan personal Anda',
         ctaText: 'Mulai Pesan',
         ctaLink: '/kategori',
-        image: 'https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?w=600',
+        image: '/gambar/banner/1.jpeg',
         gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     },
     {
@@ -23,7 +23,7 @@ const heroBanners = [
         subtitle: 'Garansi cetak ulang jika hasil tidak sesuai ekspektasi Anda',
         ctaText: 'Lihat Produk',
         ctaLink: '/kategori',
-        image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600',
+        image: '/gambar/banner/2.jpeg',
         gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
     },
     {
@@ -32,7 +32,7 @@ const heroBanners = [
         subtitle: 'Pengerjaan cepat 1-5 hari kerja untuk kebutuhan urgent',
         ctaText: 'Lihat Produk',
         ctaLink: '/kategori',
-        image: 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?w=600',
+        image: '/gambar/banner/3.jpeg',
         gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
     },
 ];

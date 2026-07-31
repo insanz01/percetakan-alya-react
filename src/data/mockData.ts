@@ -7,7 +7,7 @@ export const categories: ProductCategory[] = [
         slug: 'brosur-flyer',
         ikon: 'Newspaper',
         deskripsi: 'Brosur dan flyer berkualitas tinggi untuk promosi bisnis Anda',
-        gambar: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=400',
+        gambar: '/gambar/brosur/1.jpeg',
         jumlah_produk: 12,
     },
     {
@@ -16,7 +16,7 @@ export const categories: ProductCategory[] = [
         slug: 'kartu-nama',
         ikon: 'CreditCard',
         deskripsi: 'Kartu nama profesional dengan berbagai finishing premium',
-        gambar: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400',
+        gambar: '/gambar/kartu_nama/1.jpeg',
         jumlah_produk: 8,
     },
     {
@@ -25,7 +25,7 @@ export const categories: ProductCategory[] = [
         slug: 'banner-spanduk',
         ikon: 'Flag',
         deskripsi: 'Banner dan spanduk outdoor/indoor dengan bahan tahan lama',
-        gambar: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400',
+        gambar: '/gambar/banner/1.jpeg',
         jumlah_produk: 15,
     },
     {
@@ -34,7 +34,7 @@ export const categories: ProductCategory[] = [
         slug: 'poster-print',
         ikon: 'Image',
         deskripsi: 'Cetak poster dan foto ukuran besar dengan kualitas tinggi',
-        gambar: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400',
+        gambar: '/gambar/poster_portrait/1.jpeg',
         jumlah_produk: 10,
     },
     {
@@ -43,7 +43,7 @@ export const categories: ProductCategory[] = [
         slug: 'undangan',
         ikon: 'Heart',
         deskripsi: 'Undangan pernikahan, ulang tahun, dan acara spesial lainnya',
-        gambar: 'https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?w=400',
+        gambar: '/gambar/undangan/1.jpeg',
         jumlah_produk: 20,
     },
     {
@@ -61,7 +61,7 @@ export const categories: ProductCategory[] = [
         slug: 'stiker-label',
         ikon: 'Tag',
         deskripsi: 'Stiker dan label custom untuk produk dan kemasan',
-        gambar: 'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=400',
+        gambar: '/gambar/stiker/1.jpeg',
         jumlah_produk: 14,
     },
     {
@@ -70,7 +70,7 @@ export const categories: ProductCategory[] = [
         slug: 'kalender',
         ikon: 'Calendar',
         deskripsi: 'Kalender custom untuk personal dan corporate gift',
-        gambar: 'https://images.unsplash.com/photo-1506784926709-22f1ec395907?w=400',
+        gambar: '/gambar/kalender/1.jpeg',
         jumlah_produk: 5,
     },
     {
@@ -79,7 +79,7 @@ export const categories: ProductCategory[] = [
         slug: 'atk-perlengkapan',
         ikon: 'Pencil',
         deskripsi: 'Alat tulis kantor dan perlengkapan kerja berkualitas',
-        gambar: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=400',
+        gambar: '/gambar/atk/1.jpeg',
         jumlah_produk: 15,
     },
     {
@@ -90,6 +90,33 @@ export const categories: ProductCategory[] = [
         deskripsi: 'Aksesoris dan perlengkapan penunjang produktivitas',
         gambar: 'https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?w=400',
         jumlah_produk: 12,
+    },
+    {
+        id: 'cat-11',
+        nama: 'Buku & Majalah',
+        slug: 'buku-majalah',
+        ikon: 'FolderOpen',
+        deskripsi: 'Cetak buku, majalah, dan katalog dengan berbagai pilihan jilid',
+        gambar: '/gambar/buku_majalah/1.jpeg',
+        jumlah_produk: 4,
+    },
+    {
+        id: 'cat-12',
+        nama: 'Kemasan & Box',
+        slug: 'kemasan-box',
+        ikon: 'Package',
+        deskripsi: 'Kemasan dan box custom untuk produk dan hampers',
+        gambar: '/gambar/kemasan_box/1.jpeg',
+        jumlah_produk: 4,
+    },
+    {
+        id: 'cat-13',
+        nama: 'Konveksi & Garmen',
+        slug: 'konveksi-garmen',
+        ikon: 'Shirt',
+        deskripsi: 'Sablon dan bordir kaos, jaket, dan seragam custom',
+        gambar: '/gambar/konveksi/1.jpeg',
+        jumlah_produk: 3,
     },
 ];
 
@@ -108,8 +135,8 @@ Keunggulan:
 - Gratis desain template`,
         deskripsi_singkat: 'Brosur A5 dengan finishing premium untuk promosi bisnis',
         gambar: [
-            'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600',
-            'https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?w=600',
+            '/gambar/brosur/1.jpeg',
+            '/gambar/brosur/2.jpeg',
         ],
         harga_dasar: 500,
         ukuran: [
@@ -160,8 +187,8 @@ Keunggulan:
         deskripsi: `Kartu nama premium dengan berbagai pilihan material dan finishing eksklusif. Berikan kesan profesional dengan kartu nama berkualitas tinggi.`,
         deskripsi_singkat: 'Kartu nama dengan finishing eksklusif dan material premium',
         gambar: [
-            'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600',
-            'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600',
+            '/gambar/kartu_nama/1.jpeg',
+            '/gambar/kartu_nama/2.jpeg',
         ],
         harga_dasar: 300,
         ukuran: [
@@ -209,7 +236,7 @@ Keunggulan:
         deskripsi: `X-Banner berkualitas tinggi untuk promosi indoor. Mudah dipasang dan portable, cocok untuk pameran, seminar, atau toko.`,
         deskripsi_singkat: 'X-Banner portable untuk promosi indoor',
         gambar: [
-            'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600',
+            '/gambar/banner/2.jpeg',
         ],
         harga_dasar: 50000,
         ukuran: [
@@ -252,7 +279,7 @@ Keunggulan:
         deskripsi: `Cetak poster dan foto ukuran A3+ dengan kualitas foto premium. Warna tajam dan detail tinggi, cocok untuk dekorasi atau display.`,
         deskripsi_singkat: 'Cetak poster A3+ dengan kualitas foto premium',
         gambar: [
-            'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600',
+            '/gambar/poster_portrait/2.jpeg',
         ],
         harga_dasar: 25000,
         ukuran: [
@@ -296,7 +323,7 @@ Keunggulan:
         deskripsi: `Stiker vinyl tahan air dan UV untuk outdoor. Cocok untuk branding kendaraan, signage, atau promosi outdoor lainnya.`,
         deskripsi_singkat: 'Stiker vinyl tahan air dan UV untuk outdoor',
         gambar: [
-            'https://images.unsplash.com/photo-1635405074683-96d6921a2a68?w=600',
+            '/gambar/stiker/2.jpeg',
         ],
         harga_dasar: 50,
         ukuran: [
@@ -341,7 +368,7 @@ Keunggulan:
         deskripsi: `Undangan pernikahan hardcover dengan desain mewah dan elegan. Tersedia berbagai pilihan finishing eksklusif untuk momen spesial Anda.`,
         deskripsi_singkat: 'Undangan hardcover mewah untuk momen spesial',
         gambar: [
-            'https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?w=600',
+            '/gambar/undangan/2.jpeg',
         ],
         harga_dasar: 15000,
         ukuran: [
@@ -392,7 +419,7 @@ Spesifikasi:
 - Isi: 500 lembar per rim`,
         deskripsi_singkat: 'Kertas HVS A4 80gr 1 Rim (500 lembar) kualitas premium',
         gambar: [
-            'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=600',
+            '/gambar/atk/1.jpeg',
         ],
         harga_dasar: 45000,
         ukuran: [
@@ -435,7 +462,7 @@ Keunggulan:
 - Isi: 12 pcs/box`,
         deskripsi_singkat: 'Pulpen gel 0.5mm 1 Box (12 pcs) tinta hitam',
         gambar: [
-            'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=600',
+            '/gambar/atk/1.jpeg',
         ],
         harga_dasar: 35000,
         ukuran: [
@@ -597,6 +624,136 @@ Total: 24 pcs`,
         tipe_file_diperbolehkan: [],
         ukuran_file_maks: 0,
     },
+    {
+        id: 'prod-12',
+        nama: 'Cetak Buku Softcover A5',
+        slug: 'cetak-buku-softcover-a5',
+        kategori_id: 'cat-11',
+        deskripsi: `Cetak buku dan majalah softcover dengan pilihan jilid lem panas atau jahit kawat. Cocok untuk buku, katalog, modul, atau majalah.`,
+        deskripsi_singkat: 'Cetak buku/majalah softcover A5 dengan pilihan jilid',
+        gambar: [
+            '/gambar/buku_majalah/1.jpeg',
+            '/gambar/buku_majalah/2.jpeg',
+        ],
+        harga_dasar: 15000,
+        ukuran: [
+            { id: 'size-a5', name: 'A5 (148 x 210 mm)', width: 148, height: 210, priceMultiplier: 1 },
+            { id: 'size-b5', name: 'B5 (176 x 250 mm)', width: 176, height: 250, priceMultiplier: 1.3 },
+            { id: 'size-a4', name: 'A4 (210 x 297 mm)', width: 210, height: 297, priceMultiplier: 1.6 },
+        ],
+        bahan: [
+            { id: 'mat-hvs-70', name: 'HVS', weight: '70gr', pricePerUnit: 300, description: 'Isi buku standar' },
+            { id: 'mat-hvs-80', name: 'HVS', weight: '80gr', pricePerUnit: 350, description: 'Isi buku lebih tebal' },
+            { id: 'mat-art-paper', name: 'Art Paper', weight: '120gr', pricePerUnit: 500, description: 'Isi full color glossy' },
+        ],
+        sisi_cetak: [
+            { id: 'side-2', name: 'Isi Bolak-balik', code: '4/4', priceMultiplier: 1 },
+        ],
+        finishing: [
+            { id: 'fin-jilid-lem', name: 'Jilid Lem Panas (Perfect Binding)', type: 'binding', price: 3000, description: 'Cover lebih rapi dan kuat' },
+            { id: 'fin-jilid-kawat', name: 'Jilid Jahit Kawat (Saddle Stitch)', type: 'binding', price: 1500, description: 'Untuk buku tipis/majalah' },
+            { id: 'fin-lam-cover', name: 'Laminasi Cover Doff', type: 'laminating', price: 1000, description: 'Cover lebih awet' },
+        ],
+        tier_jumlah: [
+            { minQty: 10, maxQty: 49, pricePerUnit: 25000 },
+            { minQty: 50, maxQty: 99, pricePerUnit: 20000 },
+            { minQty: 100, maxQty: 499, pricePerUnit: 17000 },
+            { minQty: 500, maxQty: 99999, pricePerUnit: 15000 },
+        ],
+        terlaris: false,
+        promo: false,
+        min_pesan: 10,
+        estimasi_hari: 5,
+        berat_per_pcs: 150,
+        tipe_file_diperbolehkan: ['pdf', 'jpg', 'jpeg', 'png'],
+        ukuran_file_maks: 100,
+    },
+    {
+        id: 'prod-13',
+        nama: 'Box Kemasan Custom',
+        slug: 'box-kemasan-custom',
+        kategori_id: 'cat-12',
+        deskripsi: `Box kemasan custom dengan desain sesuai kebutuhan Anda. Cocok untuk kemasan produk, hampers, atau merchandise bisnis.`,
+        deskripsi_singkat: 'Box kemasan custom untuk produk dan hampers',
+        gambar: [
+            '/gambar/kemasan_box/1.jpeg',
+            '/gambar/kemasan_box/2.jpeg',
+        ],
+        harga_dasar: 5000,
+        ukuran: [
+            { id: 'size-s', name: 'Small (10 x 10 x 5 cm)', width: 100, height: 100, priceMultiplier: 1 },
+            { id: 'size-m', name: 'Medium (20 x 20 x 10 cm)', width: 200, height: 200, priceMultiplier: 1.6 },
+            { id: 'size-custom', name: 'Custom Size', width: 0, height: 0, priceMultiplier: 1 },
+        ],
+        bahan: [
+            { id: 'mat-duplex', name: 'Duplex', weight: '350gr', pricePerUnit: 3000, description: 'Standar box kemasan' },
+            { id: 'mat-ivory', name: 'Ivory', weight: '310gr', pricePerUnit: 4000, description: 'Lebih putih dan halus' },
+            { id: 'mat-corrugated', name: 'Corrugated (Karton Gelombang)', weight: '', pricePerUnit: 5000, description: 'Lebih kokoh untuk pengiriman' },
+        ],
+        sisi_cetak: [
+            { id: 'side-1', name: 'Cetak Luar', code: '4/0', priceMultiplier: 1 },
+        ],
+        finishing: [
+            { id: 'fin-lam-doff', name: 'Laminasi Doff', type: 'laminating', price: 500, description: 'Finishing matte elegan' },
+            { id: 'fin-uv', name: 'Spot UV', type: 'other', price: 800, description: 'UV coating pada logo/area tertentu' },
+            { id: 'fin-die-cut', name: 'Die Cut Custom', type: 'cutting', price: 1500, description: 'Potong sesuai pola box' },
+        ],
+        tier_jumlah: [
+            { minQty: 50, maxQty: 99, pricePerUnit: 8000 },
+            { minQty: 100, maxQty: 499, pricePerUnit: 6500 },
+            { minQty: 500, maxQty: 999, pricePerUnit: 5500 },
+            { minQty: 1000, maxQty: 99999, pricePerUnit: 5000 },
+        ],
+        terlaris: false,
+        promo: false,
+        min_pesan: 50,
+        estimasi_hari: 5,
+        berat_per_pcs: 30,
+        tipe_file_diperbolehkan: ['pdf', 'ai', 'jpg', 'jpeg', 'png'],
+        ukuran_file_maks: 100,
+    },
+    {
+        id: 'prod-14',
+        nama: 'Kaos Sablon DTF Custom',
+        slug: 'kaos-sablon-dtf-custom',
+        kategori_id: 'cat-13',
+        deskripsi: `Kaos sablon custom dengan teknik DTF (Direct to Film), hasil cetak tajam dan tahan lama. Cocok untuk seragam komunitas, event, atau merchandise.`,
+        deskripsi_singkat: 'Kaos sablon DTF custom untuk seragam dan merchandise',
+        gambar: [
+            '/gambar/konveksi/1.jpeg',
+        ],
+        harga_dasar: 45000,
+        ukuran: [
+            { id: 'size-s', name: 'S', width: 0, height: 0, priceMultiplier: 1 },
+            { id: 'size-m', name: 'M', width: 0, height: 0, priceMultiplier: 1 },
+            { id: 'size-l', name: 'L', width: 0, height: 0, priceMultiplier: 1 },
+            { id: 'size-xl', name: 'XL', width: 0, height: 0, priceMultiplier: 1.1 },
+        ],
+        bahan: [
+            { id: 'mat-cotton-24s', name: 'Cotton Combed', weight: '24s', pricePerUnit: 40000, description: 'Bahan standar nyaman dipakai' },
+            { id: 'mat-cotton-30s', name: 'Cotton Combed', weight: '30s', pricePerUnit: 35000, description: 'Lebih ringan dan adem' },
+        ],
+        sisi_cetak: [
+            { id: 'side-1', name: 'Sablon Depan', code: '1S', priceMultiplier: 1 },
+            { id: 'side-2', name: 'Sablon Depan & Belakang', code: '2S', priceMultiplier: 1.5 },
+        ],
+        finishing: [
+            { id: 'fin-jahit-label', name: 'Label Custom', type: 'other', price: 3000, description: 'Jahit label brand sendiri' },
+        ],
+        tier_jumlah: [
+            { minQty: 12, maxQty: 23, pricePerUnit: 65000 },
+            { minQty: 24, maxQty: 49, pricePerUnit: 58000 },
+            { minQty: 50, maxQty: 99, pricePerUnit: 52000 },
+            { minQty: 100, maxQty: 99999, pricePerUnit: 45000 },
+        ],
+        terlaris: false,
+        promo: false,
+        min_pesan: 12,
+        estimasi_hari: 7,
+        berat_per_pcs: 180,
+        tipe_file_diperbolehkan: ['pdf', 'ai', 'psd', 'jpg', 'jpeg', 'png'],
+        ukuran_file_maks: 100,
+    },
 ];
 
 export const shippingMethods: ShippingMethod[] = [
@@ -694,7 +851,7 @@ export const heroBanners = [
         id: 'banner-1',
         title: 'Diskon 20% Semua Produk Brosur',
         subtitle: 'Gunakan kode BROSUR20 saat checkout',
-        image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200',
+        image: '/gambar/brosur/1.jpeg',
         ctaText: 'Pesan Sekarang',
         ctaLink: '/kategori/brosur-flyer',
         gradient: 'linear-gradient(135deg, #0066e6 0%, #003d80 100%)',
@@ -703,7 +860,7 @@ export const heroBanners = [
         id: 'banner-2',
         title: 'Kartu Nama Premium',
         subtitle: 'Mulai dari Rp 250/lembar dengan finishing eksklusif',
-        image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200',
+        image: '/gambar/kartu_nama/1.jpeg',
         ctaText: 'Lihat Produk',
         ctaLink: '/kategori/kartu-nama',
         gradient: 'linear-gradient(135deg, #ff8f00 0%, #cc6600 100%)',
@@ -712,7 +869,7 @@ export const heroBanners = [
         id: 'banner-3',
         title: 'X-Banner Promo',
         subtitle: 'Gratis stand untuk pembelian minimal 10 pcs',
-        image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200',
+        image: '/gambar/banner/3.jpeg',
         ctaText: 'Promo Terbatas',
         ctaLink: '/kategori/banner-spanduk',
         gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
