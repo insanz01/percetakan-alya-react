@@ -5,12 +5,14 @@ export interface ProductCategory {
     ikon?: string;
     deskripsi?: string;
     gambar?: string;
-    jumlah_produk?: number;
+    aktif?: boolean;
+    urutan?: number;
+    productCount?: number;
 }
 
 export interface ProductSize {
     id: string;
-    name: string;
+    nama: string;
     width?: number;
     height?: number;
     dimensions?: string;
@@ -19,22 +21,22 @@ export interface ProductSize {
 
 export interface ProductMaterial {
     id: string;
-    name: string;
+    nama: string;
     weight?: string;
     pricePerUnit: number;
-    description?: string;
+    deskripsi?: string;
 }
 
 export interface PrintSide {
     id: string;
-    name: string;
-    code?: string;
+    nama: string;
+    kode?: string;
     priceMultiplier: number;
 }
 
 export interface Finishing {
     id: string;
-    name: string;
+    nama: string;
     type?: 'laminating' | 'cutting' | 'folding' | 'binding' | 'other';
     price: number;
     description?: string;
@@ -50,30 +52,32 @@ export interface Product {
     id: string;
     nama: string;
     slug: string;
-    kategori_id: string;
+    kategoriId: string;
     deskripsi: string;
-    deskripsi_singkat: string;
+    deskripsiSingkat: string;
     gambar: string[];
-    harga_dasar: number;
+    hargaDasar: number;
 
     ukuran: ProductSize[];
     bahan: ProductMaterial[];
-    sisi_cetak: PrintSide[];
+    sisiCetak: PrintSide[];
     finishing: Finishing[];
-    tier_jumlah: QuantityTier[];
+    tierJumlah: QuantityTier[];
 
     terlaris: boolean;
     promo: boolean;
-    persen_promo?: number;
-    min_pesan: number;
-    estimasi_hari: number;
-    berat_per_pcs: number;
+    persenPromo?: number;
+    minPesan: number;
+    estimasiHari: number;
+    beratPerPcs: number;
 
-    produk_retail?: boolean;
-    butuh_file_desain?: boolean;
+    produkRetail?: boolean;
+    butuhFileDesain?: boolean;
 
-    tipe_file_diperbolehkan: string[];
-    ukuran_file_maks: number;
+    tipeFileDiperbolehkan: string[];
+    ukuranFileMaks: number;
+
+    category?: ProductCategory;
 }
 
 export interface CartItemConfig {
@@ -82,8 +86,8 @@ export interface CartItemConfig {
     sisi_cetak_id: string;
     finishingIds: string[];
     jumlah: number;
-    lebar_kustom?: number;
-    tinggi_kustom?: number;
+    customWidth?: number;
+    customHeight?: number;
     nama_ukuran?: string;
     nama_bahan?: string;
     nama_sisi_cetak?: string;
@@ -104,9 +108,9 @@ export interface CartItem {
 
 export interface UploadedFile {
     id: string;
-    nama_asli: string;
-    ukuran: number;
-    tipe: string;
+    name: string;
+    size: number;
+    type: string;
     url: string;
     status: 'uploading' | 'success' | 'error';
 }

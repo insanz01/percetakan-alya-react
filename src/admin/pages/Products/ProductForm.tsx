@@ -12,8 +12,34 @@ import { fileService } from '../../../lib/fileService';
 import { useCategories } from '../../../hooks';
 import { useUIStore } from '../../../store';
 import { ImageUploader } from '../../../components';
-import type { ProductSize, ProductMaterial, PrintSide, Finishing, QuantityTier } from '../../../types';
+import type { Product, QuantityTier } from '../../../types';
 import './ProductForm.css';
+
+interface SizeOption {
+    id: string;
+    name: string;
+    dimensions?: string;
+    priceMultiplier: number;
+}
+
+interface MaterialOption {
+    id: string;
+    name: string;
+    description?: string;
+    pricePerUnit: number;
+}
+
+interface PrintSideOption {
+    id: string;
+    name: string;
+    priceMultiplier: number;
+}
+
+interface FinishingOption {
+    id: string;
+    name: string;
+    price: number;
+}
 
 interface ProductFormData {
     name: string;
@@ -26,10 +52,10 @@ interface ProductFormData {
     estimatedDays: number;
     weightPerPiece: number;
     images: string[];
-    sizes: ProductSize[];
-    materials: ProductMaterial[];
-    printSides: PrintSide[];
-    finishings: Finishing[];
+    sizes: SizeOption[];
+    materials: MaterialOption[];
+    printSides: PrintSideOption[];
+    finishings: FinishingOption[];
     quantityTiers: QuantityTier[];
     isBestSeller: boolean;
     isPromo: boolean;
@@ -93,27 +119,27 @@ export default function ProductForm() {
                 setFormData({
                     name: product.nama,
                     slug: product.slug,
-                    shortDescription: product.shortDescription,
+                    shortDescription: product.deskripsiSingkat,
                     description: product.deskripsi,
-                    categoryId: product.categoryId,
-                    basePrice: product.basePrice,
-                    minOrderQty: product.minOrderQty,
-                    estimatedDays: product.estimatedDays,
-                    weightPerPiece: product.weightPerPiece || 10,
+                    categoryId: product.kategoriId,
+                    basePrice: product.hargaDasar,
+                    minOrderQty: product.minPesan,
+                    estimatedDays: product.estimasiHari,
+                    weightPerPiece: product.beratPerPcs || 10,
                     images: product.gambar,
-                    sizes: product.ukuran,
-                    materials: product.bahan,
-                    printSides: product.printSides,
-                    finishings: product.finishing,
-                    quantityTiers: product.quantityTiers,
-                    isBestSeller: product.isBestSeller,
-                    isPromo: product.isPromo,
-                    isRetailProduct: product.isRetailProduct,
+                    sizes: product.ukuran.map(s => ({ id: s.id, name: s.nama, dimensions: s.dimensions, priceMultiplier: s.priceMultiplier })),
+                    materials: product.bahan.map(m => ({ id: m.id, name: m.nama, description: m.deskripsi, pricePerUnit: m.pricePerUnit })),
+                    printSides: product.sisiCetak.map(p => ({ id: p.id, name: p.nama, priceMultiplier: p.priceMultiplier })),
+                    finishings: product.finishing.map(f => ({ id: f.id, name: f.nama, price: f.price })),
+                    quantityTiers: product.tierJumlah,
+                    isBestSeller: product.terlaris,
+                    isPromo: product.promo,
+                    isRetailProduct: product.produkRetail,
                     isActive: true,
-                    promoPercentage: product.promoPercentage,
-                    requiresDesignFile: product.requiresDesignFile !== false,
-                    allowedFileTypes: product.allowedFileTypes,
-                    maxFileSize: product.maxFileSize,
+                    promoPercentage: product.persenPromo,
+                    requiresDesignFile: product.butuhFileDesain !== false,
+                    allowedFileTypes: product.tipeFileDiperbolehkan,
+                    maxFileSize: product.ukuranFileMaks,
                 });
             }
         } catch (error) {
@@ -165,7 +191,7 @@ export default function ProductForm() {
         }));
     };
 
-    const updateSize = (index: number, field: keyof ProductSize, value: string | number) => {
+    const updateSize = (index: number, field: keyof SizeOption, value: string | number) => {
         setFormData(prev => ({
             ...prev,
             sizes: prev.sizes.map((size, i) =>
@@ -189,7 +215,7 @@ export default function ProductForm() {
         }));
     };
 
-    const updateMaterial = (index: number, field: keyof ProductMaterial, value: string | number) => {
+    const updateMaterial = (index: number, field: keyof MaterialOption, value: string | number) => {
         setFormData(prev => ({
             ...prev,
             materials: prev.materials.map((mat, i) =>
@@ -213,7 +239,7 @@ export default function ProductForm() {
         }));
     };
 
-    const updatePrintSide = (index: number, field: keyof PrintSide, value: string | number) => {
+    const updatePrintSide = (index: number, field: keyof PrintSideOption, value: string | number) => {
         setFormData(prev => ({
             ...prev,
             printSides: prev.printSides.map((ps, i) =>
@@ -237,7 +263,7 @@ export default function ProductForm() {
         }));
     };
 
-    const updateFinishing = (index: number, field: keyof Finishing, value: string | number) => {
+    const updateFinishing = (index: number, field: keyof FinishingOption, value: string | number) => {
         setFormData(prev => ({
             ...prev,
             finishings: prev.finishings.map((fin, i) =>
@@ -318,21 +344,30 @@ export default function ProductForm() {
 
         setIsSaving(true);
         try {
-            const payload = {
-                ...formData,
+            const payload: Omit<Product, 'id'> = {
                 nama: formData.name,
+                slug: formData.slug,
+                kategoriId: formData.categoryId,
                 deskripsi: formData.description,
+                deskripsiSingkat: formData.shortDescription,
                 gambar: formData.images,
-                ukuran: formData.sizes,
-                bahan: formData.materials,
-                finishing: formData.finishings,
+                hargaDasar: formData.basePrice,
+                ukuran: formData.sizes.map(s => ({ id: s.id, nama: s.name, dimensions: s.dimensions, priceMultiplier: s.priceMultiplier })),
+                bahan: formData.materials.map(m => ({ id: m.id, nama: m.name, deskripsi: m.description, pricePerUnit: m.pricePerUnit })),
+                sisiCetak: formData.printSides.map(p => ({ id: p.id, nama: p.name, priceMultiplier: p.priceMultiplier })),
+                finishing: formData.finishings.map(f => ({ id: f.id, nama: f.name, price: f.price })),
+                tierJumlah: formData.quantityTiers,
+                terlaris: formData.isBestSeller,
+                promo: formData.isPromo,
+                persenPromo: formData.promoPercentage,
+                minPesan: formData.minOrderQty,
+                estimasiHari: formData.estimatedDays,
+                beratPerPcs: formData.weightPerPiece,
+                produkRetail: formData.isRetailProduct,
+                butuhFileDesain: formData.requiresDesignFile,
+                tipeFileDiperbolehkan: formData.allowedFileTypes,
+                ukuranFileMaks: formData.maxFileSize,
             };
-            delete (payload as Record<string, unknown>).name;
-            delete (payload as Record<string, unknown>).description;
-            delete (payload as Record<string, unknown>).images;
-            delete (payload as Record<string, unknown>).sizes;
-            delete (payload as Record<string, unknown>).materials;
-            delete (payload as Record<string, unknown>).finishings;
             if (isEdit) {
                 await productService.updateProduct(id!, payload);
                 addToast({

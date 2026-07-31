@@ -377,8 +377,8 @@ export default function Orders() {
                                 </div>
                                 <div className="status-item">
                                     <span className="status-label">Pembayaran</span>
-                                    <span className={`payment-badge ${paymentStatusConfig[selectedOrder.paymentStatus].color}`}>
-                                        {paymentStatusConfig[selectedOrder.paymentStatus].label}
+                                    <span className={`payment-badge ${paymentStatusConfig[selectedOrder.statusBayar].color}`}>
+                                        {paymentStatusConfig[selectedOrder.statusBayar].label}
                                     </span>
                                 </div>
                                 <div className="status-item">
@@ -422,17 +422,17 @@ export default function Orders() {
                                     <div className="info-card">
                                         <div className="info-row">
                                             <Truck size={16} className="info-icon-svg" />
-                                            <span>{selectedOrder.shippingMethod || '-'}</span>
+                                            <span>{selectedOrder.metodePengiriman || '-'}</span>
                                         </div>
-                                        {selectedOrder.trackingNumber && (
+                                        {selectedOrder.nomorResi && (
                                             <div className="info-row">
                                                 <Package size={16} className="info-icon-svg" />
-                                                <span>Resi: <strong>{selectedOrder.trackingNumber}</strong></span>
+                                                <span>Resi: <strong>{selectedOrder.nomorResi}</strong></span>
                                             </div>
                                         )}
                                         <div className="info-row">
                                             <CreditCard size={16} className="info-icon-svg" />
-                                            <span>{selectedOrder.paymentMethod || '-'}</span>
+                                            <span>{selectedOrder.metodePembayaran || '-'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -446,9 +446,9 @@ export default function Orders() {
                                         <div key={index} className="product-row">
                                             <div className="product-info">
                                                 <span className="product-name">{product.nama}</span>
-                                                <span className="product-qty">x {product.qty}</span>
+                                                <span className="product-qty">x {product.jumlah}</span>
                                             </div>
-                                            <span className="product-price">{formatPrice(product.price)}</span>
+                                            <span className="product-price">{formatPrice(product.harga)}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -472,7 +472,7 @@ export default function Orders() {
                                 </div>
                                 <div className="summary-row">
                                     <span>Ongkos Kirim</span>
-                                    <span>{formatPrice(selectedOrder.shippingCost || 0)}</span>
+                                    <span>{formatPrice(selectedOrder.biayaKirim || 0)}</span>
                                 </div>
                                 <div className="summary-row total">
                                     <span>Total</span>

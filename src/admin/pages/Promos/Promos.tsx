@@ -10,48 +10,48 @@ import './Promos.css';
 const fallbackPromos: Promo[] = [
     {
         id: '1',
-        code: 'BROSUR20',
-        discount: 20,
+        kode: 'BROSUR20',
         type: 'percentage',
+        diskon: 20,
         deskripsi: 'Diskon 20% untuk semua produk brosur',
-        min_purchase: 100000,
-        max_discount: 50000,
-        usage_limit: 100,
-        usage_count: 45,
-        start_date: '2024-12-01',
-        end_date: '2024-12-31',
+        min_beli: 100000,
+        maks_diskon: 50000,
+        batas_penggunaan: 100,
+        jumlah_penggunaan: 45,
+        tanggal_mulai: '2024-12-01',
+        tanggal_berakhir: '2024-12-31',
         aktif: true,
         created_at: '2024-12-01',
         updated_at: '2024-12-01',
     },
     {
         id: '2',
-        code: 'KARTUNAMA15',
-        discount: 15,
+        kode: 'KARTUNAMA15',
         type: 'percentage',
+        diskon: 15,
         deskripsi: 'Diskon 15% untuk kartu nama premium',
-        min_purchase: 50000,
-        max_discount: 25000,
-        usage_limit: 50,
-        usage_count: 23,
-        start_date: '2024-12-01',
-        end_date: '2024-12-15',
+        min_beli: 50000,
+        maks_diskon: 25000,
+        batas_penggunaan: 50,
+        jumlah_penggunaan: 23,
+        tanggal_mulai: '2024-12-01',
+        tanggal_berakhir: '2024-12-15',
         aktif: true,
         created_at: '2024-12-01',
         updated_at: '2024-12-01',
     },
     {
         id: '3',
-        code: 'FREESHIP',
-        discount: 15000,
+        kode: 'FREESHIP',
         type: 'fixed',
+        diskon: 15000,
         deskripsi: 'Gratis ongkir untuk pembelian min Rp 200.000',
-        min_purchase: 200000,
-        max_discount: 15000,
-        usage_limit: 200,
-        usage_count: 156,
-        start_date: '2024-11-01',
-        end_date: '2024-12-31',
+        min_beli: 200000,
+        maks_diskon: 15000,
+        batas_penggunaan: 200,
+        jumlah_penggunaan: 156,
+        tanggal_mulai: '2024-11-01',
+        tanggal_berakhir: '2024-12-31',
         aktif: true,
         created_at: '2024-11-01',
         updated_at: '2024-11-01',
@@ -108,7 +108,7 @@ export default function Promos() {
 
                         <div className="promo-code-display">
                             <Tag size={20} />
-                            <span className="promo-code">{promo.code}</span>
+                            <span className="promo-code">{promo.kode}</span>
                         </div>
 
                         <div className="promo-discount">
@@ -123,19 +123,19 @@ export default function Promos() {
                         <div className="promo-details">
                             <div className="promo-detail-item">
                                 <Calendar size={14} />
-                                <span>{promo.start_date || '-'} - {promo.end_date || '-'}</span>
+                                <span>{promo.tanggal_mulai || '-'} - {promo.tanggal_berakhir || '-'}</span>
                             </div>
                             <div className="promo-detail-item">
                                 <Clock size={14} />
-                                <span>Digunakan: {promo.usage_count}/{promo.usage_limit || '∞'}</span>
+                                <span>Digunakan: {promo.jumlah_penggunaan}/{promo.batas_penggunaan || '∞'}</span>
                             </div>
                         </div>
 
-                        {promo.usage_limit && (
+                        {promo.batas_penggunaan && (
                             <div className="promo-usage-bar">
                                 <div
                                     className="promo-usage-fill"
-                                    style={{ width: `${(promo.usage_count / promo.usage_limit) * 100}%` }}
+                                    style={{ width: `${(promo.jumlah_penggunaan / promo.batas_penggunaan) * 100}%` }}
                                 />
                             </div>
                         )}

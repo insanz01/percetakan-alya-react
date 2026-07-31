@@ -224,11 +224,11 @@ export default function UserOrderDetail() {
                         <div className="detail-section">
                             <h3><MapPin size={20} /> Alamat Pengiriman</h3>
                             <div className="info-card">
-                                <p className="recipient">{order.shippingAddress?.nama_penerima}</p>
-                                <p className="phone">{order.shippingAddress?.telepon}</p>
-                                <p className="address">{order.shippingAddress?.alamat}</p>
+                                <p className="recipient">{order.alamat_pengiriman?.nama_penerima}</p>
+                                <p className="phone">{order.alamat_pengiriman?.telepon}</p>
+                                <p className="address">{order.alamat_pengiriman?.alamat}</p>
                                 <p className="location">
-                                    {order.shippingAddress?.kota}, {order.shippingAddress?.provinsi} {order.shippingAddress?.kode_pos}
+                                    {order.alamat_pengiriman?.kota}, {order.alamat_pengiriman?.provinsi} {order.alamat_pengiriman?.kode_pos}
                                 </p>
                             </div>
                         </div>

@@ -239,7 +239,7 @@ export default function OrderDetail() {
                                         <div key={index} className="file-item">
                                             <FileText size={24} />
                                             <div className="file-info">
-                                                <span className="file-name">{item.designFile.nama_asli || 'Design File'}</span>
+                                                <span className="file-name">{item.designFile.name || 'Design File'}</span>
                                                 <span className="file-size">{item.product?.nama}</span>
                                             </div>
                                             <button className="btn btn-ghost btn-sm">
@@ -328,11 +328,11 @@ export default function OrderDetail() {
                             <h3><MapPin size={18} /> Alamat Pengiriman</h3>
                         </div>
                         <div className="shipping-info">
-                            <p className="recipient">{order.shippingAddress?.nama_penerima}</p>
-                            <p className="phone">{order.shippingAddress?.telepon}</p>
-                            <p className="address">{order.shippingAddress?.alamat}</p>
+                            <p className="recipient">{order.alamat_pengiriman?.nama_penerima}</p>
+                            <p className="phone">{order.alamat_pengiriman?.telepon}</p>
+                            <p className="address">{order.alamat_pengiriman?.alamat}</p>
                             <p className="location">
-                                {order.shippingAddress?.kota}, {order.shippingAddress?.provinsi} {order.shippingAddress?.kode_pos}
+                                {order.alamat_pengiriman?.kota}, {order.alamat_pengiriman?.provinsi} {order.alamat_pengiriman?.kode_pos}
                             </p>
                         </div>
                     </div>

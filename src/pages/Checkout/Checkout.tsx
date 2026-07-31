@@ -110,8 +110,8 @@ export default function Checkout() {
         setIsLoadingShipping(true);
         try {
             const response = await shippingService.calculate({
-                destination_kota: selectedAddress.kota,
-                destination_provinsi: selectedAddress.provinsi,
+                destination_city: selectedAddress.kota,
+                destination_province: selectedAddress.provinsi,
                 weight: totalWeight,
             });
             if (response.success) {

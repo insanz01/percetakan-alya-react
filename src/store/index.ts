@@ -42,7 +42,7 @@ export const useCartStore = create<CartState>()(
                     items: state.items.map((item) => {
                         if (item.id === itemId) {
                             const newTotalPrice = item.harga_satuan * quantity;
-                            return { ...item, config: { ...item.config, jumlah }, harga_total: newTotalPrice };
+                            return { ...item, config: { ...item.config, jumlah: quantity }, harga_total: newTotalPrice };
                         }
                         return item;
                     }),

@@ -160,13 +160,13 @@ export default function Products() {
                                         </td>
                                         <td>
                                             <span className="category-badge">
-                                                {getCategoryName(product.categoryId)}
+                                                {getCategoryName(product.kategoriId)}
                                             </span>
                                         </td>
                                         <td>
                                             <div className="price-cell">
                                                 <span className="base-price">
-                                                    {formatPrice(product.quantityTiers[0].pricePerUnit)}
+                                                    {formatPrice(product.tierJumlah[0].pricePerUnit)}
                                                 </span>
                                                 <span className="price-unit">/pcs</span>
                                             </div>
@@ -259,7 +259,7 @@ export default function Products() {
 
                                 <div className="product-card-price">
                                     <span className="price">
-                                        {formatPrice(product.quantityTiers[0].pricePerUnit)}
+                                        {formatPrice(product.tierJumlah[0].pricePerUnit)}
                                     </span>
                                     <span className="unit">/pcs</span>
                                 </div>

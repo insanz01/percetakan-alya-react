@@ -124,7 +124,7 @@ export default function Layout({ children }: LayoutProps) {
                                                         <span className="nav-dropdown-icon"><Icon name={category.ikon || 'Package'} size={18} /></span>
                                                         <div className="nav-dropdown-info">
                                                             <span className="nav-dropdown-name">{category.nama}</span>
-                                                            <span className="nav-dropdown-count">{category.jumlah_produk} produk</span>
+                                                            <span className="nav-dropdown-count">{category.productCount} produk</span>
                                                         </div>
                                                     </Link>
                                                 ))}

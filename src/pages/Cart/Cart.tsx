@@ -139,7 +139,7 @@ export default function Cart() {
                                         {item.uploadedFile && (
                                             <div className="cart-item-file">
                                                 <FileText size={16} />
-                                                <span>{item.uploadedFile.nama_asli}</span>
+                                                <span>{item.uploadedFile.name}</span>
                                             </div>
                                         )}
 

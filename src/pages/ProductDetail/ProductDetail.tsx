@@ -185,9 +185,9 @@ export default function ProductDetail() {
         }
 
         const config: CartItemConfig = {
-            sizeId: selectedSizeId,
-            materialId: selectedMaterialId,
-            printSideId: selectedPrintSideId,
+            ukuran_id: selectedSizeId,
+            bahan_id: selectedMaterialId,
+            sisi_cetak_id: selectedPrintSideId,
             finishingIds: selectedFinishingIds,
             jumlah: quantity,
             customWidth: customWidth || undefined,
