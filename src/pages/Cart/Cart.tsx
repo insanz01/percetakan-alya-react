@@ -114,23 +114,23 @@ export default function Cart() {
                                         <div className="cart-item-specs">
                                             <div className="spec-tag">
                                                 <span className="spec-label">Ukuran:</span>
-                                                <span>{selectedSize?.nama}</span>
+                                                <span>{selectedSize?.name}</span>
                                                 {item.config.customWidth && item.config.customHeight && (
                                                     <span> ({item.config.customWidth} x {item.config.customHeight} mm)</span>
                                                 )}
                                             </div>
                                             <div className="spec-tag">
                                                 <span className="spec-label">Bahan:</span>
-                                                <span>{selectedMaterial?.nama} {selectedMaterial?.weight}</span>
+                                                <span>{selectedMaterial?.name} {selectedMaterial?.weight}</span>
                                             </div>
                                             <div className="spec-tag">
                                                 <span className="spec-label">Cetak:</span>
-                                                <span>{selectedPrintSide?.nama} ({selectedPrintSide?.kode})</span>
+                                                <span>{selectedPrintSide?.name} ({selectedPrintSide?.code})</span>
                                             </div>
                                             {selectedFinishings.length > 0 && (
                                                 <div className="spec-tag">
                                                     <span className="spec-label">Finishing:</span>
-                                                    <span>{selectedFinishings.map(f => f.nama).join(', ')}</span>
+                                                    <span>{selectedFinishings.map(f => f.name).join(', ')}</span>
                                                 </div>
                                             )}
                                         </div>

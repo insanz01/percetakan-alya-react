@@ -11,7 +11,7 @@ const fallbackPromos: Promo[] = [
     {
         id: '1',
         kode: 'BROSUR20',
-        type: 'percentage',
+        tipe: 'percentage',
         diskon: 20,
         deskripsi: 'Diskon 20% untuk semua produk brosur',
         min_beli: 100000,
@@ -27,7 +27,7 @@ const fallbackPromos: Promo[] = [
     {
         id: '2',
         kode: 'KARTUNAMA15',
-        type: 'percentage',
+        tipe: 'percentage',
         diskon: 15,
         deskripsi: 'Diskon 15% untuk kartu nama premium',
         min_beli: 50000,
@@ -43,7 +43,7 @@ const fallbackPromos: Promo[] = [
     {
         id: '3',
         kode: 'FREESHIP',
-        type: 'fixed',
+        tipe: 'fixed',
         diskon: 15000,
         deskripsi: 'Gratis ongkir untuk pembelian min Rp 200.000',
         min_beli: 200000,
@@ -98,8 +98,8 @@ export default function Promos() {
                     <div key={promo.id} className="promo-card">
                         <div className="promo-card-header">
                             <span className="promo-type-badge">
-                                {promo.type === 'percentage' ? <Percent size={14} /> : null}
-                                {promo.type === 'percentage' ? 'Persentase' : 'Fixed'}
+                                {promo.tipe === 'percentage' ? <Percent size={14} /> : null}
+                                {promo.tipe === 'percentage' ? 'Persentase' : 'Fixed'}
                             </span>
                             <span className={`promo-status ${promo.aktif ? 'active' : 'inactive'}`}>
                                 {promo.aktif ? 'Aktif' : 'Nonaktif'}
@@ -112,7 +112,7 @@ export default function Promos() {
                         </div>
 
                         <div className="promo-discount">
-                            {promo.type === 'percentage'
+                            {promo.tipe === 'percentage'
                                 ? `${promo.diskon}% OFF`
                                 : formatPrice(promo.diskon)
                             }

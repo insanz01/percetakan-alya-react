@@ -15,7 +15,7 @@ import './PromoForm.css';
 const defaultFormData: PromoInput = {
     kode: '',
     deskripsi: '',
-    type: 'percentage',
+    tipe: 'percentage',
     diskon: 0,
     min_beli: 0,
     maks_diskon: undefined,
@@ -49,7 +49,7 @@ export default function PromoForm() {
                 setFormData({
                     kode: promo.kode,
                     deskripsi: promo.deskripsi || '',
-                    type: promo.type,
+                    tipe: promo.tipe,
                     diskon: promo.diskon,
                     min_beli: promo.min_beli || 0,
                     maks_diskon: promo.maks_diskon,
@@ -209,8 +209,8 @@ export default function PromoForm() {
                             <div className="form-group">
                                 <label>Tipe Diskon *</label>
                                 <select
-                                    name="type"
-                                    value={formData.type}
+                                    name="tipe"
+                                    value={formData.tipe}
                                     onChange={handleChange}
                                 >
                                     <option value="percentage">Persentase (%)</option>
@@ -227,11 +227,11 @@ export default function PromoForm() {
                                         value={formData.diskon}
                                         onChange={handleChange}
                                         min={0}
-                                        max={formData.type === 'percentage' ? 100 : undefined}
+                                        max={formData.tipe === 'percentage' ? 100 : undefined}
                                         required
                                     />
                                     <span className="addon">
-                                        {formData.type === 'percentage' ? '%' : 'Rp'}
+                                        {formData.tipe === 'percentage' ? '%' : 'Rp'}
                                     </span>
                                 </div>
                             </div>
@@ -258,7 +258,7 @@ export default function PromoForm() {
                             <span className="form-hint">Minimal total belanja untuk menggunakan promo</span>
                         </div>
 
-                        {formData.type === 'percentage' && (
+                        {formData.tipe === 'percentage' && (
                             <div className="form-group">
                                 <label>Maksimal Diskon</label>
                                 <div className="input-with-addon">

@@ -128,6 +128,46 @@ export function transformProduct(apiProduct: any): any {
 }
 
 /**
+ * Serialize a frontend Product (camelCase) into the snake_case shape
+ * the API's admin product endpoints validate/persist.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function serializeProduct(product: Record<string, any>): Record<string, unknown> {
+    const map: Record<string, string> = {
+        nama: 'nama',
+        slug: 'slug',
+        kategoriId: 'kategori_id',
+        deskripsi: 'deskripsi',
+        deskripsiSingkat: 'deskripsi_singkat',
+        gambar: 'gambar',
+        hargaDasar: 'harga_dasar',
+        ukuran: 'ukuran',
+        bahan: 'bahan',
+        sisiCetak: 'sisi_cetak',
+        finishing: 'finishing',
+        tierJumlah: 'tier_jumlah',
+        terlaris: 'terlaris',
+        promo: 'promo',
+        persenPromo: 'persen_promo',
+        minPesan: 'min_pesan',
+        estimasiHari: 'estimasi_hari',
+        beratPerPcs: 'berat_per_pcs',
+        produkRetail: 'produk_retail',
+        butuhFileDesain: 'butuh_file_desain',
+        tipeFileDiperbolehkan: 'tipe_file_diperbolehkan',
+        ukuranFileMaks: 'ukuran_file_maks',
+    };
+
+    const data: Record<string, unknown> = {};
+    for (const [camelKey, snakeKey] of Object.entries(map)) {
+        if (product[camelKey] !== undefined) {
+            data[snakeKey] = product[camelKey];
+        }
+    }
+    return data;
+}
+
+/**
  * Transform array of API products to frontend Product types
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -149,7 +189,7 @@ export function transformCategory(apiCategory: any): any {
         gambar: apiCategory.gambar,
         aktif: apiCategory.aktif ?? true,
         urutan: apiCategory.urutan ?? 0,
-        productCount: apiCategory.jumlah_produk ?? 0,
+        productCount: apiCategory.product_count ?? 0,
     };
 }
 

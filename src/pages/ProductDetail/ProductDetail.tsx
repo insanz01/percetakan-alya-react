@@ -63,7 +63,7 @@ export default function ProductDetail() {
         const size = product.ukuran.find(s => s.id === selectedSizeId);
         let sizeMultiplier = size?.priceMultiplier || 1;
 
-        if (size?.nama.toLowerCase().includes('custom') && customWidth > 0 && customHeight > 0) {
+        if (size?.name.toLowerCase().includes('custom') && customWidth > 0 && customHeight > 0) {
             const baseSize = product.ukuran[0];
             const baseArea = (baseSize?.width || 148) * (baseSize?.height || 210);
             const customArea = customWidth * customHeight;
@@ -71,17 +71,17 @@ export default function ProductDetail() {
         }
 
         if (sizeMultiplier !== 1) {
-            breakdown.push({ label: `Ukuran ${size?.nama} (x${sizeMultiplier.toFixed(1)})`, value: baseUnitPrice * (sizeMultiplier - 1) });
+            breakdown.push({ label: `Ukuran ${size?.name} (x${sizeMultiplier.toFixed(1)})`, value: baseUnitPrice * (sizeMultiplier - 1) });
         }
 
         const material = product.bahan.find(m => m.id === selectedMaterialId);
         const materialPrice = material?.pricePerUnit || 0;
-        breakdown.push({ label: `Bahan: ${material?.nama} ${material?.weight}`, value: materialPrice });
+        breakdown.push({ label: `Bahan: ${material?.name} ${material?.weight}`, value: materialPrice });
 
         const printSide = product.sisiCetak.find(p => p.id === selectedPrintSideId);
         const printSideMultiplier = printSide?.priceMultiplier || 1;
         if (printSideMultiplier !== 1) {
-            breakdown.push({ label: `Cetak ${printSide?.nama} (x${printSideMultiplier.toFixed(1)})`, value: baseUnitPrice * (printSideMultiplier - 1) });
+            breakdown.push({ label: `Cetak ${printSide?.name} (x${printSideMultiplier.toFixed(1)})`, value: baseUnitPrice * (printSideMultiplier - 1) });
         }
 
         let finishingTotal = 0;
@@ -89,7 +89,7 @@ export default function ProductDetail() {
             const finishing = product.finishing.find(f => f.id === fId);
             if (finishing) {
                 finishingTotal += finishing.price;
-                breakdown.push({ label: `Finishing: ${finishing.nama}`, value: finishing.price });
+                breakdown.push({ label: `Finishing: ${finishing.name}`, value: finishing.price });
             }
         });
 
@@ -326,12 +326,12 @@ export default function ProductDetail() {
                                             onClick={() => setSelectedSizeId(size.id)}
                                         >
                                             {selectedSizeId === size.id && <Check size={14} />}
-                                            {size.nama}
+                                            {size.name}
                                         </button>
                                     ))}
                                 </div>
 
-                                {selectedSize?.nama.toLowerCase().includes('custom') && (
+                                {selectedSize?.name.toLowerCase().includes('custom') && (
                                     <div className="custom-size-inputs">
                                         <div className="input-group">
                                             <label>Lebar (mm)</label>
@@ -373,8 +373,8 @@ export default function ProductDetail() {
                                                 {selectedMaterialId === material.id && <Check size={16} />}
                                             </div>
                                             <div className="option-card-info">
-                                                <span className="option-card-name">{material.nama} {material.weight}</span>
-                                                <span className="option-card-desc">{material.deskripsi}</span>
+                                                <span className="option-card-name">{material.name} {material.weight}</span>
+                                                <span className="option-card-desc">{material.description}</span>
                                             </div>
                                             <span className="option-card-price">+{formatPrice(material.pricePerUnit)}</span>
                                         </button>
@@ -392,7 +392,7 @@ export default function ProductDetail() {
                                             onClick={() => setSelectedPrintSideId(side.id)}
                                         >
                                             {selectedPrintSideId === side.id && <Check size={14} />}
-                                            {side.nama} ({side.kode})
+                                            {side.name} ({side.code})
                                         </button>
                                     ))}
                                 </div>
@@ -408,7 +408,7 @@ export default function ProductDetail() {
                                             onClick={() => toggleFinishing(finishing.id)}
                                         >
                                             {selectedFinishingIds.includes(finishing.id) && <Check size={14} />}
-                                            {finishing.nama}
+                                            {finishing.name}
                                             <span className="finishing-price">+{formatPrice(finishing.price)}</span>
                                         </button>
                                     ))}

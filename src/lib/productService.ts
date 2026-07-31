@@ -1,5 +1,5 @@
 import { api, ApiResponse, PaginatedResponse } from './api';
-import { transformProduct, transformProducts } from './utils';
+import { transformProduct, transformProducts, serializeProduct } from './utils';
 import type { Product } from '../types';
 
 // Product filters
@@ -148,7 +148,7 @@ export const productService = {
      * Create product (Admin)
      */
     async createProduct(data: Omit<Product, 'id'>): Promise<ApiResponse<Product>> {
-        const response = await api.post<ApiResponse<any>>('/admin/products', data);
+        const response = await api.post<ApiResponse<any>>('/admin/products', serializeProduct(data));
         return {
             ...response,
             data: transformProduct(response.data),
@@ -159,7 +159,7 @@ export const productService = {
      * Update product (Admin)
      */
     async updateProduct(id: string, data: Partial<Product>): Promise<ApiResponse<Product>> {
-        const response = await api.put<ApiResponse<any>>(`/admin/products/${id}`, data);
+        const response = await api.put<ApiResponse<any>>(`/admin/products/${id}`, serializeProduct(data));
         return {
             ...response,
             data: transformProduct(response.data),

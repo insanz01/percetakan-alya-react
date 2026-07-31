@@ -21,9 +21,9 @@ export interface AuthResponse {
 }
 
 export interface ProfileUpdateRequest {
-    name?: string;
-    phone?: string;
-    avatar?: string;
+    nama?: string;
+    telepon?: string;
+    foto_profil?: string;
 }
 
 export interface PasswordChangeRequest {

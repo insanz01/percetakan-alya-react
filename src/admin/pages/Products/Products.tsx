@@ -409,7 +409,7 @@ export default function Products() {
                                         <div className="option-tags">
                                             {selectedProduct.ukuran.map(size => (
                                                 <span key={size.id} className="option-tag">
-                                                    {size.nama}
+                                                    {size.name}
                                                     {size.priceMultiplier > 1 && (
                                                         <span className="option-price">x{size.priceMultiplier}</span>
                                                     )}
@@ -426,7 +426,7 @@ export default function Products() {
                                         <div className="option-tags">
                                             {selectedProduct.bahan.map(material => (
                                                 <span key={material.id} className="option-tag">
-                                                    {material.nama}
+                                                    {material.name}
                                                     {material.pricePerUnit > 0 && (
                                                         <span className="option-price">+{formatPrice(material.pricePerUnit)}</span>
                                                     )}
@@ -443,7 +443,7 @@ export default function Products() {
                                         <div className="option-tags">
                                             {selectedProduct.finishing.map(finishing => (
                                                 <span key={finishing.id} className="option-tag">
-                                                    {finishing.nama}
+                                                    {finishing.name}
                                                     <span className="option-price">+{formatPrice(finishing.price)}</span>
                                                 </span>
                                             ))}

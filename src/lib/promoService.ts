@@ -5,7 +5,7 @@ export interface Promo {
     id: string;
     kode: string;
     deskripsi?: string;
-    type: 'percentage' | 'fixed';
+    tipe: 'percentage' | 'fixed';
     diskon: number;
     min_beli: number;
     maks_diskon?: number;
@@ -40,7 +40,7 @@ export interface PromoValidationResult {
 export interface PromoInput {
     kode: string;
     deskripsi?: string;
-    type: 'percentage' | 'fixed';
+    tipe: 'percentage' | 'fixed';
     diskon: number;
     min_beli?: number;
     maks_diskon?: number;
