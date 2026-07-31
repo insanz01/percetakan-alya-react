@@ -16,52 +16,27 @@ import {
     Wallet,
     QrCode
 } from 'lucide-react';
-import { useUIStore } from '../../store';
+import { useUIStore, useCartStore, useAuthStore } from '../../store';
 import { shippingService, ShippingOption } from '../../lib/shippingService';
 import { orderService } from '../../lib/orderService';
 import { promoService } from '../../lib/promoService';
+import { addressService } from '../../lib/authService';
 import { formatPrice } from '../../lib/utils';
+import type { CartItem, ShippingAddress } from '../../types';
 import './Checkout.css';
 
-// Mock cart data - in real app, get from cart store/context
-const mockCartItems = [
-    {
-        id: '1',
-        productId: 'prod-1',
-        productName: 'Brosur A5 Premium',
-        productImage: '/gambar/brosur/1.jpeg',
-        quantity: 100,
-        sizeName: 'A5 (148 x 210 mm)',
-        materialName: 'Art Paper 120gr',
-        printSideName: '2 Sisi (4/4)',
-        finishingNames: ['Laminasi Doff'],
-        unitPrice: 850,
-        totalPrice: 85000,
-    },
-];
-
-interface ShippingAddress {
-    id: string;
-    namaPenerima: string;
-    telepon: string;
-    alamat: string;
-    kota: string;
-    provinsi: string;
-    kodePos: string;
+function getItemDisplay(item: CartItem) {
+    const size = item.product.ukuran.find(s => s.id === item.config.ukuran_id);
+    const material = item.product.bahan.find(m => m.id === item.config.bahan_id);
+    const printSide = item.product.sisiCetak.find(p => p.id === item.config.sisi_cetak_id);
+    const finishings = item.product.finishing.filter(f => item.config.finishingIds.includes(f.id));
+    return {
+        sizeName: size?.name,
+        materialName: material?.name,
+        printSideName: printSide?.name,
+        finishingNames: finishings.map(f => f.name),
+    };
 }
-
-// Mock addresses - in real app, get from API
-const mockAddresses: ShippingAddress[] = [
-    {
-        id: 'addr-1',
-        namaPenerima: 'Budi Santoso',
-        telepon: '081234567890',
-        alamat: 'Jl. Jendral Sudirman No. 123',
-        kota: 'Jakarta Selatan',
-        provinsi: 'DKI Jakarta',
-        kodePos: '12930',
-    },
-];
 
 const paymentMethods = [
     { id: 'bank_transfer', name: 'Transfer Bank', icon: <Landmark size={24} />, description: 'BCA, Mandiri, BNI, BRI' },
@@ -75,9 +50,15 @@ type CheckoutStep = 'address' | 'shipping' | 'payment' | 'review';
 export default function Checkout() {
     const navigate = useNavigate();
     const { addToast } = useUIStore();
+    const cartItems = useCartStore(state => state.items);
+    const totalWeight = useCartStore(state => state.getTotalWeight());
+    const clearCart = useCartStore(state => state.clearCart);
+    const user = useAuthStore(state => state.user);
 
     const [currentStep, setCurrentStep] = useState<CheckoutStep>('address');
-    const [selectedAddress, setSelectedAddress] = useState<ShippingAddress | null>(mockAddresses[0] || null);
+    const [addresses, setAddresses] = useState<ShippingAddress[]>([]);
+    const [isLoadingAddresses, setIsLoadingAddresses] = useState(true);
+    const [selectedAddress, setSelectedAddress] = useState<ShippingAddress | null>(null);
     const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
     const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
     const [selectedPayment, setSelectedPayment] = useState<string>('');
@@ -89,19 +70,38 @@ export default function Checkout() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [notes, setNotes] = useState('');
 
-    const cartItems = mockCartItems;
-    const subtotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    const subtotal = cartItems.reduce((sum, item) => sum + item.harga_total, 0);
     const shippingCost = selectedShipping?.cost || 0;
     const discount = promoDiscount;
     const total = subtotal + shippingCost - discount;
 
-    // Calculate total weight
-    const totalWeight = cartItems.reduce((sum, item) => sum + (item.quantity * 5), 0); // 5g per piece
+    useEffect(() => {
+        const fetchAddresses = async () => {
+            try {
+                const response = await addressService.getAddresses();
+                if (response.success) {
+                    setAddresses(response.data);
+                    setSelectedAddress(response.data.find(a => a.utama) || response.data[0] || null);
+                }
+            } catch (error) {
+                addToast({
+                    type: 'error',
+                    title: 'Error',
+                    message: 'Gagal memuat alamat pengiriman',
+                });
+            } finally {
+                setIsLoadingAddresses(false);
+            }
+        };
+        fetchAddresses();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (selectedAddress && currentStep === 'shipping') {
             fetchShippingOptions();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedAddress, currentStep]);
 
     const fetchShippingOptions = async () => {
@@ -155,6 +155,15 @@ export default function Checkout() {
     };
 
     const handleSubmitOrder = async () => {
+        if (!user) {
+            addToast({
+                type: 'error',
+                title: 'Belum Login',
+                message: 'Silakan login terlebih dahulu untuk membuat pesanan',
+            });
+            return;
+        }
+
         if (!selectedAddress || !selectedShipping || !selectedPayment) {
             addToast({
                 type: 'error',
@@ -167,29 +176,37 @@ export default function Checkout() {
         setIsSubmitting(true);
         try {
             const orderData = {
-                pengguna_id: 'current-user-id',
                 alamat_pengiriman_id: selectedAddress.id,
-                metode_pengiriman: selectedShipping.service,
-                kurir: selectedShipping.provider,
+                metode_pengiriman_id: selectedShipping.id,
                 metode_pembayaran: selectedPayment,
-                subtotal,
-                biaya_kirim: shippingCost,
-                diskon: discount,
+                kode_promo: promoApplied ? promoCode : undefined,
                 catatan: notes,
-                items: cartItems.map(item => ({
-                    produk_id: item.productId,
-                    nama_ukuran: item.sizeName,
-                    nama_bahan: item.materialName,
-                    nama_sisi_cetak: item.printSideName,
-                    nama_finishing: item.finishingNames,
-                    jumlah: item.quantity,
-                    harga_satuan: item.unitPrice,
-                    harga_total: item.totalPrice,
-                })),
+                items: cartItems.map(item => {
+                    const details = getItemDisplay(item);
+                    return {
+                        produk_id: item.produk_id,
+                        ukuran_id: item.config.ukuran_id,
+                        nama_ukuran: details.sizeName,
+                        bahan_id: item.config.bahan_id,
+                        nama_bahan: details.materialName,
+                        sisi_cetak_id: item.config.sisi_cetak_id,
+                        nama_sisi_cetak: details.printSideName,
+                        finishing_ids: item.config.finishingIds,
+                        nama_finishing: details.finishingNames,
+                        lebar_kustom: item.config.customWidth,
+                        tinggi_kustom: item.config.customHeight,
+                        jumlah: item.config.jumlah,
+                        harga_satuan: item.harga_satuan,
+                        harga_total: item.harga_total,
+                        nama_file_diunggah: item.uploadedFile?.name,
+                        tautan_file_diunggah: item.uploadedFile?.url,
+                    };
+                }),
             };
 
             const response = await orderService.createOrder(orderData);
             if (response.success) {
+                clearCart();
                 addToast({
                     type: 'success',
                     title: 'Pesanan Berhasil!',
@@ -241,6 +258,20 @@ export default function Checkout() {
         }
     };
 
+    if (cartItems.length === 0) {
+        return (
+            <div className="checkout-page">
+                <div className="container py-16">
+                    <div className="empty-state">
+                        <AlertCircle size={48} />
+                        <p>Keranjang belanja Anda kosong</p>
+                        <Link to="/" className="btn btn-primary">Mulai Belanja</Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="checkout-page">
             <div className="container">
@@ -285,9 +316,14 @@ export default function Checkout() {
                             <div className="checkout-section">
                                 <h2><MapPin size={24} /> Alamat Pengiriman</h2>
 
-                                {mockAddresses.length > 0 ? (
+                                {isLoadingAddresses ? (
+                                    <div className="loading-state">
+                                        <Loader2 className="spinner" size={32} />
+                                        <p>Memuat alamat...</p>
+                                    </div>
+                                ) : addresses.length > 0 ? (
                                     <div className="address-list">
-                                        {mockAddresses.map(addr => (
+                                        {addresses.map(addr => (
                                             <div
                                                 key={addr.id}
                                                 className={`address-card ${selectedAddress?.id === addr.id ? 'selected' : ''}`}
@@ -297,10 +333,10 @@ export default function Checkout() {
                                                     <div className="radio-dot"></div>
                                                 </div>
                                                 <div className="address-content">
-                                                    <div className="address-name">{addr.namaPenerima}</div>
+                                                    <div className="address-name">{addr.nama_penerima}</div>
                                                     <div className="address-phone">{addr.telepon}</div>
                                                     <div className="address-text">
-                                                        {addr.alamat}, {addr.kota}, {addr.provinsi} {addr.kodePos}
+                                                        {addr.alamat}, {addr.kota}, {addr.provinsi} {addr.kode_pos}
                                                     </div>
                                                 </div>
                                             </div>
@@ -313,7 +349,11 @@ export default function Checkout() {
                                     </div>
                                 )}
 
-                                <button className="btn btn-outline add-address-btn">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline add-address-btn"
+                                    onClick={() => navigate('/akun/alamat')}
+                                >
                                     <Plus size={20} />
                                     Tambah Alamat Baru
                                 </button>
@@ -344,7 +384,7 @@ export default function Checkout() {
                                                 <div className="shipping-content">
                                                     <div className="shipping-provider">{option.provider}</div>
                                                     <div className="shipping-service">{option.service}</div>
-                                                    <div className="shipping-eta">{option.estimasi_hari}</div>
+                                                    <div className="shipping-eta">{option.estimated_days}</div>
                                                 </div>
                                                 <div className="shipping-price">
                                                     {formatPrice(option.cost)}
@@ -394,19 +434,22 @@ export default function Checkout() {
 
                                 {/* Order Items */}
                                 <div className="review-items">
-                                    {cartItems.map(item => (
-                                        <div key={item.id} className="review-item">
-                                            <img src={item.productImage} alt={item.productName} />
-                                            <div className="item-details">
-                                                <div className="item-name">{item.productName}</div>
-                                                <div className="item-specs">
-                                                    {item.sizeName} • {item.materialName} • {item.printSideName}
+                                    {cartItems.map(item => {
+                                        const details = getItemDisplay(item);
+                                        return (
+                                            <div key={item.id} className="review-item">
+                                                <img src={item.product.gambar[0]} alt={item.product.nama} />
+                                                <div className="item-details">
+                                                    <div className="item-name">{item.product.nama}</div>
+                                                    <div className="item-specs">
+                                                        {details.sizeName} • {details.materialName} • {details.printSideName}
+                                                    </div>
+                                                    <div className="item-qty">Qty: {item.config.jumlah}</div>
                                                 </div>
-                                                <div className="item-qty">Qty: {item.quantity}</div>
+                                                <div className="item-price">{formatPrice(item.harga_total)}</div>
                                             </div>
-                                            <div className="item-price">{formatPrice(item.totalPrice)}</div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
 
                                 {/* Shipping Info */}
@@ -414,12 +457,12 @@ export default function Checkout() {
                                     <h3>Pengiriman</h3>
                                     <div className="review-info">
                                         <div>
-                                            <strong>{selectedAddress?.namaPenerima}</strong>
+                                            <strong>{selectedAddress?.nama_penerima}</strong>
                                             <p>{selectedAddress?.alamat}, {selectedAddress?.kota}</p>
                                         </div>
                                         <div>
                                             <strong>{selectedShipping?.provider} - {selectedShipping?.service}</strong>
-                                            <p>{selectedShipping?.estimasi_hari}</p>
+                                            <p>{selectedShipping?.estimated_days}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -485,8 +528,8 @@ export default function Checkout() {
                             <div className="summary-items">
                                 {cartItems.map(item => (
                                     <div key={item.id} className="summary-item">
-                                        <span>{item.productName} x{item.quantity}</span>
-                                        <span>{formatPrice(item.totalPrice)}</span>
+                                        <span>{item.product.nama} x{item.config.jumlah}</span>
+                                        <span>{formatPrice(item.harga_total)}</span>
                                     </div>
                                 ))}
                             </div>

@@ -15,8 +15,8 @@ import { useUIStore } from '../../store';
 import './AccountSettings.css';
 
 interface ProfileForm {
-    name: string;
-    phone: string;
+    nama: string;
+    telepon: string;
 }
 
 interface PasswordForm {
@@ -33,8 +33,8 @@ export default function AccountSettings() {
     const [isSaving, setIsSaving] = useState(false);
 
     const [profileForm, setProfileForm] = useState<ProfileForm>({
-        name: '',
-        phone: '',
+        nama: '',
+        telepon: '',
     });
 
     const [passwordForm, setPasswordForm] = useState<PasswordForm>({
@@ -64,8 +64,8 @@ export default function AccountSettings() {
             const response = await authService.getProfile();
             if (response.success) {
                 setProfileForm({
-                    name: response.data.nama,
-                    phone: response.data.telepon || '',
+                    nama: response.data.nama,
+                    telepon: response.data.telepon || '',
                 });
             }
         } catch (error) {
@@ -234,8 +234,8 @@ export default function AccountSettings() {
                                     <label>Nama Lengkap</label>
                                     <input
                                         type="text"
-                                        name="name"
-                                        value={profileForm.name}
+                                        name="nama"
+                                        value={profileForm.nama}
                                         onChange={handleProfileChange}
                                         required
                                     />
@@ -245,8 +245,8 @@ export default function AccountSettings() {
                                     <label>Nomor Telepon</label>
                                     <input
                                         type="tel"
-                                        name="phone"
-                                        value={profileForm.phone}
+                                        name="telepon"
+                                        value={profileForm.telepon}
                                         onChange={handleProfileChange}
                                         placeholder="081234567890"
                                     />

@@ -18,7 +18,7 @@ interface CategoryFormData {
     slug: string;
     description: string;
     image: string;
-    isActive: boolean;
+    aktif: boolean;
 }
 
 const defaultFormData: CategoryFormData = {
@@ -26,7 +26,7 @@ const defaultFormData: CategoryFormData = {
     slug: '',
     description: '',
     image: '',
-    isActive: true,
+    aktif: true,
 };
 
 export default function CategoryForm() {
@@ -55,7 +55,7 @@ export default function CategoryForm() {
                     slug: category.slug,
                     description: category.deskripsi || '',
                     image: category.gambar || '',
-                    isActive: true,
+                    aktif: category.aktif ?? true,
                 });
             }
         } catch (error) {
@@ -130,7 +130,7 @@ export default function CategoryForm() {
                 slug: formData.slug,
                 deskripsi: formData.description,
                 gambar: formData.image,
-                isActive: formData.isActive,
+                aktif: formData.aktif,
             };
             if (isEdit) {
                 await categoryService.updateCategory(id!, payload);
@@ -263,8 +263,8 @@ export default function CategoryForm() {
                             <label className="checkbox-label">
                                 <input
                                     type="checkbox"
-                                    name="isActive"
-                                    checked={formData.isActive}
+                                    name="aktif"
+                                    checked={formData.aktif}
                                     onChange={handleChange}
                                 />
                                 <span className="checkmark"></span>

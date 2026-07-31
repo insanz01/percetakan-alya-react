@@ -32,20 +32,21 @@ export interface OrderItemInput {
     harga_satuan: number;
     harga_total: number;
     nama_file_diunggah?: string;
-    url_file_diunggah?: string;
+    tautan_file_diunggah?: string;
 }
 
 // Create order request
+// Note: subtotal, biaya_kirim, and diskon are intentionally NOT sent — the
+// backend recomputes all three server-side (from product data, the shipping
+// rate table, and the promo record) so a tampered client value can't be used
+// to under-pay. metode_pengiriman_id is the shipping option's id (e.g.
+// "jne_reg") the backend uses to re-quote the cost.
 export interface CreateOrderRequest {
-    pengguna_id: string;
     alamat_pengiriman_id: string;
-    metode_pengiriman: string;
-    kurir?: string;
+    metode_pengiriman_id: string;
     metode_pembayaran: string;
     tipe_pembayaran?: string;
-    subtotal: number;
-    biaya_kirim: number;
-    diskon?: number;
+    kode_promo?: string;
     catatan?: string;
     items: OrderItemInput[];
 }

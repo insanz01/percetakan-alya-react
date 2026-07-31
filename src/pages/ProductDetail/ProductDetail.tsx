@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { useProduct, useCategories } from '../../hooks';
 import { formatPrice } from '../../lib/utils';
+import { fileService } from '../../lib/fileService';
 import { useCartStore, useUIStore } from '../../store';
 import type { CartItemConfig, UploadedFile } from '../../types';
 import './ProductDetail.css';
@@ -41,6 +42,7 @@ export default function ProductDetail() {
     const [customHeight, setCustomHeight] = useState<number>(0);
     const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [isUploadingFile, setIsUploadingFile] = useState(false);
 
     useEffect(() => {
         if (product) {
@@ -122,8 +124,8 @@ export default function ProductDetail() {
         }
     };
 
-    const handleFileUpload = (files: FileList | null) => {
-        if (!files || files.length === 0 || !product) return;
+    const handleFileUpload = async (files: FileList | null) => {
+        if (!files || files.length === 0 || !product || isUploadingFile) return;
 
         const file = files[0];
         const extension = file.name.split('.').pop()?.toLowerCase() || '';
@@ -147,21 +149,41 @@ export default function ProductDetail() {
             return;
         }
 
-        const uploaded: UploadedFile = {
-            id: `file-${Date.now()}`,
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            url: URL.createObjectURL(file),
-            status: 'success',
-        };
+        setIsUploadingFile(true);
+        try {
+            const response = await fileService.upload(file, 'design', product.id, 'product');
+            setUploadedFile({
+                id: response.data.id,
+                name: response.data.name,
+                size: response.data.size,
+                type: file.type,
+                url: response.data.url,
+                status: 'success',
+            });
+            addToast({
+                type: 'success',
+                title: 'File berhasil diupload',
+                message: file.name,
+            });
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Upload gagal',
+                message: error instanceof Error ? error.message : 'Gagal mengupload file desain',
+            });
+        } finally {
+            setIsUploadingFile(false);
+        }
+    };
 
-        setUploadedFile(uploaded);
-        addToast({
-            type: 'success',
-            title: 'File berhasil diupload',
-            message: file.name,
-        });
+    const handleRemoveFile = () => {
+        if (uploadedFile) {
+            // ponytail: fire-and-forget cleanup; not blocking the UI on a delete
+            // that already served its purpose. Upgrade path: surface failures if
+            // orphaned uploads become a real storage-cost problem.
+            fileService.deleteFile(uploadedFile.id).catch(() => {});
+        }
+        setUploadedFile(null);
     };
 
     const handleDrop = (e: React.DragEvent) => {
@@ -466,7 +488,12 @@ export default function ProductDetail() {
                                         onDragLeave={() => setIsDragging(false)}
                                         onDrop={handleDrop}
                                     >
-                                        {uploadedFile ? (
+                                        {isUploadingFile ? (
+                                            <>
+                                                <Loader2 size={40} className="animate-spin" />
+                                                <p>Mengupload file...</p>
+                                            </>
+                                        ) : uploadedFile ? (
                                             <div className="uploaded-file">
                                                 <FileText size={32} />
                                                 <div className="uploaded-file-info">
@@ -477,7 +504,7 @@ export default function ProductDetail() {
                                                 </div>
                                                 <button
                                                     className="remove-file-btn"
-                                                    onClick={() => setUploadedFile(null)}
+                                                    onClick={handleRemoveFile}
                                                 >
                                                     <X size={18} />
                                                 </button>

@@ -12,7 +12,7 @@ export interface ProductCategory {
 
 export interface ProductSize {
     id: string;
-    nama: string;
+    name: string;
     width?: number;
     height?: number;
     dimensions?: string;
@@ -21,22 +21,22 @@ export interface ProductSize {
 
 export interface ProductMaterial {
     id: string;
-    nama: string;
+    name: string;
     weight?: string;
     pricePerUnit: number;
-    deskripsi?: string;
+    description?: string;
 }
 
 export interface PrintSide {
     id: string;
-    nama: string;
-    kode?: string;
+    name: string;
+    code?: string;
     priceMultiplier: number;
 }
 
 export interface Finishing {
     id: string;
-    nama: string;
+    name: string;
     type?: 'laminating' | 'cutting' | 'folding' | 'binding' | 'other';
     price: number;
     description?: string;

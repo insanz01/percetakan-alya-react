@@ -45,9 +45,9 @@ export const fileService = {
     ): Promise<ApiResponse<UploadResponse>> {
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('type', type);
-        if (relatedId) formData.append('related_id', relatedId);
-        if (relatedType) formData.append('related_type', relatedType);
+        formData.append('tipe', type);
+        if (relatedId) formData.append('terkait_id', relatedId);
+        if (relatedType) formData.append('terkait_tipe', relatedType);
 
         const token = localStorage.getItem('auth_token');
         const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
