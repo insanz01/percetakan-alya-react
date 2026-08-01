@@ -265,14 +265,15 @@
     padding: 0 var(--spacing-3);
 }
 
-.user-name {
+.header-action-btn .user-name {
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
     display: none;
 }
 
 @media (min-width: 768px) {
-    .user-name {
+    .header-action-btn .user-name {
         display: block;
     }
 }
