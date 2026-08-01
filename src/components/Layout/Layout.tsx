@@ -17,7 +17,6 @@ import {
     FileText,
     Printer
 } from 'lucide-react';
-import { Icon } from '../../lib/iconMap';
 import { useState, useEffect } from 'react';
 import { useCartStore, useUIStore, useAuthStore } from '../../store';
 import { useCategories } from '../../hooks';
@@ -121,7 +120,7 @@ export default function Layout({ children }: LayoutProps) {
                                                         to={`/kategori/${category.slug}`}
                                                         className="nav-dropdown-item"
                                                     >
-                                                        <span className="nav-dropdown-icon"><Icon name={category.ikon || 'Package'} size={18} /></span>
+                                                        <span className="nav-dropdown-icon">{category.ikon || '📁'}</span>
                                                         <div className="nav-dropdown-info">
                                                             <span className="nav-dropdown-name">{category.nama}</span>
                                                             <span className="nav-dropdown-count">{category.productCount} produk</span>
@@ -283,7 +282,7 @@ export default function Layout({ children }: LayoutProps) {
                                         to={`/kategori/${category.slug}`}
                                         className="mobile-nav-link mobile-nav-category"
                                     >
-                                        <Icon name={category.ikon || 'Package'} size={18} />
+                                        <span className="mobile-nav-category-icon">{category.ikon || '📁'}</span>
                                         {category.nama}
                                     </Link>
                                 ))}

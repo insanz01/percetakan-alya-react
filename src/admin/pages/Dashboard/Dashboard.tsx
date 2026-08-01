@@ -8,7 +8,6 @@ import {
     ArrowDownRight,
     Loader2
 } from 'lucide-react';
-import { Icon } from '../../../lib/iconMap';
 import {
     useOrderStatistics,
     useCustomerStatistics,
@@ -160,8 +159,8 @@ export default function Dashboard() {
                                                     <span className="items-more"> +{order.items_count - 1} lainnya</span>
                                                 )}
                                             </td>
-                                            <td>{order.jumlah}</td>
-                                            <td className="order-total">{formatPrice(order.total)}</td>
+                                            <td>{order.quantity}</td>
+                                            <td className="order-total">{formatPrice(order.total_amount)}</td>
                                             <td>
                                                 <span className={`status-badge ${statusLabels[order.status]?.color || 'gray'}`}>
                                                     {statusLabels[order.status]?.label || order.status}
@@ -209,7 +208,7 @@ export default function Dashboard() {
                                         <p className="product-name">{product.nama}</p>
                                         <div className="product-stats">
                                             <span><ShoppingCart size={12} /> {product.total_sold} terjual</span>
-                                            <span className="category-tag">{product.category || 'Uncategorized'}</span>
+                                            <span className="category-tag">{product.kategori || 'Uncategorized'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +235,7 @@ export default function Dashboard() {
                         {(categories || []).length > 0 ? (
                             categories!.map((category) => (
                                 <div key={category.id} className="category-item">
-                                    <span className="category-icon"><Icon name={category.ikon || 'FolderOpen'} size={20} /></span>
+                                    <span className="category-icon">{category.ikon || '📁'}</span>
                                     <div className="category-info">
                                         <p className="category-name">{category.nama}</p>
                                         <p className="category-count">{category.productCount || 0} produk</p>

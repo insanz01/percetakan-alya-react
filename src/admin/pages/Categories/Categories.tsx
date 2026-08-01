@@ -80,11 +80,11 @@ export default function Categories() {
                         </div>
                         <div className="category-card-actions">
                             <button className="action-btn edit">
-                                <Edit2 size={16} />
+                                <Edit2 size={18} />
                                 Edit
                             </button>
                             <button className="action-btn delete">
-                                <Trash2 size={16} />
+                                <Trash2 size={18} />
                                 Hapus
                             </button>
                         </div>

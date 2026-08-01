@@ -147,7 +147,7 @@ export default function OrderHistory() {
                                             />
                                             <div className="item-info">
                                                 <div className="item-name">{item.product?.nama}</div>
-                                                <div className="item-qty">Qty: {item.config?.jumlah}</div>
+                                                <div className="item-qty">Qty: {item.jumlah}</div>
                                             </div>
                                             <div className="item-price">{formatPrice(item.harga_total)}</div>
                                         </div>

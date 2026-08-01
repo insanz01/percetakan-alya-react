@@ -4,34 +4,13 @@ import { useCustomers } from '../../../hooks';
 import { formatDate } from '../../../lib/utils';
 import './Customers.css';
 
-// Fallback dummy customers
-const fallbackCustomers = [
-    { id: '1', name: 'Budi Santoso', email: 'budi@email.com', phone: '081234567890', orders: 12, totalSpent: 4500000, joinDate: '2024-01-15' },
-    { id: '2', name: 'Siti Rahma', email: 'siti@email.com', phone: '081234567891', orders: 8, totalSpent: 2200000, joinDate: '2024-02-20' },
-    { id: '3', name: 'Ahmad Wijaya', email: 'ahmad@email.com', phone: '081234567892', orders: 5, totalSpent: 1500000, joinDate: '2024-03-10' },
-    { id: '4', name: 'Maya Putri', email: 'maya@email.com', phone: '081234567893', orders: 15, totalSpent: 6800000, joinDate: '2024-01-05' },
-    { id: '5', name: 'Rudi Hartono', email: 'rudi@email.com', phone: '081234567894', orders: 3, totalSpent: 750000, joinDate: '2024-04-12' },
-];
-
 export default function Customers() {
     const [searchQuery, setSearchQuery] = useState('');
     const { data: apiCustomers, isLoading } = useCustomers();
 
-    // Use API data or fallback
     const customers = useMemo(() => {
-        const customerList = apiCustomers || fallbackCustomers.map(c => ({
-            id: c.id,
-            nama: c.name,
-            email: c.email,
-            telepon: c.phone,
-            role: 'customer' as const,
-            aktif: true,
-            created_at: c.joinDate,
-            orders: [],
-            addresses: [],
-        }));
+        const customerList = apiCustomers || [];
 
-        // Filter by search
         if (searchQuery) {
             return customerList.filter(c =>
                 c.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -107,7 +86,7 @@ export default function Customers() {
                                         </div>
                                     </td>
                                     <td>
-                                        <span className="orders-count">{customer.orders?.length || 0} pesanan</span>
+                                        <span className="orders-count">{customer.orders_count || 0} pesanan</span>
                                     </td>
                                     <td>
                                         <span className={`status-badge ${customer.aktif ? 'green' : 'red'}`}>

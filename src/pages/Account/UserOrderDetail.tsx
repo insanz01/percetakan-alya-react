@@ -206,11 +206,11 @@ export default function UserOrderDetail() {
                                         <div className="item-info">
                                             <div className="item-name">{item.product?.nama}</div>
                                             <div className="item-specs">
-                                                {item.config?.nama_ukuran && <span>{item.config.nama_ukuran}</span>}
-                                                {item.config?.nama_bahan && <span>{item.config.nama_bahan}</span>}
-                                                {item.config?.nama_sisi_cetak && <span>{item.config.nama_sisi_cetak}</span>}
+                                                {item.nama_ukuran && <span>{item.nama_ukuran}</span>}
+                                                {item.nama_bahan && <span>{item.nama_bahan}</span>}
+                                                {item.nama_sisi_cetak && <span>{item.nama_sisi_cetak}</span>}
                                             </div>
-                                            <div className="item-qty">Qty: {item.config?.jumlah} pcs</div>
+                                            <div className="item-qty">Qty: {item.jumlah} pcs</div>
                                         </div>
                                         <div className="item-price">
                                             {formatPrice(item.harga_total)}
@@ -224,11 +224,11 @@ export default function UserOrderDetail() {
                         <div className="detail-section">
                             <h3><MapPin size={20} /> Alamat Pengiriman</h3>
                             <div className="info-card">
-                                <p className="recipient">{order.alamat_pengiriman?.nama_penerima}</p>
-                                <p className="phone">{order.alamat_pengiriman?.telepon}</p>
-                                <p className="address">{order.alamat_pengiriman?.alamat}</p>
+                                <p className="recipient">{order.shipping_address?.nama_penerima}</p>
+                                <p className="phone">{order.shipping_address?.telepon}</p>
+                                <p className="address">{order.shipping_address?.alamat}</p>
                                 <p className="location">
-                                    {order.alamat_pengiriman?.kota}, {order.alamat_pengiriman?.provinsi} {order.alamat_pengiriman?.kode_pos}
+                                    {order.shipping_address?.kota}, {order.shipping_address?.provinsi} {order.shipping_address?.kode_pos}
                                 </p>
                             </div>
                         </div>
@@ -270,7 +270,7 @@ export default function UserOrderDetail() {
                             </div>
                             <div className="payment-method">
                                 <CreditCard size={16} />
-                                <span>{typeof order.metode_pembayaran === 'string' ? order.metode_pembayaran : order.metode_pembayaran?.nama || 'Transfer Bank'}</span>
+                                <span>{order.metode_pembayaran || 'Transfer Bank'}</span>
                             </div>
                         </div>
 

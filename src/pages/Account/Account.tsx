@@ -20,7 +20,7 @@ interface UserData {
     nama: string;
     email: string;
     telepon?: string;
-    avatar?: string;
+    foto_profil?: string;
     peran?: string;
     created_at?: string;
 }
@@ -112,8 +112,8 @@ export default function Account() {
                         <aside className="account-sidebar">
                             <div className="user-card">
                                 <div className="user-avatar">
-                                    {user?.avatar ? (
-                                        <img src={user.avatar} alt={user.nama} />
+                                    {user?.foto_profil ? (
+                                        <img src={user.foto_profil} alt={user.nama} />
                                     ) : (
                                         <span>{user?.nama?.charAt(0).toUpperCase()}</span>
                                     )}
@@ -162,8 +162,8 @@ export default function Account() {
                     <aside className="account-sidebar">
                         <div className="user-card">
                             <div className="user-avatar">
-                                    {user?.avatar ? (
-                                    <img src={user.avatar} alt={user.nama} />
+                                    {user?.foto_profil ? (
+                                    <img src={user.foto_profil} alt={user.nama} />
                                 ) : (
                                     <span>{user?.nama?.charAt(0).toUpperCase()}</span>
                                 )}
@@ -206,8 +206,8 @@ export default function Account() {
 
                             <div className="profile-card">
                                 <div className="profile-avatar-large">
-                                    {user?.avatar ? (
-                                        <img src={user.avatar} alt={user.nama} />
+                                    {user?.foto_profil ? (
+                                        <img src={user.foto_profil} alt={user.nama} />
                                     ) : (
                                         <span>{user?.nama?.charAt(0).toUpperCase()}</span>
                                     )}

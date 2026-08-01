@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Edit2, Trash2, Tag, Calendar, Percent, Clock, Loader2 } from 'lucide-react';
 import { usePromos } from '../../../hooks';
-import { formatPrice } from '../../../lib/utils';
+import { formatPrice, formatDate } from '../../../lib/utils';
 import type { Promo } from '../../../lib/promoService';
 import './Promos.css';
 
@@ -123,7 +123,7 @@ export default function Promos() {
                         <div className="promo-details">
                             <div className="promo-detail-item">
                                 <Calendar size={14} />
-                                <span>{promo.tanggal_mulai || '-'} - {promo.tanggal_berakhir || '-'}</span>
+                                <span>{promo.tanggal_mulai ? formatDate(promo.tanggal_mulai) : '-'} - {promo.tanggal_berakhir ? formatDate(promo.tanggal_berakhir) : '-'}</span>
                             </div>
                             <div className="promo-detail-item">
                                 <Clock size={14} />
@@ -142,11 +142,11 @@ export default function Promos() {
 
                         <div className="promo-card-actions">
                             <button className="action-btn edit">
-                                <Edit2 size={16} />
+                                <Edit2 size={18} />
                                 Edit
                             </button>
                             <button className="action-btn delete">
-                                <Trash2 size={16} />
+                                <Trash2 size={18} />
                                 Hapus
                             </button>
                         </div>

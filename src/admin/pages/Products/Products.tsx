@@ -195,10 +195,10 @@ export default function Products() {
                                                     title="Lihat"
                                                     onClick={() => handleViewProduct(product)}
                                                 >
-                                                    <Eye size={16} />
+                                                    <Eye size={18} />
                                                 </button>
                                                 <button className="action-btn" title="Edit">
-                                                    <Edit2 size={16} />
+                                                    <Edit2 size={18} />
                                                 </button>
                                                 <div className="dropdown-container">
                                                     <button
@@ -207,7 +207,7 @@ export default function Products() {
                                                             activeDropdown === product.id ? null : product.id
                                                         )}
                                                     >
-                                                        <MoreVertical size={16} />
+                                                        <MoreVertical size={18} />
                                                     </button>
                                                     {activeDropdown === product.id && (
                                                         <div className="dropdown-menu">
@@ -285,14 +285,14 @@ export default function Products() {
                                             handleViewProduct(product);
                                         }}
                                     >
-                                        <Eye size={16} />
+                                        <Eye size={18} />
                                     </button>
                                     <button
                                         className="action-btn"
                                         title="Edit"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <Edit2 size={16} />
+                                        <Edit2 size={18} />
                                     </button>
                                     <button
                                         className="action-btn"
@@ -301,7 +301,7 @@ export default function Products() {
                                             setActiveDropdown(activeDropdown === product.id ? null : product.id);
                                         }}
                                     >
-                                        <MoreVertical size={16} />
+                                        <MoreVertical size={18} />
                                     </button>
                                 </div>
                             </div>

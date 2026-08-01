@@ -150,8 +150,8 @@ export interface RecentOrder {
     customer_email: string | null;
     product: string;
     items_count: number;
-    jumlah: number;
-    total: number;
+    quantity: number;
+    total_amount: number;
     status: string;
     status_bayar: string;
     created_at: string;

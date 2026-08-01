@@ -144,7 +144,7 @@ export default function AdminLayout() {
 
 
     return (
-        <div className="admin-layout">
+        <div className="admin-layout admin-scope">
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
                 <div

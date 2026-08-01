@@ -46,7 +46,7 @@ export default function AdminLogin() {
     };
 
     return (
-        <div className="admin-login-page">
+        <div className="admin-login-page admin-scope">
             <div className="admin-login-container">
                 <div className="admin-login-card">
                     {/* Header */}

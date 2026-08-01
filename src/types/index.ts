@@ -126,9 +126,31 @@ export type OrderStatus =
     | 'delivered'
     | 'cancelled';
 
-export interface OrderItem extends CartItem {
+export interface OrderItem {
+    id: string;
+    pesanan_id: string;
+    produk_id: string;
+    product?: Product;
+    ukuran_id?: string;
+    nama_ukuran?: string;
+    bahan_id?: string;
+    nama_bahan?: string;
+    sisi_cetak_id?: string;
+    nama_sisi_cetak?: string;
+    finishing_ids?: string[];
+    nama_finishing?: string[];
+    lebar_kustom?: number;
+    tinggi_kustom?: number;
+    jumlah: number;
+    harga_satuan: number;
+    harga_total: number;
+    nama_file_diunggah?: string;
+    tautan_file_diunggah?: string;
+    status_file_diunggah?: string;
     status: OrderStatus;
     catatan?: string;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export interface ShippingAddress {
@@ -142,22 +164,6 @@ export interface ShippingAddress {
     utama: boolean;
 }
 
-export interface ShippingMethod {
-    id: string;
-    nama: string;
-    kurir: string;
-    estimasi_hari: string;
-    price: number;
-}
-
-export interface PaymentMethod {
-    id: string;
-    nama: string;
-    tipe: 'bank_transfer' | 'virtual_account' | 'ewallet' | 'qris';
-    ikon: string;
-    instructions?: string;
-}
-
 export interface Order {
     id: string;
     nomor_pesanan: string;
@@ -169,9 +175,13 @@ export interface Order {
         telepon?: string;
     };
     items: OrderItem[];
-    alamat_pengiriman: ShippingAddress;
-    metode_pengiriman: ShippingMethod;
-    metode_pembayaran: PaymentMethod | string;
+    alamat_pengiriman_id?: string;
+    shipping_address?: ShippingAddress;
+    metode_pengiriman: string;
+    kurir?: string;
+    nomor_resi?: string;
+    metode_pembayaran: string;
+    tipe_pembayaran?: string;
     catatan?: string;
     subtotal: number;
     biaya_kirim: number;
@@ -180,6 +190,7 @@ export interface Order {
     status: OrderStatus;
     status_bayar: 'pending' | 'paid' | 'expired' | 'refunded';
     batas_bayar?: Date;
+    dibayar_pada?: Date;
     created_at: Date;
     updated_at: Date;
 }
@@ -189,9 +200,10 @@ export interface User {
     email: string;
     nama: string;
     telepon?: string;
-    avatar?: string;
+    foto_profil?: string;
     addresses: ShippingAddress[];
     orders?: Order[];
+    orders_count?: number;
     peran?: 'customer' | 'admin' | 'super_admin';
     aktif?: boolean;
     email_diverifikasi_pada?: string;

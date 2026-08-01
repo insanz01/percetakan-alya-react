@@ -188,7 +188,7 @@ export interface PopularProduct {
     slug: string;
     gambar: string | null;
     harga_dasar: number;
-    category: string | null;
+    kategori: string | null;
     sales_count: number;
     total_sold: number;
 }

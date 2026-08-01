@@ -212,11 +212,11 @@ export default function OrderDetail() {
                                     <div className="item-info">
                                         <div className="item-name">{item.product?.nama}</div>
                                         <div className="item-specs">
-                                            {item.config?.nama_ukuran && <span>{item.config.nama_ukuran}</span>}
-                                            {item.config?.nama_bahan && <span>{item.config.nama_bahan}</span>}
-                                            {item.config?.nama_sisi_cetak && <span>{item.config.nama_sisi_cetak}</span>}
+                                            {item.nama_ukuran && <span>{item.nama_ukuran}</span>}
+                                            {item.nama_bahan && <span>{item.nama_bahan}</span>}
+                                            {item.nama_sisi_cetak && <span>{item.nama_sisi_cetak}</span>}
                                         </div>
-                                        <div className="item-qty">Qty: {item.config?.jumlah}</div>
+                                        <div className="item-qty">Qty: {item.jumlah}</div>
                                     </div>
                                     <div className="item-price">
                                         <div className="unit-price">{formatPrice(item.harga_satuan)}/pcs</div>
@@ -233,19 +233,24 @@ export default function OrderDetail() {
                             <h3><FileText size={20} /> File Desain</h3>
                         </div>
                         <div className="design-files">
-                            {order.items?.some(item => item.designFile) ? (
+                            {order.items?.some(item => item.tautan_file_diunggah) ? (
                                 order.items.map((item, index) => (
-                                    item.designFile && (
+                                    item.tautan_file_diunggah && (
                                         <div key={index} className="file-item">
                                             <FileText size={24} />
                                             <div className="file-info">
-                                                <span className="file-name">{item.designFile.name || 'Design File'}</span>
+                                                <span className="file-name">{item.nama_file_diunggah || 'Design File'}</span>
                                                 <span className="file-size">{item.product?.nama}</span>
                                             </div>
-                                            <button className="btn btn-ghost btn-sm">
+                                            <a
+                                                href={item.tautan_file_diunggah}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-ghost btn-sm"
+                                            >
                                                 <Download size={16} />
                                                 Download
-                                            </button>
+                                            </a>
                                         </div>
                                     )
                                 ))
@@ -328,11 +333,11 @@ export default function OrderDetail() {
                             <h3><MapPin size={18} /> Alamat Pengiriman</h3>
                         </div>
                         <div className="shipping-info">
-                            <p className="recipient">{order.alamat_pengiriman?.nama_penerima}</p>
-                            <p className="phone">{order.alamat_pengiriman?.telepon}</p>
-                            <p className="address">{order.alamat_pengiriman?.alamat}</p>
+                            <p className="recipient">{order.shipping_address?.nama_penerima}</p>
+                            <p className="phone">{order.shipping_address?.telepon}</p>
+                            <p className="address">{order.shipping_address?.alamat}</p>
                             <p className="location">
-                                {order.alamat_pengiriman?.kota}, {order.alamat_pengiriman?.provinsi} {order.alamat_pengiriman?.kode_pos}
+                                {order.shipping_address?.kota}, {order.shipping_address?.provinsi} {order.shipping_address?.kode_pos}
                             </p>
                         </div>
                     </div>
@@ -370,7 +375,7 @@ export default function OrderDetail() {
                             </div>
                             <div className="payment-method">
                                 <span>Metode</span>
-                                <span>{typeof order.metode_pembayaran === 'string' ? order.metode_pembayaran : order.metode_pembayaran?.nama || '-'}</span>
+                                <span>{order.metode_pembayaran || '-'}</span>
                             </div>
                         </div>
                     </div>
