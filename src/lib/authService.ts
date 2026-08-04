@@ -32,6 +32,12 @@ export interface PasswordChangeRequest {
     password_confirmation: string;
 }
 
+export interface ResetPasswordRequest {
+    email: string;
+    password: string;
+    password_confirmation: string;
+}
+
 // Auth Service
 export const authService = {
     /**
@@ -86,6 +92,13 @@ export const authService = {
      */
     async changePassword(data: PasswordChangeRequest): Promise<ApiResponse<null>> {
         return api.put<ApiResponse<null>>('/auth/password', data);
+    },
+
+    /**
+     * Reset password (email + new password, no email verification)
+     */
+    async resetPassword(data: ResetPasswordRequest): Promise<ApiResponse<null>> {
+        return api.post<ApiResponse<null>>('/auth/reset-password', data);
     },
 
     /**
