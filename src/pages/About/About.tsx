@@ -9,38 +9,14 @@ import {
     ChevronRight,
     Printer
 } from 'lucide-react';
+import { useContent } from '../../hooks';
 import './About.css';
 
 export default function About() {
-    const stats = [
-        { value: '10+', label: 'Tahun Pengalaman' },
-        { value: '50K+', label: 'Pelanggan Puas' },
-        { value: '500K+', label: 'Pesanan Selesai' },
-        { value: '99%', label: 'Tingkat Kepuasan' },
-    ];
+    const { about } = useContent();
 
-    const values = [
-        {
-            icon: <Award size={32} />,
-            title: 'Kualitas Premium',
-            description: 'Kami menggunakan mesin cetak terbaru dan bahan berkualitas tinggi untuk menghasilkan produk terbaik.',
-        },
-        {
-            icon: <Clock size={32} />,
-            title: 'Tepat Waktu',
-            description: 'Komitmen kami adalah menyelesaikan pesanan sesuai estimasi yang dijanjikan.',
-        },
-        {
-            icon: <Shield size={32} />,
-            title: 'Garansi Kepuasan',
-            description: 'Jika hasil tidak sesuai, kami akan cetak ulang tanpa biaya tambahan.',
-        },
-        {
-            icon: <ThumbsUp size={32} />,
-            title: 'Harga Transparan',
-            description: 'Tidak ada biaya tersembunyi. Harga yang Anda lihat adalah harga yang Anda bayar.',
-        },
-    ];
+    // Icons stay in code, matched to value cards by position.
+    const valueIcons = [Award, Clock, Shield, ThumbsUp];
 
     return (
         <div className="about-page">
@@ -59,12 +35,8 @@ export default function About() {
             <section className="about-hero">
                 <div className="container">
                     <div className="about-hero-content">
-                        <h1>Mitra Percetakan Terpercaya untuk Bisnis Anda</h1>
-                        <p>
-                            Sejak 2014, Semanggi Print telah menjadi solusi percetakan online terlengkap
-                            dengan menggabungkan teknologi modern dan keahlian tradisional untuk
-                            menghasilkan produk cetak berkualitas tinggi.
-                        </p>
+                        <h1>{about.title}</h1>
+                        <p>{about.body}</p>
                     </div>
                 </div>
                 <div className="about-hero-pattern" />
@@ -74,7 +46,7 @@ export default function About() {
             <section className="stats-section">
                 <div className="container">
                     <div className="stats-grid">
-                        {stats.map((stat, index) => (
+                        {about.stats.map((stat, index) => (
                             <div key={index} className="stat-card">
                                 <span className="stat-value">{stat.value}</span>
                                 <span className="stat-label">{stat.label}</span>
@@ -90,7 +62,7 @@ export default function About() {
                     <div className="story-grid">
                         <div className="story-image">
                             <img
-                                src="https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?w=600"
+                                src={about.story.image}
                                 alt="Semanggi Print Office"
                             />
                             <div className="story-image-overlay">
@@ -98,23 +70,11 @@ export default function About() {
                             </div>
                         </div>
                         <div className="story-content">
-                            <span className="section-badge">Cerita Kami</span>
-                            <h2>Dari Garasi ke Ribuan Pelanggan</h2>
-                            <p>
-                                Semanggi Print didirikan dengan semangat untuk memberikan layanan percetakan
-                                berkualitas yang mudah dijangkau oleh semua kalangan. Berawal dari usaha
-                                kecil, kami kini melayani ribuan pelanggan dari seluruh Indonesia.
-                            </p>
-                            <p>
-                                Perjalanan kami tidak selalu mulus, namun dengan komitmen pada kualitas
-                                dan kepuasan pelanggan, kami terus berkembang. Saat ini, Semanggi Print
-                                memiliki fasilitas produksi modern dengan berbagai mesin cetak offset
-                                dan digital untuk memenuhi kebutuhan percetakan Anda.
-                            </p>
-                            <p>
-                                Kami percaya bahwa setiap bisnis, besar maupun kecil, berhak mendapatkan
-                                hasil cetakan berkualitas dengan harga yang terjangkau dan transparan.
-                            </p>
+                            <span className="section-badge">{about.story.badge}</span>
+                            <h2>{about.story.title}</h2>
+                            {about.story.paragraphs.map((p, i) => (
+                                <p key={i}>{p}</p>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -129,10 +89,7 @@ export default function About() {
                                 <Eye size={40} />
                             </div>
                             <h3>Visi Kami</h3>
-                            <p>
-                                Menjadi platform percetakan online nomor satu di Indonesia yang dikenal
-                                dengan kualitas premium, inovasi teknologi, dan layanan pelanggan terbaik.
-                            </p>
+                            <p>{about.vision}</p>
                         </div>
                         <div className="vision-card">
                             <div className="vision-icon">
@@ -140,10 +97,9 @@ export default function About() {
                             </div>
                             <h3>Misi Kami</h3>
                             <ul>
-                                <li>Menyediakan produk cetak berkualitas tinggi dengan harga kompetitif</li>
-                                <li>Menghadirkan pengalaman pemesanan yang mudah dan transparan</li>
-                                <li>Memberikan layanan pelanggan yang responsif dan solutif</li>
-                                <li>Mendukung pertumbuhan bisnis UMKM Indonesia</li>
+                                {about.mission.map((m, i) => (
+                                    <li key={i}>{m}</li>
+                                ))}
                             </ul>
                         </div>
                     </div>
@@ -160,13 +116,16 @@ export default function About() {
                     </div>
 
                     <div className="values-grid">
-                        {values.map((value, index) => (
-                            <div key={index} className="value-card">
-                                <div className="value-icon">{value.icon}</div>
-                                <h4>{value.title}</h4>
-                                <p>{value.description}</p>
-                            </div>
-                        ))}
+                        {about.values.map((value, index) => {
+                            const Icon = valueIcons[index % valueIcons.length];
+                            return (
+                                <div key={index} className="value-card">
+                                    <div className="value-icon"><Icon size={32} /></div>
+                                    <h4>{value.title}</h4>
+                                    <p>{value.description}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

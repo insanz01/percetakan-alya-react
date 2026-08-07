@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useCartStore, useUIStore, useAuthStore } from '../../store';
-import { useCategories } from '../../hooks';
+import { useCategories, useContent } from '../../hooks';
 import { formatPrice } from '../../lib/utils';
 import './Layout.css';
 
@@ -41,6 +41,7 @@ export default function Layout({ children }: LayoutProps) {
     } = useUIStore();
     const { isAuthenticated, user } = useAuthStore();
     const { data: categories } = useCategories({ active: true });
+    const { footer, contact } = useContent();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -63,13 +64,13 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="container">
                     <div className="top-bar-content">
                         <div className="top-bar-left">
-                            <a href="tel:+6281311152071" className="top-bar-link">
+                            <a href={`tel:${contact.phone.replace(/[^\d+]/g, '')}`} className="top-bar-link">
                                 <Phone size={14} />
-                                <span>0813-1115-2071</span>
+                                <span>{contact.phone}</span>
                             </a>
-                            <a href="mailto:rudygrafika@gmail.com" className="top-bar-link">
+                            <a href={`mailto:${contact.email}`} className="top-bar-link">
                                 <Mail size={14} />
-                                <span>rudygrafika@gmail.com</span>
+                                <span>{contact.email}</span>
                             </a>
                         </div>
                         <div className="top-bar-right">
@@ -336,14 +337,13 @@ export default function Layout({ children }: LayoutProps) {
                                 </span>
                             </Link>
                             <p className="footer-about">
-                                Platform percetakan online terpercaya dengan kualitas premium dan harga transparan.
-                                Melayani kebutuhan cetak individu hingga corporate.
+                                {footer.description}
                             </p>
                             <div className="footer-social">
-                                <a href="#" className="social-link" aria-label="Facebook">
+                                <a href={footer.facebook || '#'} className="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                                     <Facebook size={20} />
                                 </a>
-                                <a href="#" className="social-link" aria-label="Instagram">
+                                <a href={footer.instagram || '#'} className="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                                     <Instagram size={20} />
                                 </a>
                                 <a href="#" className="social-link" aria-label="Twitter">
@@ -381,15 +381,15 @@ export default function Layout({ children }: LayoutProps) {
                             <ul className="footer-contact">
                                 <li>
                                     <MapPin size={16} />
-                                    <span>Jl. A.Yani No.39, Palangka Raya, Kalteng</span>
+                                    <span>{contact.address}</span>
                                 </li>
                                 <li>
                                     <Phone size={16} />
-                                    <span>0813-1115-2071</span>
+                                    <span>{contact.phone}</span>
                                 </li>
                                 <li>
                                     <Mail size={16} />
-                                    <span>rudygrafika@gmail.com</span>
+                                    <span>{contact.email}</span>
                                 </li>
                             </ul>
                         </div>

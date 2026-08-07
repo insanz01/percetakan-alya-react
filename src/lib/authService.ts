@@ -118,6 +118,20 @@ export const authService = {
     isAuthenticated(): boolean {
         return !!localStorage.getItem('auth_token');
     },
+
+    /**
+     * Check if the logged-in admin is a Super Admin.
+     * Reads the `adminUser` set at admin login. Accepts either the API role
+     * (`peran: 'super_admin'`) or the display role string ('Super Admin').
+     */
+    isSuperAdmin(): boolean {
+        try {
+            const u = JSON.parse(localStorage.getItem('adminUser') || '{}');
+            return u.peran === 'super_admin' || u.role === 'Super Admin';
+        } catch {
+            return false;
+        }
+    },
 };
 
 // Shipping Address Service

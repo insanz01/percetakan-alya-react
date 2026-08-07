@@ -57,8 +57,9 @@ export const settingService = {
      * Update multiple settings (Admin)
      */
     async updateSettings(settings: { key: string; value: unknown }[]): Promise<ApiResponse<{ updated: string[]; count: number }>> {
+        // Backend (Lumen) memvalidasi field `kunci`/`nilai`, bukan `key`/`value`.
         return api.put<ApiResponse<{ updated: string[]; count: number }>>('/admin/settings', {
-            settings,
+            settings: settings.map(s => ({ kunci: s.key, nilai: s.value })),
         });
     },
 
@@ -66,7 +67,7 @@ export const settingService = {
      * Update single setting (Admin)
      */
     async updateSetting(key: string, value: unknown): Promise<ApiResponse<Setting>> {
-        return api.put<ApiResponse<Setting>>(`/admin/settings/${key}`, { value });
+        return api.put<ApiResponse<Setting>>(`/admin/settings/${key}`, { nilai: value });
     },
 };
 

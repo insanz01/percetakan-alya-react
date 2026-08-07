@@ -16,8 +16,10 @@ import {
     CreditCard,
     BarChart3,
     Printer,
-    UserCircle
+    UserCircle,
+    FileText
 } from 'lucide-react';
+import { authService } from '../../../lib/authService';
 import './AdminLayout.css';
 import '../../styles/admin-shared.css';
 
@@ -38,6 +40,7 @@ const menuItems = [
     { path: '/admin/orders', icon: <ShoppingCart size={20} />, label: 'Pesanan' },
     { path: '/admin/customers', icon: <Users size={20} />, label: 'Pelanggan' },
     { path: '/admin/promos', icon: <Tag size={20} />, label: 'Promo' },
+    { path: '/admin/content', icon: <FileText size={20} />, label: 'Konten', superAdmin: true },
     { path: '/admin/settings', icon: <Settings size={20} />, label: 'Pengaturan' },
 ];
 
@@ -110,6 +113,9 @@ export default function AdminLayout() {
         return defaultAdminUser;
     }, []);
 
+    const isSuperAdmin = authService.isSuperAdmin();
+    const visibleMenu = menuItems.filter(item => !item.superAdmin || isSuperAdmin);
+
     const isActive = (path: string, exact?: boolean) => {
         if (exact) {
             return location.pathname === path;
@@ -173,7 +179,7 @@ export default function AdminLayout() {
                 <div className="sidebar-badge">Admin Panel</div>
 
                 <nav className="sidebar-nav">
-                    {menuItems.map((item) => (
+                    {visibleMenu.map((item) => (
                         <Link
                             key={item.path}
                             to={item.path}
@@ -210,7 +216,7 @@ export default function AdminLayout() {
                             <Menu size={24} />
                         </button>
                         <h1 className="page-title">
-                            {menuItems.find(m => isActive(m.path, m.exact))?.label || 'Admin'}
+                            {visibleMenu.find(m => isActive(m.path, m.exact))?.label || 'Admin'}
                         </h1>
                     </div>
 

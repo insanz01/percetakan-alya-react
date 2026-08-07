@@ -37,6 +37,7 @@ import Customers from './admin/pages/Customers';
 import Promos from './admin/pages/Promos';
 import PromoForm from './admin/pages/Promos/PromoForm';
 import Settings from './admin/pages/Settings';
+import Content from './admin/pages/Content';
 
 function App() {
     return (
@@ -63,6 +64,7 @@ function App() {
                     <Route path="promos" element={<Promos />} />
                     <Route path="promos/new" element={<PromoForm />} />
                     <Route path="promos/:id/edit" element={<PromoForm />} />
+                    <Route path="content" element={<Content />} />
                     <Route path="settings" element={<Settings />} />
                 </Route>
 

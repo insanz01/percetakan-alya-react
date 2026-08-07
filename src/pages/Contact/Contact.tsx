@@ -12,10 +12,12 @@ import {
     Loader2
 } from 'lucide-react';
 import { useUIStore } from '../../store';
+import { useContent } from '../../hooks';
 import './Contact.css';
 
 export default function Contact() {
     const { addToast } = useUIStore();
+    const { contact, faq } = useContent();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -30,49 +32,33 @@ export default function Contact() {
         {
             icon: <Phone size={24} />,
             title: 'Telepon',
-            details: ['0813-1115-2071'],
-            action: 'tel:+6281311152071',
+            details: [contact.phone],
+            action: `tel:${contact.phone.replace(/[^\d+]/g, '')}`,
             actionLabel: 'Hubungi Sekarang',
         },
         {
             icon: <Mail size={24} />,
             title: 'Email',
-            details: ['rudygrafika@gmail.com'],
-            action: 'mailto:rudygrafika@gmail.com',
+            details: [contact.email],
+            action: `mailto:${contact.email}`,
             actionLabel: 'Kirim Email',
         },
         {
             icon: <MessageCircle size={24} />,
             title: 'WhatsApp',
-            details: ['0813-1115-2071', 'Respon cepat 24 jam'],
-            action: 'https://wa.me/6281311152071',
+            details: [contact.whatsapp, 'Respon cepat 24 jam'],
+            action: `https://wa.me/${contact.whatsapp.replace(/[^\d]/g, '')}`,
             actionLabel: 'Chat WhatsApp',
         },
         {
             icon: <Clock size={24} />,
             title: 'Jam Operasional',
-            details: ['Senin - Sabtu: 08.00 - 17.00'],
+            details: [contact.hours],
         },
     ];
 
-    const faqItems = [
-        {
-            question: 'Berapa lama waktu pengerjaan?',
-            answer: 'Waktu pengerjaan bervariasi tergantung jenis produk dan jumlah pesanan. Estimasi waktu tertera di halaman produk.',
-        },
-        {
-            question: 'Apakah bisa cetak dalam jumlah kecil?',
-            answer: 'Setiap produk memiliki minimum order yang berbeda. Silakan cek di halaman produk untuk detail lebih lanjut.',
-        },
-        {
-            question: 'Bagaimana cara pembayaran?',
-            answer: 'Kami menerima transfer bank, kartu kredit/debit, dan e-wallet seperti GoPay, OVO, dan DANA.',
-        },
-        {
-            question: 'Apakah ada garansi?',
-            answer: 'Ya, kami memberikan garansi cetak ulang gratis jika hasil tidak sesuai dengan pesanan.',
-        },
-    ];
+    // Show the first few managed FAQ entries on the contact page.
+    const faqItems = faq.slice(0, 4);
 
     const validateForm = (): boolean => {
         const newErrors: Record<string, string> = {};
@@ -296,37 +282,41 @@ export default function Contact() {
 
                         {/* Map & Address */}
                         <div className="contact-map-section">
-                            <div className="map-container">
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.5!2d113.9213!3d-2.2072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMTInMjUuOSJTIDExM8KwNTUnMTYuNyJF!5e0!3m2!1sid!2sid!4v1234567890!5m2!1sid!2sid&q=Jl.+A.Yani+No.39+Palangka+Raya+Kalimantan+Tengah"
-                                    width="100%"
-                                    height="300"
-                                    style={{ border: 0, borderRadius: 'var(--radius-xl)' }}
-                                    allowFullScreen
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    title="Lokasi Semanggi Print"
-                                />
-                            </div>
+                            {contact.maps && (
+                                <div className="map-container">
+                                    <iframe
+                                        src={contact.maps}
+                                        width="100%"
+                                        height="300"
+                                        style={{ border: 0, borderRadius: 'var(--radius-xl)' }}
+                                        allowFullScreen
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        title="Lokasi Semanggi Print"
+                                    />
+                                </div>
+                            )}
 
                             <div className="address-card">
                                 <div className="address-icon">
                                     <MapPin size={24} />
                                 </div>
                                 <div className="address-content">
-                                    <h3>Kantor & Workshop</h3>
-                                    <p>Jl. A.Yani No.39</p>
-                                    <p>Kelurahan Langkai, Kec. Pahandut</p>
-                                    <p>Kota Palangka Raya, Kalimantan Tengah 73111</p>
-                                    <a
-                                        href="https://www.google.com/maps/search/Jl.+A.Yani+No.39+Palangka+Raya+Kalimantan+Tengah"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="btn btn-outline btn-sm"
-                                    >
-                                        <MapPin size={16} />
-                                        Lihat di Google Maps
-                                    </a>
+                                    <h3>{contact.addressTitle}</h3>
+                                    {contact.addressLines.map((line, i) => (
+                                        <p key={i}>{line}</p>
+                                    ))}
+                                    {contact.mapsLink && (
+                                        <a
+                                            href={contact.mapsLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="btn btn-outline btn-sm"
+                                        >
+                                            <MapPin size={16} />
+                                            Lihat di Google Maps
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </div>

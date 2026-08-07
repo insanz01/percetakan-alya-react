@@ -1,57 +1,40 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, ArrowRight, Star, Clock, Truck, Shield, Headphones, Loader2, Flame, MessageCircle } from 'lucide-react';
-import { useCategories, useProducts } from '../../hooks';
+import { useCategories, useProducts, useContent } from '../../hooks';
 import { formatPrice } from '../../lib/utils';
 import type { Product } from '../../types';
 import './Home.css';
 
-// Hero banners - static data
-const heroBanners = [
-    {
-        id: 'banner-1',
-        title: 'Cetak Berkualitas, Harga Terjangkau',
-        subtitle: 'Solusi percetakan terpercaya untuk bisnis dan personal Anda',
-        ctaText: 'Mulai Pesan',
-        ctaLink: '/kategori',
-        image: '/gambar/banner/1.jpeg',
-        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    },
-    {
-        id: 'banner-2',
-        title: 'Kualitas Terjamin',
-        subtitle: 'Garansi cetak ulang jika hasil tidak sesuai ekspektasi Anda',
-        ctaText: 'Lihat Produk',
-        ctaLink: '/kategori',
-        image: '/gambar/banner/2.jpeg',
-        gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    },
-    {
-        id: 'banner-3',
-        title: 'Express Printing',
-        subtitle: 'Pengerjaan cepat 1-5 hari kerja untuk kebutuhan urgent',
-        ctaText: 'Lihat Produk',
-        ctaLink: '/kategori',
-        image: '/gambar/banner/3.jpeg',
-        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    },
+// Gradients/icons stay in code (presentation); text/images come from CMS content.
+const bannerGradients = [
+    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
 ];
+const uspIcons = [Truck, Shield, Clock, Headphones];
 
 export default function Home() {
     const [currentBanner, setCurrentBanner] = useState(0);
+
+    const content = useContent();
+    const heroBanners = content.hero_banners;
+    const features = content.features;
 
     const { data: categories, isLoading: categoriesLoading } = useCategories({ active: true });
     const { data: allProducts, isLoading: productsLoading } = useProducts({ active: true });
 
     const bestSellers = (allProducts || []).filter(p => p.terlaris).slice(0, 4);
 
-    // Auto-slide banner
+    // Auto-slide banner (re-armed when the banner count changes)
     useEffect(() => {
+        if (heroBanners.length <= 1) return;
+        setCurrentBanner((prev) => (prev < heroBanners.length ? prev : 0));
         const timer = setInterval(() => {
             setCurrentBanner((prev) => (prev + 1) % heroBanners.length);
         }, 5000);
         return () => clearInterval(timer);
-    }, []);
+    }, [heroBanners.length]);
 
     const nextBanner = () => {
         setCurrentBanner((prev) => (prev + 1) % heroBanners.length);
@@ -68,9 +51,9 @@ export default function Home() {
                 <div className="hero-slider">
                     {heroBanners.map((banner, index) => (
                         <div
-                            key={banner.id}
+                            key={index}
                             className={`hero-slide ${index === currentBanner ? 'active' : ''}`}
-                            style={{ background: banner.gradient }}
+                            style={{ background: bannerGradients[index % bannerGradients.length] }}
                         >
                             <div className="container">
                                 <div className="hero-content">
@@ -116,42 +99,20 @@ export default function Home() {
             <section className="usp-section">
                 <div className="container">
                     <div className="usp-grid">
-                        <div className="usp-item">
-                            <div className="usp-icon">
-                                <Truck size={28} />
-                            </div>
-                            <div className="usp-content">
-                                <h4>Pengiriman Cepat</h4>
-                                <p>Gratis Ongkir untuk pekerjaan tertentu</p>
-                            </div>
-                        </div>
-                        <div className="usp-item">
-                            <div className="usp-icon">
-                                <Shield size={28} />
-                            </div>
-                            <div className="usp-content">
-                                <h4>Kualitas Terjamin</h4>
-                                <p>Garansi cetak ulang jika tidak sesuai</p>
-                            </div>
-                        </div>
-                        <div className="usp-item">
-                            <div className="usp-icon">
-                                <Clock size={28} />
-                            </div>
-                            <div className="usp-content">
-                                <h4>Proses Cepat</h4>
-                                <p>Proses estimasi 1-5 hari kerja</p>
-                            </div>
-                        </div>
-                        <div className="usp-item">
-                            <div className="usp-icon">
-                                <Headphones size={28} />
-                            </div>
-                            <div className="usp-content">
-                                <h4>Support 24/7</h4>
-                                <p>Tim support siap membantu</p>
-                            </div>
-                        </div>
+                        {features.map((feature, index) => {
+                            const Icon = uspIcons[index % uspIcons.length];
+                            return (
+                                <div className="usp-item" key={index}>
+                                    <div className="usp-icon">
+                                        <Icon size={28} />
+                                    </div>
+                                    <div className="usp-content">
+                                        <h4>{feature.title}</h4>
+                                        <p>{feature.description}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -236,7 +197,7 @@ export default function Home() {
                         <h2>Butuh Cetakan Custom?</h2>
                         <p>Konsultasikan kebutuhan cetak Anda dengan tim kami</p>
                         <div className="cta-actions">
-                            <a href="https://wa.me/6281311152071" className="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer">
+                            <a href={`https://wa.me/${content.contact.whatsapp.replace(/[^\d]/g, '')}`} className="btn btn-accent btn-lg" target="_blank" rel="noopener noreferrer">
                                 <MessageCircle size={18} /> Chat WhatsApp
                             </a>
                             <Link to="/kontak" className="btn btn-outline btn-lg">
