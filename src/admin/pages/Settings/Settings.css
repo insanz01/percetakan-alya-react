@@ -2,13 +2,16 @@
 
 .admin-scope .admin-settings{display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: var(--spacing-5);
+    width: 100%;
 
     }
 
 .admin-scope .settings-container{display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 240px minmax(0, 1fr);
     gap: var(--spacing-6);
+    width: 100%;
     background: var(--bg-primary);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-color);

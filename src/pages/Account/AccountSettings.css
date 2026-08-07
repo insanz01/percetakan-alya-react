@@ -18,32 +18,32 @@
 }
 
 /* Header */
-.settings-header {
+.account-settings .settings-header {
     display: flex;
     align-items: center;
     gap: var(--spacing-4);
     margin-bottom: var(--spacing-6);
 }
 
-.settings-header .back-btn {
+.account-settings .settings-header .back-btn {
     display: flex;
     align-items: center;
     gap: var(--spacing-1);
     color: var(--text-muted);
 }
 
-.settings-header .back-btn:hover {
+.account-settings .settings-header .back-btn:hover {
     color: var(--color-primary);
 }
 
-.settings-header h1 {
+.account-settings .settings-header h1 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: var(--text-primary);
 }
 
 /* Content Layout */
-.settings-content {
+.account-settings .settings-content {
     display: grid;
     grid-template-columns: 250px 1fr;
     gap: var(--spacing-6);
@@ -51,7 +51,7 @@
 }
 
 /* Tabs */
-.settings-tabs {
+.account-settings .settings-tabs {
     background: var(--bg-primary);
     border-radius: var(--radius-xl);
     padding: var(--spacing-2);
@@ -60,7 +60,7 @@
     gap: var(--spacing-1);
 }
 
-.settings-tabs .tab {
+.account-settings .settings-tabs .tab {
     display: flex;
     align-items: center;
     gap: var(--spacing-3);
@@ -76,41 +76,41 @@
     text-align: left;
 }
 
-.settings-tabs .tab:hover {
+.account-settings .settings-tabs .tab:hover {
     background: var(--bg-secondary);
     color: var(--text-primary);
 }
 
-.settings-tabs .tab.active {
+.account-settings .settings-tabs .tab.active {
     background: var(--color-primary);
     color: white;
 }
 
 /* Panel */
-.settings-panel {
+.account-settings .settings-panel {
     background: var(--bg-primary);
     border-radius: var(--radius-xl);
     padding: var(--spacing-6);
 }
 
 /* Form */
-.settings-form h2 {
+.account-settings .settings-form h2 {
     font-size: var(--font-size-xl);
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: var(--spacing-1);
 }
 
-.settings-form .form-desc {
+.account-settings .settings-form .form-desc {
     color: var(--text-muted);
     margin-bottom: var(--spacing-6);
 }
 
-.settings-form .form-group {
+.account-settings .settings-form .form-group {
     margin-bottom: var(--spacing-4);
 }
 
-.settings-form label {
+.account-settings .settings-form label {
     display: block;
     font-size: var(--font-size-sm);
     font-weight: 600;
@@ -118,7 +118,7 @@
     margin-bottom: var(--spacing-2);
 }
 
-.settings-form input {
+.account-settings .settings-form input {
     width: 100%;
     padding: var(--spacing-3);
     border: 2px solid var(--border-color);
@@ -129,18 +129,18 @@
     transition: border-color var(--transition-base);
 }
 
-.settings-form input:focus {
+.account-settings .settings-form input:focus {
     outline: none;
     border-color: var(--color-primary);
 }
 
-.settings-form .form-hint {
+.account-settings .settings-form .form-hint {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
     margin-top: var(--spacing-1);
 }
 
-.settings-form .btn {
+.account-settings .settings-form .btn {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -148,15 +148,15 @@
 }
 
 /* Password Input */
-.password-input {
+.account-settings .password-input {
     position: relative;
 }
 
-.password-input input {
+.account-settings .password-input input {
     padding-right: var(--spacing-12);
 }
 
-.password-input .toggle-btn {
+.account-settings .password-input .toggle-btn {
     position: absolute;
     right: var(--spacing-3);
     top: 50%;
@@ -167,18 +167,18 @@
     cursor: pointer;
 }
 
-.password-input .toggle-btn:hover {
+.account-settings .password-input .toggle-btn:hover {
     color: var(--color-primary);
 }
 
 /* Notifications */
-.notification-list {
+.account-settings .notification-list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-4);
 }
 
-.notification-item {
+.account-settings .notification-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -187,32 +187,32 @@
     border-radius: var(--radius-lg);
 }
 
-.notification-info h4 {
+.account-settings .notification-info h4 {
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: var(--spacing-1);
 }
 
-.notification-info p {
+.account-settings .notification-info p {
     font-size: var(--font-size-sm);
     color: var(--text-muted);
 }
 
 /* Toggle Switch */
-.toggle-switch {
+.account-settings .toggle-switch {
     position: relative;
     display: inline-block;
     width: 48px;
     height: 26px;
 }
 
-.toggle-switch input {
+.account-settings .toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.toggle-slider {
+.account-settings .toggle-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -224,7 +224,7 @@
     transition: 0.3s;
 }
 
-.toggle-slider::before {
+.account-settings .toggle-slider::before {
     position: absolute;
     content: '';
     height: 20px;
@@ -236,26 +236,26 @@
     transition: 0.3s;
 }
 
-.toggle-switch input:checked+.toggle-slider {
+.account-settings .toggle-switch input:checked+.toggle-slider {
     background-color: var(--color-primary);
 }
 
-.toggle-switch input:checked+.toggle-slider::before {
+.account-settings .toggle-switch input:checked+.toggle-slider::before {
     transform: translateX(22px);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .settings-content {
+    .account-settings .settings-content {
         grid-template-columns: 1fr;
     }
 
-    .settings-tabs {
+    .account-settings .settings-tabs {
         flex-direction: row;
         overflow-x: auto;
     }
 
-    .settings-tabs .tab {
+    .account-settings .settings-tabs .tab {
         flex-shrink: 0;
     }
 }
