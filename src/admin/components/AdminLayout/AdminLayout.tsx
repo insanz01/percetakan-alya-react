@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import {
     LayoutDashboard,
     Package,
@@ -124,7 +124,7 @@ export default function AdminLayout() {
     };
 
     const handleLogout = () => {
-        // In real app, clear admin session
+        authService.adminLogout();
         navigate('/admin/login');
     };
 
@@ -148,6 +148,11 @@ export default function AdminLayout() {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isNotificationOpen, isProfileOpen]);
 
+
+    // Route guard: only an authenticated admin may view the panel.
+    if (!authService.isAdminLoggedIn()) {
+        return <Navigate to="/admin/login" replace />;
+    }
 
     return (
         <div className="admin-layout admin-scope">

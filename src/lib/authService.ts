@@ -132,6 +132,23 @@ export const authService = {
             return false;
         }
     },
+
+    /**
+     * Whether an admin session is active (set by /admin/login or by an
+     * admin logging in through the normal login form).
+     */
+    isAdminLoggedIn(): boolean {
+        return localStorage.getItem('adminLoggedIn') === 'true';
+    },
+
+    /**
+     * Clear the admin session (used on admin logout).
+     */
+    adminLogout(): void {
+        localStorage.removeItem('adminLoggedIn');
+        localStorage.removeItem('adminUser');
+        removeToken();
+    },
 };
 
 // Shipping Address Service
