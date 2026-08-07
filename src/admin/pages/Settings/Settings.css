@@ -276,3 +276,29 @@
     border-top: 1px solid var(--border-color);
 
     }
+/* Rich text (Quill) editor — selaras dengan input admin */
+.admin-scope .rich-editor.rich-editor{background: var(--bg-primary);}
+.admin-scope .rich-editor .ql-toolbar.ql-snow{
+    border: 2px solid var(--border-color);
+    border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--bg-secondary);
+}
+.admin-scope .rich-editor .ql-container.ql-snow{
+    border: 2px solid var(--border-color);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    font-family: inherit;
+    font-size: var(--font-size-sm);
+}
+.admin-scope .rich-editor .ql-editor{
+    min-height: 160px;
+    color: var(--text-primary);
+}
+.admin-scope .rich-editor .ql-editor.ql-blank::before{
+    color: var(--text-muted);
+    font-style: normal;
+}
+.admin-scope .rich-editor:focus-within .ql-toolbar.ql-snow,
+.admin-scope .rich-editor:focus-within .ql-container.ql-snow{
+    border-color: var(--color-primary-500);
+}

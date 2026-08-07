@@ -1,9 +1,24 @@
 import { useState } from 'react';
 import { Save, Store, Globe, Mail, Phone, MapPin, Bell, Shield, Palette } from 'lucide-react';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 import './Settings.css';
+
+// Toolbar untuk editor deskripsi
+const quillModules = {
+    toolbar: [
+        [{ header: [2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'clean'],
+    ],
+};
 
 export default function Settings() {
     const [activeTab, setActiveTab] = useState('general');
+    const [storeDescription, setStoreDescription] = useState(
+        '<p>Semanggi Print adalah percetakan online terpercaya yang menyediakan layanan cetak berkualitas tinggi dengan harga transparan di Palangka Raya.</p>'
+    );
 
     return (
         <div className="admin-settings">
@@ -71,40 +86,57 @@ export default function Settings() {
                             </div>
 
                             <div className="settings-form">
-                                <div className="form-group">
-                                    <label className="label">Nama Toko</label>
-                                    <input
-                                        type="text"
-                                        className="input"
-                                        defaultValue="Semanggi Print"
-                                    />
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label className="label">Nama Toko</label>
+                                        <input
+                                            type="text"
+                                            className="input"
+                                            defaultValue="Semanggi Print"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="label">Tagline</label>
+                                        <input
+                                            type="text"
+                                            className="input"
+                                            defaultValue="Platform Percetakan Online Terpercaya"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="form-group">
-                                    <label className="label">Tagline</label>
-                                    <input
-                                        type="text"
-                                        className="input"
-                                        defaultValue="Platform Percetakan Online Terpercaya"
-                                    />
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label className="label">Website URL</label>
+                                        <div className="input-with-addon">
+                                            <span className="input-addon"><Globe size={16} /></span>
+                                            <input
+                                                type="url"
+                                                className="input"
+                                                defaultValue="https://semanggiprintpalangkaraya.com"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="label">Email Toko</label>
+                                        <div className="input-with-addon">
+                                            <span className="input-addon"><Mail size={16} /></span>
+                                            <input
+                                                type="email"
+                                                className="input"
+                                                defaultValue="rudygrafika@gmail.com"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label className="label">Deskripsi</label>
-                                    <textarea
-                                        className="input textarea"
-                                        rows={4}
-                                        defaultValue="Semanggi Print adalah percetakan online terpercaya yang menyediakan layanan cetak berkualitas tinggi dengan harga transparan di Palangka Raya."
+                                    <ReactQuill
+                                        theme="snow"
+                                        className="rich-editor"
+                                        value={storeDescription}
+                                        onChange={setStoreDescription}
+                                        modules={quillModules}
                                     />
-                                </div>
-                                <div className="form-group">
-                                    <label className="label">Website URL</label>
-                                    <div className="input-with-addon">
-                                        <span className="input-addon"><Globe size={16} /></span>
-                                        <input
-                                            type="url"
-                                            className="input"
-                                            defaultValue="https://semanggiprintpalangkaraya.com"
-                                        />
-                                    </div>
                                 </div>
                             </div>
                         </div>
