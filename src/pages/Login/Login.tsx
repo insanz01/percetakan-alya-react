@@ -46,7 +46,15 @@ export default function Login() {
                 title: 'Login berhasil',
                 message: 'Selamat datang kembali!',
             });
-            navigate('/');
+            // Admin / super admin masuk ke panel admin, bukan halaman akun.
+            const loggedInUser = useAuthStore.getState().user;
+            if (loggedInUser && (loggedInUser.peran === 'admin' || loggedInUser.peran === 'super_admin')) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminUser', JSON.stringify(loggedInUser));
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
         } else {
             addToast({
                 type: 'error',

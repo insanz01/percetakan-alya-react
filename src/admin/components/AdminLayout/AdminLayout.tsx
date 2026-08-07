@@ -104,7 +104,7 @@ export default function AdminLayout() {
                 return {
                     nama: user.nama || defaultAdminUser.nama,
                     email: user.email || defaultAdminUser.email,
-                    role: user.role || 'Admin',
+                    role: user.role || (user.peran === 'super_admin' ? 'Super Admin' : 'Admin'),
                 };
             }
         } catch {
