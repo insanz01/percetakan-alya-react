@@ -46,3 +46,6 @@ lerna-debug.log*
 # Misc
 *.log
 .cache
+
+# ruflo / claude-flow tooling artifacts
+.claude-flow/
