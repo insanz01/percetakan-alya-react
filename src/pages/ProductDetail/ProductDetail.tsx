@@ -128,9 +128,10 @@ export default function ProductDetail() {
         if (!files || files.length === 0 || !product || isUploadingFile) return;
 
         const file = files[0];
-        const extension = file.name.split('.').pop()?.toLowerCase() || '';
+        const extension = file.name.split('.').pop()?.toLowerCase().trim() || '';
+        const allowedTypes = product.tipeFileDiperbolehkan.map(t => t.trim().toLowerCase().replace(/^\./, ''));
 
-        if (!product.tipeFileDiperbolehkan.includes(extension)) {
+        if (!allowedTypes.includes(extension)) {
             addToast({
                 type: 'error',
                 title: 'Format file tidak didukung',
@@ -518,7 +519,7 @@ export default function ProductDetail() {
                                                     <input
                                                         type="file"
                                                         className="sr-only"
-                                                        accept={product.tipeFileDiperbolehkan.map(t => `.${t}`).join(',')}
+                                                        accept={product.tipeFileDiperbolehkan.map(t => `.${t.trim().toLowerCase().replace(/^\./, '')}`).join(',')}
                                                         onChange={(e) => handleFileUpload(e.target.files)}
                                                     />
                                                 </label>
