@@ -476,6 +476,14 @@
     color: var(--color-success-600);
 }
 
+.uploaded-file-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
 .uploaded-file-info {
     flex: 1;
 }

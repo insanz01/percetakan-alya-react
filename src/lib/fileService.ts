@@ -23,25 +23,25 @@ async function uploadMultipart<T>(url: string, formData: FormData): Promise<T> {
     return data;
 }
 
-// Uploaded file
+// Uploaded file (as returned by /files/{id} and /files)
 export interface UploadedFile {
     id: string;
-    name: string;
-    size: number;
+    nama_asli: string;
+    ukuran: number;
     human_size: string;
-    mime_type: string;
-    type: string;
+    jenis_mime: string;
+    tipe: string;
     url: string;
     created_at: string;
 }
 
-// Upload response
+// Upload response (field names match the Lumen API's Indonesian keys)
 export interface UploadResponse {
     id: string;
-    name: string;
-    size: number;
+    nama_asli: string;
+    ukuran: number;
     human_size: string;
-    mime_type: string;
+    jenis_mime: string;
     url: string;
 }
 

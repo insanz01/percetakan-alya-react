@@ -155,11 +155,12 @@ export default function ProductDetail() {
             const response = await fileService.upload(file, 'design', product.id, 'product');
             setUploadedFile({
                 id: response.data.id,
-                name: response.data.name,
-                size: response.data.size,
+                name: response.data.nama_asli,
+                size: response.data.ukuran,
                 type: file.type,
                 url: response.data.url,
                 status: 'success',
+                previewUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined,
             });
             addToast({
                 type: 'success',
@@ -183,6 +184,7 @@ export default function ProductDetail() {
             // that already served its purpose. Upgrade path: surface failures if
             // orphaned uploads become a real storage-cost problem.
             fileService.deleteFile(uploadedFile.id).catch(() => {});
+            if (uploadedFile.previewUrl) URL.revokeObjectURL(uploadedFile.previewUrl);
         }
         setUploadedFile(null);
     };
@@ -496,7 +498,15 @@ export default function ProductDetail() {
                                             </>
                                         ) : uploadedFile ? (
                                             <div className="uploaded-file">
-                                                <FileText size={32} />
+                                                {uploadedFile.previewUrl ? (
+                                                    <img
+                                                        src={uploadedFile.previewUrl}
+                                                        alt={uploadedFile.name}
+                                                        className="uploaded-file-thumb"
+                                                    />
+                                                ) : (
+                                                    <FileText size={32} />
+                                                )}
                                                 <div className="uploaded-file-info">
                                                     <p className="uploaded-file-name">{uploadedFile.name}</p>
                                                     <p className="uploaded-file-size">

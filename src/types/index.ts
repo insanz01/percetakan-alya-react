@@ -113,6 +113,7 @@ export interface UploadedFile {
     type: string;
     url: string;
     status: 'uploading' | 'success' | 'error';
+    previewUrl?: string;
 }
 
 export type OrderStatus =
