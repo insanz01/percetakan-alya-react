@@ -14,6 +14,19 @@ const removeToken = (): void => {
     localStorage.removeItem('auth_token');
 };
 
+// Fired whenever a request carrying a token comes back 401 (expired/invalid).
+// Registered once by App.tsx so the UI store stays decoupled from this module.
+let unauthorizedHandler: (() => void) | null = null;
+
+export const setUnauthorizedHandler = (fn: () => void): void => {
+    unauthorizedHandler = fn;
+};
+
+export const notifyUnauthorized = (): void => {
+    removeToken();
+    unauthorizedHandler?.();
+};
+
 // API Response types
 export interface ApiResponse<T> {
     success: boolean;
@@ -67,6 +80,9 @@ class ApiClient {
         const data = await response.json();
 
         if (!response.ok) {
+            if (response.status === 401 && token) {
+                notifyUnauthorized();
+            }
             throw new ApiError(data.message || 'An error occurred', response.status, data.errors);
         }
 

@@ -1,6 +1,10 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Toast from './components/Toast';
+import SessionExpiredModal from './components/SessionExpiredModal/SessionExpiredModal';
+import { setUnauthorizedHandler } from './lib/api';
+import { useAuthStore, useUIStore } from './store';
 import Home from './pages/Home';
 import Category from './pages/Category';
 import ProductDetail from './pages/ProductDetail';
@@ -40,6 +44,13 @@ import Settings from './admin/pages/Settings';
 import Content from './admin/pages/Content';
 
 function App() {
+    useEffect(() => {
+        setUnauthorizedHandler(() => {
+            useAuthStore.setState({ user: null, isAuthenticated: false });
+            useUIStore.getState().setLoginModalOpen(true);
+        });
+    }, []);
+
     return (
         <Router>
             <Routes>
@@ -134,6 +145,9 @@ function App() {
 
             {/* Global Toast */}
             <Toast />
+
+            {/* Session expired -> prompt re-login */}
+            <SessionExpiredModal />
         </Router>
     );
 }

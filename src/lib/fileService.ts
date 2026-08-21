@@ -1,4 +1,27 @@
-import { api, ApiResponse } from './api';
+import { api, ApiResponse, getToken, notifyUnauthorized } from './api';
+
+// Shared by every multipart upload below (fetch, not the JSON api client,
+// since these send FormData). Centralizes the 401 -> "session expired" hook.
+async function uploadMultipart<T>(url: string, formData: FormData): Promise<T> {
+    const token = getToken();
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        if (response.status === 401 && token) {
+            notifyUnauthorized();
+        }
+        throw new Error(data.message || 'Upload failed');
+    }
+
+    return data;
+}
 
 // Uploaded file
 export interface UploadedFile {
@@ -49,22 +72,8 @@ export const fileService = {
         if (relatedId) formData.append('terkait_id', relatedId);
         if (relatedType) formData.append('terkait_tipe', relatedType);
 
-        const token = localStorage.getItem('auth_token');
         const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
-
-        const response = await fetch(`${baseUrl}/files/upload`, {
-            method: 'POST',
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Upload failed');
-        }
-
-        return data;
+        return uploadMultipart(`${baseUrl}/files/upload`, formData);
     },
 
     /**
@@ -118,22 +127,8 @@ export const fileService = {
             formData.append('replace_index', replaceIndex.toString());
         }
 
-        const token = localStorage.getItem('auth_token');
         const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
-
-        const response = await fetch(`${baseUrl}/admin/products/${productId}/images`, {
-            method: 'POST',
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Upload failed');
-        }
-
-        return data;
+        return uploadMultipart(`${baseUrl}/admin/products/${productId}/images`, formData);
     },
 
     /**
@@ -156,22 +151,8 @@ export const fileService = {
         const formData = new FormData();
         formData.append('image', file);
 
-        const token = localStorage.getItem('auth_token');
         const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
-
-        const response = await fetch(`${baseUrl}/admin/categories/${categoryId}/image`, {
-            method: 'POST',
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Upload failed');
-        }
-
-        return data;
+        return uploadMultipart(`${baseUrl}/admin/categories/${categoryId}/image`, formData);
     },
 
     /**
@@ -192,22 +173,8 @@ export const fileService = {
         formData.append('image', file);
         if (folder) formData.append('folder', folder);
 
-        const token = localStorage.getItem('auth_token');
         const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
-
-        const response = await fetch(`${baseUrl}/admin/images/upload`, {
-            method: 'POST',
-            headers: token ? { Authorization: `Bearer ${token}` } : {},
-            body: formData,
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || 'Upload failed');
-        }
-
-        return data;
+        return uploadMultipart(`${baseUrl}/admin/images/upload`, formData);
     },
 };
 
