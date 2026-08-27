@@ -13,14 +13,17 @@ import {
     Plus,
     ChevronRight,
     Landmark,
-    Wallet,
-    QrCode
+    Copy,
+    Upload,
+    FileText,
+    X
 } from 'lucide-react';
 import { useUIStore, useCartStore, useAuthStore } from '../../store';
 import { shippingService, ShippingOption } from '../../lib/shippingService';
 import { orderService } from '../../lib/orderService';
 import { promoService } from '../../lib/promoService';
 import { addressService } from '../../lib/authService';
+import { fileService } from '../../lib/fileService';
 import { formatPrice } from '../../lib/utils';
 import type { CartItem, ShippingAddress } from '../../types';
 import './Checkout.css';
@@ -38,12 +41,7 @@ function getItemDisplay(item: CartItem) {
     };
 }
 
-const paymentMethods = [
-    { id: 'bank_transfer', name: 'Transfer Bank', icon: <Landmark size={24} />, description: 'BCA, Mandiri, BNI, BRI' },
-    { id: 'virtual_account', name: 'Virtual Account', icon: <CreditCard size={24} />, description: 'Pembayaran otomatis' },
-    { id: 'ewallet', name: 'E-Wallet', icon: <Wallet size={24} />, description: 'OVO, GoPay, DANA, ShopeePay' },
-    { id: 'qris', name: 'QRIS', icon: <QrCode size={24} />, description: 'Scan & bayar' },
-];
+const BANK_ACCOUNT = { bank: 'BCA', accountNumber: '8600908473', accountName: 'Rudyanto SH' };
 
 type CheckoutStep = 'address' | 'shipping' | 'payment' | 'review';
 
@@ -61,7 +59,9 @@ export default function Checkout() {
     const [selectedAddress, setSelectedAddress] = useState<ShippingAddress | null>(null);
     const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
     const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
-    const [selectedPayment, setSelectedPayment] = useState<string>('');
+    const [paymentProofId, setPaymentProofId] = useState<string | null>(null);
+    const [paymentProofPreview, setPaymentProofPreview] = useState<string | null>(null);
+    const [isUploadingProof, setIsUploadingProof] = useState(false);
     const [promoCode, setPromoCode] = useState('');
     const [promoDiscount, setPromoDiscount] = useState(0);
     const [promoApplied, setPromoApplied] = useState(false);
@@ -128,6 +128,43 @@ export default function Checkout() {
         }
     };
 
+    const handleProofFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        e.target.value = '';
+        if (!file) return;
+
+        if (!['image/jpeg', 'image/png', 'application/pdf'].includes(file.type)) {
+            addToast({ type: 'error', title: 'File Tidak Didukung', message: 'Gunakan JPG, PNG, atau PDF' });
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            addToast({ type: 'error', title: 'File Terlalu Besar', message: 'Ukuran maksimal 5 MB' });
+            return;
+        }
+
+        setIsUploadingProof(true);
+        try {
+            const response = await fileService.upload(file, 'payment_proof');
+            if (response.success) {
+                setPaymentProofId(response.data.id);
+                setPaymentProofPreview(file.type === 'application/pdf' ? null : URL.createObjectURL(file));
+            }
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Upload Gagal',
+                message: error instanceof Error ? error.message : 'Gagal mengunggah bukti transfer',
+            });
+        } finally {
+            setIsUploadingProof(false);
+        }
+    };
+
+    const removePaymentProof = () => {
+        setPaymentProofId(null);
+        setPaymentProofPreview(null);
+    };
+
     const handleApplyPromo = async () => {
         if (!promoCode.trim()) return;
 
@@ -164,7 +201,7 @@ export default function Checkout() {
             return;
         }
 
-        if (!selectedAddress || !selectedShipping || !selectedPayment) {
+        if (!selectedAddress || !selectedShipping || !paymentProofId) {
             addToast({
                 type: 'error',
                 title: 'Data Tidak Lengkap',
@@ -178,7 +215,8 @@ export default function Checkout() {
             const orderData = {
                 alamat_pengiriman_id: selectedAddress.id,
                 metode_pengiriman_id: selectedShipping.id,
-                metode_pembayaran: selectedPayment,
+                metode_pembayaran: 'bank_transfer',
+                bukti_transfer_file_id: paymentProofId,
                 kode_promo: promoApplied ? promoCode : undefined,
                 catatan: notes,
                 items: cartItems.map(item => {
@@ -236,7 +274,7 @@ export default function Checkout() {
         switch (currentStep) {
             case 'address': return !!selectedAddress;
             case 'shipping': return !!selectedShipping;
-            case 'payment': return !!selectedPayment;
+            case 'payment': return !!paymentProofId;
             case 'review': return true;
             default: return false;
         }
@@ -406,23 +444,70 @@ export default function Checkout() {
                             <div className="checkout-section">
                                 <h2><CreditCard size={24} /> Metode Pembayaran</h2>
 
-                                <div className="payment-list">
-                                    {paymentMethods.map(method => (
-                                        <div
-                                            key={method.id}
-                                            className={`payment-card ${selectedPayment === method.id ? 'selected' : ''}`}
-                                            onClick={() => setSelectedPayment(method.id)}
+                                <div className="payment-card selected">
+                                    <div className="payment-icon"><Landmark size={24} /></div>
+                                    <div className="payment-content">
+                                        <div className="payment-name">Transfer Bank Manual</div>
+                                        <div className="payment-desc">Transfer ke rekening di bawah, lalu unggah bukti transfer</div>
+                                    </div>
+                                </div>
+
+                                <div className="bank-account-card">
+                                    <div className="bank-account-bank">{BANK_ACCOUNT.bank}</div>
+                                    <div className="bank-account-number">
+                                        {BANK_ACCOUNT.accountNumber}
+                                        <button
+                                            type="button"
+                                            className="copy-btn"
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(BANK_ACCOUNT.accountNumber);
+                                                addToast({ type: 'success', title: 'Disalin!', message: 'Nomor rekening disalin' });
+                                            }}
                                         >
-                                            <div className="payment-radio">
-                                                <div className="radio-dot"></div>
-                                            </div>
-                                            <div className="payment-icon">{method.icon}</div>
-                                            <div className="payment-content">
-                                                <div className="payment-name">{method.name}</div>
-                                                <div className="payment-desc">{method.description}</div>
-                                            </div>
+                                            <Copy size={16} />
+                                        </button>
+                                    </div>
+                                    <div className="bank-account-name">a.n. {BANK_ACCOUNT.accountName}</div>
+                                </div>
+
+                                <div className="proof-upload-section">
+                                    <h3>Unggah Bukti Transfer</h3>
+                                    {paymentProofId ? (
+                                        <div className="proof-preview">
+                                            {paymentProofPreview ? (
+                                                <img src={paymentProofPreview} alt="Bukti transfer" />
+                                            ) : (
+                                                <div className="proof-file-placeholder">
+                                                    <FileText size={32} />
+                                                    <span>Bukti terunggah</span>
+                                                </div>
+                                            )}
+                                            <button type="button" className="btn btn-outline proof-remove-btn" onClick={removePaymentProof}>
+                                                <X size={16} /> Hapus
+                                            </button>
                                         </div>
-                                    ))}
+                                    ) : (
+                                        <label className="proof-upload-dropzone">
+                                            <input
+                                                type="file"
+                                                accept="image/jpeg,image/png,application/pdf"
+                                                onChange={handleProofFileChange}
+                                                disabled={isUploadingProof}
+                                            />
+                                            {isUploadingProof ? (
+                                                <>
+                                                    <Loader2 className="spinner" size={28} />
+                                                    <span>Mengunggah...</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Upload size={28} />
+                                                    <span>Klik untuk pilih screenshot/foto bukti transfer</span>
+                                                    <span className="proof-upload-hint">JPG, PNG, atau PDF, maks 5 MB</span>
+                                                </>
+                                            )}
+                                        </label>
+                                    )}
                                 </div>
                             </div>
                         )}

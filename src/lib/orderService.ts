@@ -47,6 +47,7 @@ export interface CreateOrderRequest {
     metode_pembayaran: string;
     tipe_pembayaran?: string;
     kode_promo?: string;
+    bukti_transfer_file_id?: string;
     catatan?: string;
     items: OrderItemInput[];
 }
