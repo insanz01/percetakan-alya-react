@@ -197,9 +197,13 @@ export default function Products() {
                                                 >
                                                     <Eye size={18} />
                                                 </button>
-                                                <button className="action-btn" title="Edit">
+                                                <Link
+                                                    to={`/admin/products/${product.id}/edit`}
+                                                    className="action-btn"
+                                                    title="Edit"
+                                                >
                                                     <Edit2 size={18} />
-                                                </button>
+                                                </Link>
                                                 <div className="dropdown-container">
                                                     <button
                                                         className="action-btn"
@@ -217,9 +221,12 @@ export default function Products() {
                                                             >
                                                                 <Eye size={14} /> Lihat Detail
                                                             </button>
-                                                            <button className="dropdown-item">
+                                                            <Link
+                                                                to={`/admin/products/${product.id}/edit`}
+                                                                className="dropdown-item"
+                                                            >
                                                                 <Edit2 size={14} /> Edit Produk
-                                                            </button>
+                                                            </Link>
                                                             <button className="dropdown-item delete">
                                                                 <Trash2 size={14} /> Hapus
                                                             </button>
@@ -287,13 +294,14 @@ export default function Products() {
                                     >
                                         <Eye size={18} />
                                     </button>
-                                    <button
+                                    <Link
+                                        to={`/admin/products/${product.id}/edit`}
                                         className="action-btn"
                                         title="Edit"
                                         onClick={(e) => e.stopPropagation()}
                                     >
                                         <Edit2 size={18} />
-                                    </button>
+                                    </Link>
                                     <button
                                         className="action-btn"
                                         onClick={(e) => {
@@ -503,10 +511,13 @@ export default function Products() {
                                 <ExternalLink size={18} />
                                 Lihat di Website
                             </Link>
-                            <button className="btn btn-primary">
+                            <Link
+                                to={`/admin/products/${selectedProduct.id}/edit`}
+                                className="btn btn-primary"
+                            >
                                 <Edit2 size={18} />
                                 Edit Produk
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

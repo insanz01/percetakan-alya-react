@@ -77,6 +77,7 @@ export interface Product {
     tipeFileDiperbolehkan: string[];
     ukuranFileMaks: number;
 
+    aktif?: boolean;
     category?: ProductCategory;
 }
 

@@ -135,7 +135,7 @@ export default function ProductForm() {
                     isBestSeller: product.terlaris,
                     isPromo: product.promo,
                     isRetailProduct: product.produkRetail,
-                    isActive: true,
+                    isActive: product.aktif ?? true,
                     promoPercentage: product.persenPromo,
                     requiresDesignFile: product.butuhFileDesain !== false,
                     allowedFileTypes: product.tipeFileDiperbolehkan,
@@ -367,6 +367,7 @@ export default function ProductForm() {
                 butuhFileDesain: formData.requiresDesignFile,
                 tipeFileDiperbolehkan: formData.allowedFileTypes,
                 ukuranFileMaks: formData.maxFileSize,
+                aktif: formData.isActive,
             };
             if (isEdit) {
                 await productService.updateProduct(id!, payload);

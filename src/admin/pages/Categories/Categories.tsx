@@ -79,10 +79,10 @@ export default function Categories() {
                             </div>
                         </div>
                         <div className="category-card-actions">
-                            <button className="action-btn edit">
+                            <Link to={`/admin/categories/${category.id}/edit`} className="action-btn edit">
                                 <Edit2 size={18} />
                                 Edit
-                            </button>
+                            </Link>
                             <button className="action-btn delete">
                                 <Trash2 size={18} />
                                 Hapus

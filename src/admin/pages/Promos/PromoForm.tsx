@@ -54,8 +54,10 @@ export default function PromoForm() {
                     min_beli: promo.min_beli || 0,
                     maks_diskon: promo.maks_diskon,
                     batas_penggunaan: promo.batas_penggunaan,
-                    tanggal_mulai: promo.tanggal_mulai || '',
-                    tanggal_berakhir: promo.tanggal_berakhir || '',
+                    // API returns full ISO datetimes (datetime cast); <input type="date">
+                    // only accepts yyyy-MM-dd, so trim it down.
+                    tanggal_mulai: promo.tanggal_mulai ? promo.tanggal_mulai.slice(0, 10) : '',
+                    tanggal_berakhir: promo.tanggal_berakhir ? promo.tanggal_berakhir.slice(0, 10) : '',
                     aktif: promo.aktif,
                 });
             }

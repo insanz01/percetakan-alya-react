@@ -123,6 +123,7 @@ export function transformProduct(apiProduct: any): any {
         tipeFileDiperbolehkan: apiProduct.tipe_file_diperbolehkan || [],
         ukuranFileMaks: apiProduct.ukuran_file_maks || 50,
 
+        aktif: apiProduct.aktif ?? true,
         category: apiProduct.category,
     };
 }
@@ -156,6 +157,7 @@ export function serializeProduct(product: Record<string, any>): Record<string, u
         butuhFileDesain: 'butuh_file_desain',
         tipeFileDiperbolehkan: 'tipe_file_diperbolehkan',
         ukuranFileMaks: 'ukuran_file_maks',
+        aktif: 'aktif',
     };
 
     const data: Record<string, unknown> = {};
