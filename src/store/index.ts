@@ -5,7 +5,7 @@ import type { CartItem, CartItemConfig, Product, Toast, User } from '../types';
 // Cart Store
 interface CartState {
     items: CartItem[];
-    addItem: (product: Product, config: CartItemConfig, unitPrice: number, totalPrice: number) => void;
+    addItem: (product: Product, config: CartItemConfig, unitPrice: number, totalPrice: number, uploadedFile?: CartItem['uploadedFile']) => void;
     removeItem: (itemId: string) => void;
     updateItemQuantity: (itemId: string, quantity: number) => void;
     updateItemFile: (itemId: string, file: CartItem['uploadedFile']) => void;
@@ -20,12 +20,13 @@ export const useCartStore = create<CartState>()(
         (set, get) => ({
             items: [],
 
-            addItem: (product, config, unitPrice, totalPrice) => {
+            addItem: (product, config, unitPrice, totalPrice, uploadedFile) => {
                 const newItem: CartItem = {
                     id: `cart-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
                     produk_id: product.id,
                     product,
                     config,
+                    uploadedFile,
                     harga_satuan: unitPrice,
                     harga_total: totalPrice,
                     created_at: new Date(),

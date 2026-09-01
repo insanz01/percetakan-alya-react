@@ -314,6 +314,74 @@
 
     }
 
+/* Design Templates */
+.admin-scope .template-add-row{display: flex;
+    gap: var(--spacing-2);
+    align-items: center;
+
+    }
+
+.admin-scope .template-add-row input{flex: 1;
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+
+    }
+
+.admin-scope .template-add-row label.btn{display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    white-space: nowrap;
+    cursor: pointer;
+
+    }
+
+.admin-scope .templates-grid{display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+
+    }
+
+.admin-scope .template-card{position: relative;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-secondary);
+
+    }
+
+.admin-scope .template-card img{width: 100%;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+
+    }
+
+.admin-scope .template-card-name{padding: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+
+    }
+
+.admin-scope .template-card .remove-btn{position: absolute;
+    top: var(--spacing-1);
+    right: var(--spacing-1);
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+
+    }
+
+.admin-scope .template-card .remove-btn:hover{background: var(--color-error);
+    color: #fff;
+
+    }
+
 /* Tier */
 .admin-scope .tier-header{display: grid;
     grid-template-columns: 1fr 1fr 120px auto;

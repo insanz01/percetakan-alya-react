@@ -433,6 +433,93 @@
     font-weight: var(--font-weight-medium);
 }
 
+/* Design Mode Toggle */
+.design-mode-toggle {
+    display: flex;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+}
+
+.design-mode-btn {
+    flex: 1;
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.design-mode-btn:hover {
+    border-color: var(--color-primary-300);
+}
+
+.design-mode-btn.active {
+    border-color: var(--color-primary-500);
+    background: var(--color-primary-50);
+    color: var(--color-primary-600);
+}
+
+/* Design Templates Grid */
+.design-templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-3);
+}
+
+.design-template-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-primary);
+    cursor: pointer;
+    padding: 0 0 var(--spacing-2);
+    text-align: left;
+    transition: all var(--transition-fast);
+}
+
+.design-template-option:hover {
+    border-color: var(--color-primary-300);
+}
+
+.design-template-option.selected {
+    border-color: var(--color-success-500);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.design-template-option img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+}
+
+.design-template-option span:not(.design-template-check) {
+    font-size: var(--font-size-xs);
+    color: var(--text-primary);
+    padding: 0 var(--spacing-2);
+}
+
+.design-template-check {
+    position: absolute;
+    top: var(--spacing-1);
+    right: var(--spacing-1);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-success-500);
+    color: #fff;
+    border-radius: var(--radius-full);
+}
+
 /* Upload Zone */
 .upload-zone {
     border: 2px dashed var(--border-color);

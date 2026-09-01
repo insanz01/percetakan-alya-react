@@ -125,6 +125,11 @@ export function transformProduct(apiProduct: any): any {
 
         aktif: apiProduct.aktif ?? true,
         category: apiProduct.category,
+        templateDesain: (apiProduct.design_templates || []).map((t: any) => ({
+            id: t.id,
+            nama: t.nama,
+            gambar: t.gambar,
+        })),
     };
 }
 

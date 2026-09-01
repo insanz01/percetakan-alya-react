@@ -79,6 +79,13 @@ export interface Product {
 
     aktif?: boolean;
     category?: ProductCategory;
+    templateDesain?: ProductDesignTemplate[];
+}
+
+export interface ProductDesignTemplate {
+    id: string;
+    nama: string;
+    gambar: string;
 }
 
 export interface CartItemConfig {
@@ -115,6 +122,7 @@ export interface UploadedFile {
     url: string;
     status: 'uploading' | 'success' | 'error';
     previewUrl?: string;
+    source?: 'upload' | 'template';
 }
 
 export type OrderStatus =

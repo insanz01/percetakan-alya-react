@@ -21,7 +21,7 @@ import { useProduct, useCategories } from '../../hooks';
 import { formatPrice } from '../../lib/utils';
 import { fileService } from '../../lib/fileService';
 import { useCartStore, useUIStore } from '../../store';
-import type { CartItemConfig, UploadedFile } from '../../types';
+import type { CartItemConfig, ProductDesignTemplate, UploadedFile } from '../../types';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
@@ -43,6 +43,7 @@ export default function ProductDetail() {
     const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [isUploadingFile, setIsUploadingFile] = useState(false);
+    const [designMode, setDesignMode] = useState<'upload' | 'template'>('upload');
 
     useEffect(() => {
         if (product) {
@@ -179,7 +180,7 @@ export default function ProductDetail() {
     };
 
     const handleRemoveFile = () => {
-        if (uploadedFile) {
+        if (uploadedFile && uploadedFile.source !== 'template') {
             // ponytail: fire-and-forget cleanup; not blocking the UI on a delete
             // that already served its purpose. Upgrade path: surface failures if
             // orphaned uploads become a real storage-cost problem.
@@ -187,6 +188,19 @@ export default function ProductDetail() {
             if (uploadedFile.previewUrl) URL.revokeObjectURL(uploadedFile.previewUrl);
         }
         setUploadedFile(null);
+    };
+
+    const handleSelectTemplate = (template: ProductDesignTemplate) => {
+        setUploadedFile({
+            id: template.id,
+            name: template.nama,
+            size: 0,
+            type: 'image/*',
+            url: template.gambar,
+            status: 'success',
+            previewUrl: template.gambar,
+            source: 'template',
+        });
     };
 
     const handleDrop = (e: React.DragEvent) => {
@@ -219,7 +233,7 @@ export default function ProductDetail() {
             customHeight: customHeight || undefined,
         };
 
-        addItem(product, config, calculatedPrice.unitPrice, calculatedPrice.totalPrice);
+        addItem(product, config, calculatedPrice.unitPrice, calculatedPrice.totalPrice, uploadedFile || undefined);
 
         addToast({
             type: 'success',
@@ -482,63 +496,106 @@ export default function ProductDetail() {
                             {product.butuhFileDesain !== false && !product.produkRetail && (
                                 <div className="config-section">
                                     <label className="config-label">
-                                        Upload File Desain
+                                        Desain
                                         <span className="required">*Wajib</span>
                                     </label>
-                                    <div
-                                        className={`upload-zone ${isDragging ? 'dragging' : ''} ${uploadedFile ? 'has-file' : ''}`}
-                                        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-                                        onDragLeave={() => setIsDragging(false)}
-                                        onDrop={handleDrop}
-                                    >
-                                        {isUploadingFile ? (
-                                            <>
-                                                <Loader2 size={40} className="animate-spin" />
-                                                <p>Mengupload file...</p>
-                                            </>
-                                        ) : uploadedFile ? (
-                                            <div className="uploaded-file">
-                                                {uploadedFile.previewUrl ? (
-                                                    <img
-                                                        src={uploadedFile.previewUrl}
-                                                        alt={uploadedFile.name}
-                                                        className="uploaded-file-thumb"
-                                                    />
-                                                ) : (
-                                                    <FileText size={32} />
-                                                )}
-                                                <div className="uploaded-file-info">
-                                                    <p className="uploaded-file-name">{uploadedFile.name}</p>
-                                                    <p className="uploaded-file-size">
-                                                        {(uploadedFile.size / (1024 * 1024)).toFixed(2)} MB
-                                                    </p>
-                                                </div>
+
+                                    {!!product.templateDesain?.length && (
+                                        <div className="design-mode-toggle">
+                                            <button
+                                                type="button"
+                                                className={`design-mode-btn ${designMode === 'upload' ? 'active' : ''}`}
+                                                onClick={() => {
+                                                    if (designMode !== 'upload') { handleRemoveFile(); setDesignMode('upload'); }
+                                                }}
+                                            >
+                                                Upload Desain Sendiri
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className={`design-mode-btn ${designMode === 'template' ? 'active' : ''}`}
+                                                onClick={() => {
+                                                    if (designMode !== 'template') { handleRemoveFile(); setDesignMode('template'); }
+                                                }}
+                                            >
+                                                Pilih dari Desain Kami
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    {designMode === 'template' && product.templateDesain?.length ? (
+                                        <div className="design-templates-grid">
+                                            {product.templateDesain.map(template => (
                                                 <button
-                                                    className="remove-file-btn"
-                                                    onClick={handleRemoveFile}
+                                                    type="button"
+                                                    key={template.id}
+                                                    className={`design-template-option ${uploadedFile?.id === template.id ? 'selected' : ''}`}
+                                                    onClick={() => handleSelectTemplate(template)}
                                                 >
-                                                    <X size={18} />
+                                                    <img src={template.gambar} alt={template.nama} />
+                                                    <span>{template.nama}</span>
+                                                    {uploadedFile?.id === template.id && (
+                                                        <span className="design-template-check"><Check size={14} /></span>
+                                                    )}
                                                 </button>
-                                            </div>
-                                        ) : (
-                                            <>
-                                                <Upload size={40} />
-                                                <p>Drag & drop file atau</p>
-                                                <label className="btn btn-outline btn-sm">
-                                                    Pilih File
-                                                    <input
-                                                        type="file"
-                                                        className="sr-only"
-                                                        accept={product.tipeFileDiperbolehkan.map(t => `.${t.trim().toLowerCase().replace(/^\./, '')}`).join(',')}
-                                                        onChange={(e) => handleFileUpload(e.target.files)}
-                                                    />
-                                                </label>
-                                                <p className="upload-info">
-                                                    Format: {product.tipeFileDiperbolehkan.join(', ').toUpperCase()} | Max: {product.ukuranFileMaks}MB
-                                                </p>
-                                            </>
-                                        )}
-                                    </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className={`upload-zone ${isDragging ? 'dragging' : ''} ${uploadedFile ? 'has-file' : ''}`}
+                                            onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+                                            onDragLeave={() => setIsDragging(false)}
+                                            onDrop={handleDrop}
+                                        >
+                                            {isUploadingFile ? (
+                                                <>
+                                                    <Loader2 size={40} className="animate-spin" />
+                                                    <p>Mengupload file...</p>
+                                                </>
+                                            ) : uploadedFile ? (
+                                                <div className="uploaded-file">
+                                                    {uploadedFile.previewUrl ? (
+                                                        <img
+                                                            src={uploadedFile.previewUrl}
+                                                            alt={uploadedFile.name}
+                                                            className="uploaded-file-thumb"
+                                                        />
+                                                    ) : (
+                                                        <FileText size={32} />
+                                                    )}
+                                                    <div className="uploaded-file-info">
+                                                        <p className="uploaded-file-name">{uploadedFile.name}</p>
+                                                        <p className="uploaded-file-size">
+                                                            {(uploadedFile.size / (1024 * 1024)).toFixed(2)} MB
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        className="remove-file-btn"
+                                                        onClick={handleRemoveFile}
+                                                    >
+                                                        <X size={18} />
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <Upload size={40} />
+                                                    <p>Drag & drop file atau</p>
+                                                    <label className="btn btn-outline btn-sm">
+                                                        Pilih File
+                                                        <input
+                                                            type="file"
+                                                            className="sr-only"
+                                                            accept={product.tipeFileDiperbolehkan.map(t => `.${t.trim().toLowerCase().replace(/^\./, '')}`).join(',')}
+                                                            onChange={(e) => handleFileUpload(e.target.files)}
+                                                        />
+                                                    </label>
+                                                    <p className="upload-info">
+                                                        Format: {product.tipeFileDiperbolehkan.join(', ').toUpperCase()} | Max: {product.ukuranFileMaks}MB
+                                                    </p>
+                                                </>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             )}
 

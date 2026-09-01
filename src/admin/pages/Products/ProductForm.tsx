@@ -12,7 +12,7 @@ import { fileService } from '../../../lib/fileService';
 import { useCategories } from '../../../hooks';
 import { useUIStore } from '../../../store';
 import { ImageUploader } from '../../../components';
-import type { Product, QuantityTier } from '../../../types';
+import type { Product, ProductDesignTemplate, QuantityTier } from '../../../types';
 import './ProductForm.css';
 
 interface SizeOption {
@@ -103,7 +103,11 @@ export default function ProductForm() {
     const [formData, setFormData] = useState<ProductFormData>(defaultFormData);
     const [isLoading, setIsLoading] = useState(isEdit);
     const [isSaving, setIsSaving] = useState(false);
-    const [activeTab, setActiveTab] = useState<'basic' | 'options' | 'pricing' | 'settings'>('basic');
+    const [activeTab, setActiveTab] = useState<'basic' | 'options' | 'pricing' | 'templates' | 'settings'>('basic');
+
+    const [templates, setTemplates] = useState<ProductDesignTemplate[]>([]);
+    const [newTemplateName, setNewTemplateName] = useState('');
+    const [isUploadingTemplate, setIsUploadingTemplate] = useState(false);
 
     useEffect(() => {
         if (isEdit && id) {
@@ -141,6 +145,7 @@ export default function ProductForm() {
                     allowedFileTypes: product.tipeFileDiperbolehkan,
                     maxFileSize: product.ukuranFileMaks,
                 });
+                setTemplates(product.templateDesain || []);
             }
         } catch (error) {
             addToast({
@@ -329,6 +334,50 @@ export default function ProductForm() {
         }
     };
 
+    const handleAddTemplate = async (file: File) => {
+        if (!id) return;
+        if (!newTemplateName.trim()) {
+            addToast({ type: 'error', title: 'Validasi Error', message: 'Nama template wajib diisi' });
+            return;
+        }
+
+        setIsUploadingTemplate(true);
+        try {
+            const uploadResponse = await fileService.uploadImage(file, 'design-templates');
+            const response = await productService.addDesignTemplate(id, {
+                nama: newTemplateName.trim(),
+                gambar: uploadResponse.data.url,
+            });
+            if (response.success) {
+                setTemplates(prev => [...prev, response.data]);
+                setNewTemplateName('');
+                addToast({ type: 'success', title: 'Berhasil', message: 'Template desain ditambahkan' });
+            }
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error',
+                message: error instanceof Error ? error.message : 'Gagal menambahkan template desain',
+            });
+        } finally {
+            setIsUploadingTemplate(false);
+        }
+    };
+
+    const handleDeleteTemplate = async (templateId: string) => {
+        if (!id) return;
+        try {
+            await productService.deleteDesignTemplate(id, templateId);
+            setTemplates(prev => prev.filter(t => t.id !== templateId));
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error',
+                message: error instanceof Error ? error.message : 'Gagal menghapus template desain',
+            });
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -456,6 +505,12 @@ export default function ProductForm() {
                     onClick={() => setActiveTab('pricing')}
                 >
                     Harga & Tier
+                </button>
+                <button
+                    className={`tab ${activeTab === 'templates' ? 'active' : ''} `}
+                    onClick={() => setActiveTab('templates')}
+                >
+                    Template Desain
                 </button>
                 <button
                     className={`tab ${activeTab === 'settings' ? 'active' : ''} `}
@@ -784,6 +839,79 @@ export default function ProductForm() {
                                 ))}
                             </div>
                         </div>
+                    </div>
+                )}
+
+                {/* Design Templates */}
+                {activeTab === 'templates' && (
+                    <div className="form-section">
+                        <p className="setting-desc" style={{ marginBottom: 'var(--spacing-4)' }}>
+                            Opsi desain siap pakai yang ditawarkan ke pelanggan sebagai alternatif upload
+                            desain sendiri (misal: beberapa pilihan desain spanduk untuk tema tertentu).
+                        </p>
+
+                        {!isEdit ? (
+                            <p className="no-options">Simpan produk terlebih dahulu untuk menambahkan template desain.</p>
+                        ) : (
+                            <>
+                                <div className="options-card">
+                                    <div className="options-header">
+                                        <h3>Tambah Template Desain</h3>
+                                    </div>
+                                    <div className="template-add-row">
+                                        <input
+                                            type="text"
+                                            value={newTemplateName}
+                                            onChange={(e) => setNewTemplateName(e.target.value)}
+                                            placeholder="Nama template (misal: Dirgahayu RI Merah)"
+                                            disabled={isUploadingTemplate}
+                                        />
+                                        <label className="btn btn-sm btn-outline">
+                                            {isUploadingTemplate ? (
+                                                <>
+                                                    <Loader2 size={16} className="animate-spin" /> Mengunggah...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Plus size={16} /> Pilih Gambar
+                                                </>
+                                            )}
+                                            <input
+                                                type="file"
+                                                className="sr-only"
+                                                accept="image/jpeg,image/png,image/gif,image/webp"
+                                                disabled={isUploadingTemplate}
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0];
+                                                    e.target.value = '';
+                                                    if (file) handleAddTemplate(file);
+                                                }}
+                                            />
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {templates.length === 0 ? (
+                                    <p className="no-options">Belum ada template desain untuk produk ini.</p>
+                                ) : (
+                                    <div className="templates-grid">
+                                        {templates.map(template => (
+                                            <div key={template.id} className="template-card">
+                                                <img src={template.gambar} alt={template.nama} />
+                                                <div className="template-card-name">{template.nama}</div>
+                                                <button
+                                                    type="button"
+                                                    className="remove-btn"
+                                                    onClick={() => handleDeleteTemplate(template.id)}
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
                 )}
 

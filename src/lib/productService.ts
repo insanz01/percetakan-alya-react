@@ -174,6 +174,27 @@ export const productService = {
     },
 
     /**
+     * Add a design template option to a product (Admin). The image itself
+     * is uploaded beforehand via fileService.uploadImage.
+     */
+    async addDesignTemplate(
+        productId: string,
+        data: { nama: string; gambar: string }
+    ): Promise<ApiResponse<{ id: string; nama: string; gambar: string }>> {
+        return api.post<ApiResponse<{ id: string; nama: string; gambar: string }>>(
+            `/admin/products/${productId}/design-templates`,
+            data
+        );
+    },
+
+    /**
+     * Remove a design template option from a product (Admin)
+     */
+    async deleteDesignTemplate(productId: string, templateId: string): Promise<ApiResponse<null>> {
+        return api.delete<ApiResponse<null>>(`/admin/products/${productId}/design-templates/${templateId}`);
+    },
+
+    /**
      * Get popular products with sales statistics (Admin Dashboard)
      */
     async getPopularProducts(limit: number = 5): Promise<ApiResponse<PopularProduct[]>> {
