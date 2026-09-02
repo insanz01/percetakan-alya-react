@@ -185,7 +185,8 @@
 
     }
 
-.admin-scope .input-with-addon .textarea{padding-left: var(--spacing-4);
+.admin-scope .input-with-addon:has(.textarea) .input-addon{top: var(--spacing-3);
+    transform: none;
 
     }
 
