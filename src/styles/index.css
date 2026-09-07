@@ -275,6 +275,11 @@ a:hover {
   overflow: hidden;
 }
 
+.btn svg {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .btn::before {
   content: '';
   position: absolute;
