@@ -199,21 +199,21 @@
     gap: var(--spacing-4);
 }
 
-.form-group {
+.address-form .form-group {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-2);
 }
 
-.form-group label {
+.address-form .form-group label {
     font-size: var(--font-size-sm);
     font-weight: 600;
     color: var(--text-primary);
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.address-form .form-group input,
+.address-form .form-group textarea,
+.address-form .form-group select {
     padding: var(--spacing-3);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
@@ -223,14 +223,14 @@
     transition: border-color var(--transition-base);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.address-form .form-group input:focus,
+.address-form .form-group textarea:focus,
+.address-form .form-group select:focus {
     outline: none;
     border-color: var(--color-primary);
 }
 
-.form-group textarea {
+.address-form .form-group textarea {
     resize: vertical;
     font-family: inherit;
 }
