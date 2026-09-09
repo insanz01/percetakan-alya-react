@@ -43,7 +43,7 @@ export default function ProductDetail() {
     const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [isUploadingFile, setIsUploadingFile] = useState(false);
-    const [designMode, setDesignMode] = useState<'upload' | 'template'>('upload');
+    const [designMode, setDesignMode] = useState<'upload' | 'template'>('template');
 
     useEffect(() => {
         if (product) {
@@ -504,21 +504,21 @@ export default function ProductDetail() {
                                         <div className="design-mode-toggle">
                                             <button
                                                 type="button"
-                                                className={`design-mode-btn ${designMode === 'upload' ? 'active' : ''}`}
-                                                onClick={() => {
-                                                    if (designMode !== 'upload') { handleRemoveFile(); setDesignMode('upload'); }
-                                                }}
-                                            >
-                                                Upload Desain Sendiri
-                                            </button>
-                                            <button
-                                                type="button"
                                                 className={`design-mode-btn ${designMode === 'template' ? 'active' : ''}`}
                                                 onClick={() => {
                                                     if (designMode !== 'template') { handleRemoveFile(); setDesignMode('template'); }
                                                 }}
                                             >
                                                 Pilih dari Desain Kami
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className={`design-mode-btn ${designMode === 'upload' ? 'active' : ''}`}
+                                                onClick={() => {
+                                                    if (designMode !== 'upload') { handleRemoveFile(); setDesignMode('upload'); }
+                                                }}
+                                            >
+                                                Upload Desain Sendiri
                                             </button>
                                         </div>
                                     )}
