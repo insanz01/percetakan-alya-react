@@ -122,7 +122,7 @@ export interface UploadedFile {
     url: string;
     status: 'uploading' | 'success' | 'error';
     previewUrl?: string;
-    source?: 'upload' | 'template';
+    source?: 'upload' | 'template' | 'discuss';
 }
 
 export type OrderStatus =

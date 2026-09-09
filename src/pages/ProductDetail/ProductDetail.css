@@ -500,6 +500,16 @@
     object-fit: cover;
 }
 
+.design-template-placeholder {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    color: var(--color-primary-500);
+}
+
 .design-template-option span:not(.design-template-check) {
     font-size: var(--font-size-xs);
     color: var(--text-primary);

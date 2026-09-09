@@ -15,7 +15,8 @@ import {
     Info,
     X,
     FileText,
-    Loader2
+    Loader2,
+    MessageCircle
 } from 'lucide-react';
 import { useProduct, useCategories } from '../../hooks';
 import { formatPrice } from '../../lib/utils';
@@ -23,6 +24,8 @@ import { fileService } from '../../lib/fileService';
 import { useCartStore, useUIStore } from '../../store';
 import type { CartItemConfig, ProductDesignTemplate, UploadedFile } from '../../types';
 import './ProductDetail.css';
+
+const DISCUSS_LATER_ID = 'diskusi-belakang';
 
 export default function ProductDetail() {
     const { slug } = useParams<{ slug: string }>();
@@ -180,7 +183,7 @@ export default function ProductDetail() {
     };
 
     const handleRemoveFile = () => {
-        if (uploadedFile && uploadedFile.source !== 'template') {
+        if (uploadedFile && uploadedFile.source !== 'template' && uploadedFile.source !== 'discuss') {
             // ponytail: fire-and-forget cleanup; not blocking the UI on a delete
             // that already served its purpose. Upgrade path: surface failures if
             // orphaned uploads become a real storage-cost problem.
@@ -200,6 +203,18 @@ export default function ProductDetail() {
             status: 'success',
             previewUrl: template.gambar,
             source: 'template',
+        });
+    };
+
+    const handleSelectDiscussLater = () => {
+        setUploadedFile({
+            id: DISCUSS_LATER_ID,
+            name: 'Diskusi di Belakang',
+            size: 0,
+            type: 'text/discuss',
+            url: '',
+            status: 'success',
+            source: 'discuss',
         });
     };
 
@@ -500,32 +515,30 @@ export default function ProductDetail() {
                                         <span className="required">*Wajib</span>
                                     </label>
 
-                                    {!!product.templateDesain?.length && (
-                                        <div className="design-mode-toggle">
-                                            <button
-                                                type="button"
-                                                className={`design-mode-btn ${designMode === 'template' ? 'active' : ''}`}
-                                                onClick={() => {
-                                                    if (designMode !== 'template') { handleRemoveFile(); setDesignMode('template'); }
-                                                }}
-                                            >
-                                                Pilih dari Desain Kami
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className={`design-mode-btn ${designMode === 'upload' ? 'active' : ''}`}
-                                                onClick={() => {
-                                                    if (designMode !== 'upload') { handleRemoveFile(); setDesignMode('upload'); }
-                                                }}
-                                            >
-                                                Upload Desain Sendiri
-                                            </button>
-                                        </div>
-                                    )}
+                                    <div className="design-mode-toggle">
+                                        <button
+                                            type="button"
+                                            className={`design-mode-btn ${designMode === 'template' ? 'active' : ''}`}
+                                            onClick={() => {
+                                                if (designMode !== 'template') { handleRemoveFile(); setDesignMode('template'); }
+                                            }}
+                                        >
+                                            Pilih dari Desain Kami
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className={`design-mode-btn ${designMode === 'upload' ? 'active' : ''}`}
+                                            onClick={() => {
+                                                if (designMode !== 'upload') { handleRemoveFile(); setDesignMode('upload'); }
+                                            }}
+                                        >
+                                            Upload Desain Sendiri
+                                        </button>
+                                    </div>
 
-                                    {designMode === 'template' && product.templateDesain?.length ? (
+                                    {designMode === 'template' ? (
                                         <div className="design-templates-grid">
-                                            {product.templateDesain.map(template => (
+                                            {product.templateDesain?.map(template => (
                                                 <button
                                                     type="button"
                                                     key={template.id}
@@ -539,6 +552,19 @@ export default function ProductDetail() {
                                                     )}
                                                 </button>
                                             ))}
+                                            <button
+                                                type="button"
+                                                className={`design-template-option discuss-later-option ${uploadedFile?.id === DISCUSS_LATER_ID ? 'selected' : ''}`}
+                                                onClick={handleSelectDiscussLater}
+                                            >
+                                                <div className="design-template-placeholder">
+                                                    <MessageCircle size={28} />
+                                                </div>
+                                                <span>Diskusi di Belakang</span>
+                                                {uploadedFile?.id === DISCUSS_LATER_ID && (
+                                                    <span className="design-template-check"><Check size={14} /></span>
+                                                )}
+                                            </button>
                                         </div>
                                     ) : (
                                         <div
