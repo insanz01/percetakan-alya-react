@@ -558,7 +558,9 @@ export default function ProductDetail() {
                                                 onClick={handleSelectDiscussLater}
                                             >
                                                 <div className="design-template-placeholder">
-                                                    <MessageCircle size={28} />
+                                                    <span className="design-template-placeholder-icon">
+                                                        <MessageCircle size={18} />
+                                                    </span>
                                                 </div>
                                                 <span>Diskusi di Belakang</span>
                                                 {uploadedFile?.id === DISCUSS_LATER_ID && (

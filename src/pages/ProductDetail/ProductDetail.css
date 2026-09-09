@@ -506,8 +506,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-secondary);
-    color: var(--color-primary-500);
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-700));
+    position: relative;
+    overflow: hidden;
+}
+
+.design-template-placeholder::before,
+.design-template-placeholder::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.design-template-placeholder::before {
+    width: 70px;
+    height: 70px;
+    top: -30px;
+    right: -20px;
+}
+
+.design-template-placeholder::after {
+    width: 40px;
+    height: 40px;
+    bottom: -18px;
+    left: -10px;
+}
+
+.design-template-placeholder-icon {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
 }
 
 .design-template-option span:not(.design-template-check) {
