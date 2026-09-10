@@ -11,6 +11,7 @@ import {
 import { useCategories } from '../../../hooks';
 import { categoryService } from '../../../lib/categoryService';
 import { useUIStore } from '../../../store';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import type { ProductCategory } from '../../../types';
 import './Categories.css';
 
@@ -19,6 +20,7 @@ export default function Categories() {
     const { data: categories, isLoading, refetch: refetchCategories } = useCategories();
     const { addToast } = useUIStore();
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [categoryToDelete, setCategoryToDelete] = useState<ProductCategory | null>(null);
 
     const filteredCategories = useMemo(() => {
         return (categories || []).filter(cat =>
@@ -26,7 +28,7 @@ export default function Categories() {
         );
     }, [categories, searchQuery]);
 
-    const handleDeleteCategory = async (category: ProductCategory) => {
+    const handleDeleteCategory = (category: ProductCategory) => {
         if ((category.productCount ?? 0) > 0) {
             addToast({
                 type: 'warning',
@@ -36,15 +38,18 @@ export default function Categories() {
             return;
         }
 
-        if (!window.confirm(`Hapus kategori "${category.nama}"? Tindakan ini tidak bisa dibatalkan.`)) {
-            return;
-        }
+        setCategoryToDelete(category);
+    };
 
-        setDeletingId(category.id);
+    const confirmDeleteCategory = async () => {
+        if (!categoryToDelete) return;
+
+        setDeletingId(categoryToDelete.id);
         try {
-            await categoryService.deleteCategory(category.id);
-            addToast({ type: 'success', title: 'Kategori dihapus', message: category.nama });
+            await categoryService.deleteCategory(categoryToDelete.id);
+            addToast({ type: 'success', title: 'Kategori dihapus', message: categoryToDelete.nama });
             refetchCategories();
+            setCategoryToDelete(null);
         } catch (error) {
             addToast({
                 type: 'error',
@@ -138,6 +143,15 @@ export default function Categories() {
                     <p>Coba ubah kata kunci pencarian</p>
                 </div>
             )}
+
+            <ConfirmDialog
+                open={!!categoryToDelete}
+                title="Hapus Kategori"
+                message={`Hapus kategori "${categoryToDelete?.nama}"? Tindakan ini tidak bisa dibatalkan.`}
+                isLoading={deletingId === categoryToDelete?.id}
+                onConfirm={confirmDeleteCategory}
+                onCancel={() => setCategoryToDelete(null)}
+            />
         </div>
     );
 }

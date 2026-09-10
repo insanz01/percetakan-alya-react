@@ -319,6 +319,18 @@ a:hover {
   box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 143, 0, 0.3);
 }
 
+.btn-danger {
+  background: linear-gradient(135deg, var(--color-error-500), var(--color-error-600));
+  color: white;
+  box-shadow: var(--shadow-md), 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, var(--color-error-400), var(--color-error-500));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(239, 68, 68, 0.3);
+}
+
 .btn-outline {
   background: transparent;
   color: var(--color-primary-500);

@@ -24,6 +24,7 @@ import { useProducts, useCategories } from '../../../hooks';
 import { formatPrice } from '../../../lib/utils';
 import { productService } from '../../../lib/productService';
 import { useUIStore } from '../../../store';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import type { Product } from '../../../types';
 import './Products.css';
 
@@ -38,6 +39,7 @@ export default function Products() {
     const { data: categories, isLoading: categoriesLoading } = useCategories();
     const { addToast } = useUIStore();
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
     const isLoading = productsLoading || categoriesLoading;
 
@@ -63,17 +65,20 @@ export default function Products() {
         setSelectedProduct(null);
     };
 
-    const handleDeleteProduct = async (product: Product) => {
+    const handleDeleteProduct = (product: Product) => {
         setActiveDropdown(null);
-        if (!window.confirm(`Hapus produk "${product.nama}"? Tindakan ini tidak bisa dibatalkan.`)) {
-            return;
-        }
+        setProductToDelete(product);
+    };
 
-        setDeletingId(product.id);
+    const confirmDeleteProduct = async () => {
+        if (!productToDelete) return;
+
+        setDeletingId(productToDelete.id);
         try {
-            await productService.deleteProduct(product.id);
-            addToast({ type: 'success', title: 'Produk dihapus', message: product.nama });
+            await productService.deleteProduct(productToDelete.id);
+            addToast({ type: 'success', title: 'Produk dihapus', message: productToDelete.nama });
             refetchProducts();
+            setProductToDelete(null);
         } catch (error) {
             addToast({
                 type: 'error',
@@ -552,6 +557,15 @@ export default function Products() {
                     </div>
                 </div>
             )}
+
+            <ConfirmDialog
+                open={!!productToDelete}
+                title="Hapus Produk"
+                message={`Hapus produk "${productToDelete?.nama}"? Tindakan ini tidak bisa dibatalkan.`}
+                isLoading={deletingId === productToDelete?.id}
+                onConfirm={confirmDeleteProduct}
+                onCancel={() => setProductToDelete(null)}
+            />
         </div>
     );
 }

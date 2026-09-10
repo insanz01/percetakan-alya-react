@@ -1,0 +1,66 @@
+.admin-scope .confirm-dialog-overlay {
+    z-index: calc(var(--z-modal) + 10);
+}
+
+.admin-scope .confirm-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-6);
+    text-align: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.admin-scope .confirm-dialog-close {
+    position: absolute;
+    top: var(--spacing-3);
+    right: var(--spacing-3);
+    width: 32px;
+    height: 32px;
+}
+
+.admin-scope .confirm-dialog-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto var(--spacing-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+}
+
+.admin-scope .confirm-dialog-icon.danger {
+    background: var(--color-error-100);
+    color: var(--color-error-500);
+}
+
+.admin-scope .confirm-dialog-icon.default {
+    background: var(--color-primary-100);
+    color: var(--color-primary-500);
+}
+
+.admin-scope .confirm-dialog-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+.admin-scope .confirm-dialog-message {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed, 1.5);
+    margin-bottom: var(--spacing-6);
+}
+
+.admin-scope .confirm-dialog-actions {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+.admin-scope .confirm-dialog-actions .btn {
+    flex: 1;
+}
