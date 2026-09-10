@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import { useProducts, useCategories } from '../../../hooks';
 import { formatPrice } from '../../../lib/utils';
+import { productService } from '../../../lib/productService';
+import { useUIStore } from '../../../store';
 import type { Product } from '../../../types';
 import './Products.css';
 
@@ -32,8 +34,10 @@ export default function Products() {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [viewMode, setViewMode] = useState<'table' | 'grid'>('table');
 
-    const { data: products, isLoading: productsLoading } = useProducts();
+    const { data: products, isLoading: productsLoading, refetch: refetchProducts } = useProducts();
     const { data: categories, isLoading: categoriesLoading } = useCategories();
+    const { addToast } = useUIStore();
+    const [deletingId, setDeletingId] = useState<string | null>(null);
 
     const isLoading = productsLoading || categoriesLoading;
 
@@ -57,6 +61,28 @@ export default function Products() {
 
     const closeModal = () => {
         setSelectedProduct(null);
+    };
+
+    const handleDeleteProduct = async (product: Product) => {
+        setActiveDropdown(null);
+        if (!window.confirm(`Hapus produk "${product.nama}"? Tindakan ini tidak bisa dibatalkan.`)) {
+            return;
+        }
+
+        setDeletingId(product.id);
+        try {
+            await productService.deleteProduct(product.id);
+            addToast({ type: 'success', title: 'Produk dihapus', message: product.nama });
+            refetchProducts();
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Gagal menghapus produk',
+                message: error instanceof Error ? error.message : 'Terjadi kesalahan, silakan coba lagi',
+            });
+        } finally {
+            setDeletingId(null);
+        }
     };
 
     if (isLoading) {
@@ -227,8 +253,12 @@ export default function Products() {
                                                             >
                                                                 <Edit2 size={14} /> Edit Produk
                                                             </Link>
-                                                            <button className="dropdown-item delete">
-                                                                <Trash2 size={14} /> Hapus
+                                                            <button
+                                                                className="dropdown-item delete"
+                                                                disabled={deletingId === product.id}
+                                                                onClick={() => handleDeleteProduct(product)}
+                                                            >
+                                                                <Trash2 size={14} /> {deletingId === product.id ? 'Menghapus...' : 'Hapus'}
                                                             </button>
                                                         </div>
                                                     )}
