@@ -12,6 +12,7 @@ import { fileService } from '../../../lib/fileService';
 import { useCategories } from '../../../hooks';
 import { useUIStore } from '../../../store';
 import { ImageUploader } from '../../../components';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import type { Product, ProductDesignTemplate, QuantityTier } from '../../../types';
 import './ProductForm.css';
 
@@ -106,6 +107,8 @@ export default function ProductForm() {
     const [activeTab, setActiveTab] = useState<'basic' | 'options' | 'pricing' | 'templates' | 'settings'>('basic');
 
     const [templates, setTemplates] = useState<ProductDesignTemplate[]>([]);
+    const [templateToDelete, setTemplateToDelete] = useState<ProductDesignTemplate | null>(null);
+    const [deletingTemplateId, setDeletingTemplateId] = useState<string | null>(null);
     const [newTemplateName, setNewTemplateName] = useState('');
     const [isUploadingTemplate, setIsUploadingTemplate] = useState(false);
 
@@ -364,17 +367,22 @@ export default function ProductForm() {
         }
     };
 
-    const handleDeleteTemplate = async (templateId: string) => {
-        if (!id) return;
+    const confirmDeleteTemplate = async () => {
+        if (!id || !templateToDelete) return;
+
+        setDeletingTemplateId(templateToDelete.id);
         try {
-            await productService.deleteDesignTemplate(id, templateId);
-            setTemplates(prev => prev.filter(t => t.id !== templateId));
+            await productService.deleteDesignTemplate(id, templateToDelete.id);
+            setTemplates(prev => prev.filter(t => t.id !== templateToDelete.id));
+            setTemplateToDelete(null);
         } catch (error) {
             addToast({
                 type: 'error',
                 title: 'Error',
                 message: error instanceof Error ? error.message : 'Gagal menghapus template desain',
             });
+        } finally {
+            setDeletingTemplateId(null);
         }
     };
 
@@ -902,7 +910,8 @@ export default function ProductForm() {
                                                 <button
                                                     type="button"
                                                     className="remove-btn"
-                                                    onClick={() => handleDeleteTemplate(template.id)}
+                                                    disabled={deletingTemplateId === template.id}
+                                                    onClick={() => setTemplateToDelete(template)}
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
@@ -1039,6 +1048,15 @@ export default function ProductForm() {
                     </div>
                 )}
             </form>
+
+            <ConfirmDialog
+                open={!!templateToDelete}
+                title="Hapus Template Desain"
+                message={`Hapus template desain "${templateToDelete?.nama}"? Tindakan ini tidak bisa dibatalkan.`}
+                isLoading={deletingTemplateId === templateToDelete?.id}
+                onConfirm={confirmDeleteTemplate}
+                onCancel={() => setTemplateToDelete(null)}
+            />
         </div>
     );
 }
