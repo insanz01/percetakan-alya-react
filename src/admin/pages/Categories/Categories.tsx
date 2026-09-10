@@ -9,17 +9,52 @@ import {
     Loader2
 } from 'lucide-react';
 import { useCategories } from '../../../hooks';
+import { categoryService } from '../../../lib/categoryService';
+import { useUIStore } from '../../../store';
+import type { ProductCategory } from '../../../types';
 import './Categories.css';
 
 export default function Categories() {
     const [searchQuery, setSearchQuery] = useState('');
-    const { data: categories, isLoading } = useCategories();
+    const { data: categories, isLoading, refetch: refetchCategories } = useCategories();
+    const { addToast } = useUIStore();
+    const [deletingId, setDeletingId] = useState<string | null>(null);
 
     const filteredCategories = useMemo(() => {
         return (categories || []).filter(cat =>
             cat.nama.toLowerCase().includes(searchQuery.toLowerCase())
         );
     }, [categories, searchQuery]);
+
+    const handleDeleteCategory = async (category: ProductCategory) => {
+        if ((category.productCount ?? 0) > 0) {
+            addToast({
+                type: 'warning',
+                title: 'Tidak bisa dihapus',
+                message: `Pindahkan atau hapus ${category.productCount} produk di kategori ini terlebih dahulu`,
+            });
+            return;
+        }
+
+        if (!window.confirm(`Hapus kategori "${category.nama}"? Tindakan ini tidak bisa dibatalkan.`)) {
+            return;
+        }
+
+        setDeletingId(category.id);
+        try {
+            await categoryService.deleteCategory(category.id);
+            addToast({ type: 'success', title: 'Kategori dihapus', message: category.nama });
+            refetchCategories();
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Gagal menghapus kategori',
+                message: error instanceof Error ? error.message : 'Terjadi kesalahan, silakan coba lagi',
+            });
+        } finally {
+            setDeletingId(null);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -83,9 +118,13 @@ export default function Categories() {
                                 <Edit2 size={18} />
                                 Edit
                             </Link>
-                            <button className="action-btn delete">
+                            <button
+                                className="action-btn delete"
+                                disabled={deletingId === category.id}
+                                onClick={() => handleDeleteCategory(category)}
+                            >
                                 <Trash2 size={18} />
-                                Hapus
+                                {deletingId === category.id ? 'Menghapus...' : 'Hapus'}
                             </button>
                         </div>
                     </div>
