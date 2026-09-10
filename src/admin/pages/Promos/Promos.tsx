@@ -1,8 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Edit2, Trash2, Tag, Calendar, Percent, Clock, Loader2 } from 'lucide-react';
 import { usePromos } from '../../../hooks';
 import { formatPrice, formatDate } from '../../../lib/utils';
+import { promoService } from '../../../lib/promoService';
+import { useUIStore } from '../../../store';
+import ConfirmDialog from '../../components/ConfirmDialog';
 import type { Promo } from '../../../lib/promoService';
 import './Promos.css';
 
@@ -59,13 +62,36 @@ const fallbackPromos: Promo[] = [
 ];
 
 export default function Promos() {
-    const { data: apiPromos, isLoading } = usePromos();
+    const { data: apiPromos, isLoading, refetch: refetchPromos } = usePromos();
+    const { addToast } = useUIStore();
+    const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [promoToDelete, setPromoToDelete] = useState<Promo | null>(null);
 
     const promos = useMemo(() => {
         return apiPromos || fallbackPromos;
     }, [apiPromos]);
 
     const activeCount = promos.filter(p => p.aktif).length;
+
+    const confirmDeletePromo = async () => {
+        if (!promoToDelete) return;
+
+        setDeletingId(promoToDelete.id);
+        try {
+            await promoService.deletePromo(promoToDelete.id);
+            addToast({ type: 'success', title: 'Promo dihapus', message: promoToDelete.kode });
+            refetchPromos();
+            setPromoToDelete(null);
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Gagal menghapus promo',
+                message: error instanceof Error ? error.message : 'Terjadi kesalahan, silakan coba lagi',
+            });
+        } finally {
+            setDeletingId(null);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -145,14 +171,27 @@ export default function Promos() {
                                 <Edit2 size={18} />
                                 Edit
                             </Link>
-                            <button className="action-btn delete">
+                            <button
+                                className="action-btn delete"
+                                disabled={deletingId === promo.id}
+                                onClick={() => setPromoToDelete(promo)}
+                            >
                                 <Trash2 size={18} />
-                                Hapus
+                                {deletingId === promo.id ? 'Menghapus...' : 'Hapus'}
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            <ConfirmDialog
+                open={!!promoToDelete}
+                title="Hapus Promo"
+                message={`Hapus promo "${promoToDelete?.kode}"? Tindakan ini tidak bisa dibatalkan.`}
+                isLoading={deletingId === promoToDelete?.id}
+                onConfirm={confirmDeletePromo}
+                onCancel={() => setPromoToDelete(null)}
+            />
         </div>
     );
 }
