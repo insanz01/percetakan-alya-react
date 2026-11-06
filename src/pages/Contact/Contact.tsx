@@ -5,20 +5,15 @@ import {
     Mail,
     MapPin,
     Clock,
-    Send,
     MessageCircle,
     ChevronRight,
-    CheckCircle,
-    Loader2
+    CheckCircle
 } from 'lucide-react';
-import { useUIStore } from '../../store';
 import { useContent } from '../../hooks';
 import './Contact.css';
 
 export default function Contact() {
-    const { addToast } = useUIStore();
     const { contact, faq } = useContent();
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -91,25 +86,29 @@ export default function Contact() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const subjectLabels: Record<string, string> = {
+        inquiry: 'Pertanyaan Umum',
+        order: 'Pertanyaan Pesanan',
+        complaint: 'Komplain',
+        partnership: 'Kerja Sama',
+        other: 'Lainnya',
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!validateForm()) return;
 
-        setIsSubmitting(true);
+        const text = [
+            `Halo, saya ${formData.name} (${formData.phone}).`,
+            `Subjek: ${subjectLabels[formData.subject] ?? formData.subject}`,
+            '',
+            formData.message,
+        ].join('\n');
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        const phone = contact.whatsapp.replace(/[^\d]/g, '');
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
 
-        setIsSubmitting(false);
-
-        addToast({
-            type: 'success',
-            title: 'Pesan terkirim!',
-            message: 'Tim kami akan menghubungi Anda segera.',
-        });
-
-        // Reset form
         setFormData({
             name: '',
             email: '',
@@ -264,18 +263,9 @@ export default function Contact() {
                                     {errors.message && <span className="error-message">{errors.message}</span>}
                                 </div>
 
-                                <button type="submit" className="btn btn-primary btn-lg" disabled={isSubmitting}>
-                                    {isSubmitting ? (
-                                        <>
-                                            <Loader2 size={20} className="animate-spin" />
-                                            Mengirim...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Send size={20} />
-                                            Kirim Pesan
-                                        </>
-                                    )}
+                                <button type="submit" className="btn btn-primary btn-lg">
+                                    <MessageCircle size={20} />
+                                    Kirim via WhatsApp
                                 </button>
                             </form>
                         </div>
